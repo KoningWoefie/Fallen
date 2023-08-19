@@ -9,7 +9,7 @@ class Dynamic
 {
 public:
     Dynamic();
-    ~Dynamic();
+    virtual ~Dynamic();
 
     virtual void update(float deltaTime) = 0;
 
