@@ -1,0 +1,2 @@
+#define SWIDTH 1280
+#define SHEIGHT 960
