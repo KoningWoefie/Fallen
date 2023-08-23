@@ -29,6 +29,9 @@ public:
 private:
     std::vector<Dynamic*> _children;
     std::string _texturePath;
+protected:
+    int _width;
+    int _height;
 };
 
 

@@ -6,6 +6,9 @@ Dynamic::Dynamic()
     this->scale = glm::vec3(1.0f, 1.0f, 1.0f);
     this->rotation = 0.0f;
 
+    _width = 0;
+    _height = 0;
+
     this->parent = nullptr;
 
     _texturePath = "";
