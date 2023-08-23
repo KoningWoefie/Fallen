@@ -6,7 +6,7 @@
 class ExampleScene00 : public Scene
 {
 public:
-    ExampleScene00(/* args */);
+    ExampleScene00();
     ~ExampleScene00();
 
     virtual void update(float deltaTime);

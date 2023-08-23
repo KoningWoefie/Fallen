@@ -63,11 +63,13 @@ set(ALL_GRAPHICS_LIBS
 
 # src (fallenlib.a)
 add_library(src # ar rcs fallenlib.a
-	src/config.h
 	src/camera.cpp
 	src/camera.h
+	src/config.h
 	src/dynamic.cpp
 	src/dynamic.h
+	src/game.cpp
+	src/game.h
 	src/renderer.cpp
 	src/renderer.h
 	src/resourcemanager.cpp
@@ -76,10 +78,10 @@ add_library(src # ar rcs fallenlib.a
 	src/scene.h
 )
 
-add_executable(examples # g++ pokemans/main.cpp -o pokemans
+add_executable(examples # g++ examples/main.cpp -o examples
 	examples/main.cpp
-	examples/Scene00.cpp
-	examples/Scene00.h
+	examples/exampleScene00.cpp
+	examples/exampleScene00.h
 )
 
 target_link_libraries(examples #g++ -lsrc

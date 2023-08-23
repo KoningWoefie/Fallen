@@ -8,6 +8,7 @@
 #include <GLFW/glfw3.h>
 
 #include <src/config.h>
+#include <src/scene.h>
 #include <src/renderer.h>
 #include <src/camera.h>
 #include <src/inputmanager.h>
@@ -27,9 +28,9 @@ public:
 private:
 	Renderer renderer;
 
-    float updateDeltaTime();
+    float UpdateDeltaTime();
 
-	void UpdateDynamic(Dynamic* e, float deltaTime);
+	void UpdateDynamic(Dynamic* d, float deltaTime);
 
 	bool running;
 }; 

@@ -1,19 +1,18 @@
 #include <src/game.h>
 
-//Copyright 2023 Sander Hoving (Fuck you Gideon)
-
 Game::Game() 
 {
 	running = true;
 } 
+
 Game::~Game() 
 {
 }
 
 void Game::Run(Scene* scene)
 {
-	// get deltaTime and update camera
-	float dt = this->updateDeltaTime();
+	//get deltaTime and update camera
+	float dt = this->UpdateDeltaTime();
 	scene->camera()->computeViewMatrixFromInput(renderer.window(), dt);
 	// _inMan->update(renderer.window());
 
@@ -42,7 +41,7 @@ void Game::UpdateDynamic(Dynamic* d, float deltaTime)
 	}
 }
 
-float Game::updateDeltaTime()
+float Game::UpdateDeltaTime()
 {
     // lastTime is initialised only the first time this function is called
 	static double lastTime = glfwGetTime();

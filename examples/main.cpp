@@ -12,5 +12,7 @@ int main(void)
     } 
     while (game.IsRunning());
     
+    delete scene00;
+
     return 0;
 }

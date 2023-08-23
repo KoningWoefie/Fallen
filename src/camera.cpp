@@ -5,7 +5,7 @@
 
 Camera::Camera()
 {
-	_projectionMatrix = glm::ortho(0.0f, (float)WIDTH, (float)HEIGHT, 0.0f, 0.1f, 100.0f);
+	_projectionMatrix = glm::ortho(0.0f, (float)SWIDTH, (float)SHEIGHT, 0.0f, 0.1f, 100.0f);
 	_viewMatrix = glm::mat4(1.0f);
 	_cursor = glm::vec3( 0, 0, 0 );
 }
