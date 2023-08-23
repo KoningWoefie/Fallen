@@ -4,6 +4,7 @@
 #include <iostream>
 #include <glm/glm.hpp>
 #include <vector>
+#include <string>
 
 class Dynamic
 {
@@ -23,8 +24,11 @@ public:
     glm::vec3 position;
     glm::vec3 scale;
     float rotation;
+
+    std::string FileName() { return _texturePath; }
 private:
     std::vector<Dynamic*> _children;
+    std::string _texturePath;
 };
 
 

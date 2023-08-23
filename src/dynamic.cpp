@@ -7,6 +7,8 @@ Dynamic::Dynamic()
     this->rotation = 0.0f;
 
     this->parent = nullptr;
+
+    _texturePath = "";
 }
 
 Dynamic::~Dynamic()
