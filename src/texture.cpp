@@ -6,17 +6,7 @@ Texture::Texture(int width, int height)
     _width = width;
     _height = height;
 
-    if(_width != 0 || _height != 0)
-    {
-        GLuint textureID;
-        GLubyte data[4] = {255, 255, 255, 255};
-        glGenTextures(1, &textureID);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	    glEnable(GL_BLEND);
-	    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _width, _height, 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
-
-        _texture = textureID;
-    }
+    _texture = 0;
 }
 
 Texture::~Texture()

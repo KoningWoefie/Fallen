@@ -23,26 +23,33 @@ ResourceManager::~ResourceManager()
     std::cout << "ResourceManager destroyed" << std::endl;
 }
 
-Texture* ResourceManager::GetTexture(std::string& fileName, int width, int height)
+Texture* ResourceManager::GetTexture(std::string fileName, int width, int height)
 {
     if(fileName.empty())
     {
-        char temp[32];
-        sprintf(temp, "%d_%d", width, height);
-        std::string name(temp);
-        fileName = name;
+        return nullptr;
     }
-
     if(_textures[fileName])
     {
-        return _textures[fileName];
-    }
-    if(width || height)
-    {
-        _textures[fileName] = new Texture(width, height);
         return _textures[fileName];
     }
     _textures[fileName] = new Texture();
     _textures[fileName]->loadTGA(fileName);
     return _textures[fileName];
+}
+
+Mesh* ResourceManager::GetMesh(int width, int height, float uvWidth, float uvHeight)
+{
+    char temp[64];
+    sprintf(temp, "%d_%d_%.5f_%.5f", width, height, uvWidth, uvHeight);
+    std::string name(temp);
+
+    if(_meshes[name])
+    {
+        return _meshes[name];
+    }
+    Mesh* m = new Mesh(width, height);
+    m->generateMesh(glm::vec2(0.5f, 0.5f), uvWidth, uvHeight);
+    _meshes[name] = m;
+    return _meshes[name];
 }

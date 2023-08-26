@@ -1,23 +1,15 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
-#include <iostream>
-#include <cstdio>
-#include <cstdlib>
-#include <string>
-#include <vector>
-#include <fstream>
-
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#define GLM_ENABLE_EXPERIMENTAL
-#include <glm/gtx/euler_angles.hpp>
 
 #include <src/config.h>
 #include <src/dynamic.h>
 #include <src/scene.h>
+#include <src/resourcemanager.h>
+#include <src/texture.h>
+#include <src/mesh.h>
 
 class Renderer
 {
@@ -34,6 +26,7 @@ private:
     int init();
 
 	GLFWwindow* _window;
+    ResourceManager _resMan;
 
 	GLuint loadShaders(
 		const std::string& vertex_file_path,

@@ -26,12 +26,16 @@ public:
     float rotation;
 
     std::string FileName() { return _texturePath; }
+
+    int Width() { return _width; }
+    int Height() { return _height; }
 private:
     std::vector<Dynamic*> _children;
-    std::string _texturePath;
 protected:
     int _width;
     int _height;
+
+    std::string _texturePath;
 };
 
 

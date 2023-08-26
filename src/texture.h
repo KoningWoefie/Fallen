@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-#include <glew.h>
+#include <GL/glew.h>
 
 class Texture
 {

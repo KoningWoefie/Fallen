@@ -1,3 +1,17 @@
+#include <iostream>
+#include <cstdio>
+#include <cstdlib>
+#include <string>
+#include <vector>
+#include <fstream>
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/euler_angles.hpp>
+
+#include <src/config.h>
+#include <src/camera.h>
 #include <src/renderer.h>
 
 Renderer::Renderer()
@@ -35,7 +49,7 @@ int Renderer::init()
 	glfwWindowHint(GLFW_SAMPLES, 4);
 
 	// Open a window and create its OpenGL context
-	_window = glfwCreateWindow( SWIDTH, SHEIGHT, "examples", NULL, NULL);
+	_window = glfwCreateWindow( SWIDTH, SHEIGHT, "exmaples", NULL, NULL);
 	if( _window == NULL ){
 		fprintf( stderr, "Failed to open GLFW window.\n" );
 		glfwTerminate();
@@ -53,7 +67,7 @@ int Renderer::init()
 	glfwSetInputMode(_window, GLFW_STICKY_KEYS, GL_TRUE);
 
 	// Dark blue background
-	glClearColor(0.0f, 1.0f, 0.0f, 0.0f);
+	glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
 
 	// Cull triangles which normal is not towards the camera
 	glEnable(GL_CULL_FACE);
@@ -87,14 +101,78 @@ void Renderer::RenderScene(Scene* scene)
 
 void Renderer::RenderDynamic(Dynamic* d, glm::mat4 PaMa)
 {
-    // Build the Model matrix from Dynamic transform
-	glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(d->position));
+   // Build MVP matrix
+	// Send our transformation to the currently bound shader, in the "MVP" uniform
+	glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(d->position[0], d->position[1], 0));
 	glm::mat4 rotationMatrix = glm::eulerAngleYXZ(0.0f, 0.0f, d->rotation);
-	glm::mat4 scalingMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(d->scale));
-
+	glm::mat4 scalingMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(d->scale[0], d->scale[1], 1));
 	glm::mat4 modelMatrix = translationMatrix * rotationMatrix * scalingMatrix;
-
+	// glm::mat4 mdm = PaMa;
 	PaMa *= modelMatrix;
+	glm::mat4 MVP = _projectionMatrix * _viewMatrix * PaMa;
+
+	// Bind our texture in Texture Unit 0
+    glActiveTexture(GL_TEXTURE0);
+	Texture* t = _resMan.GetTexture(d->FileName());
+	Mesh* m = nullptr;
+    if(t)
+    {
+	    glBindTexture(GL_TEXTURE_2D, t->getTexture());
+	    // Set our "textureSampler" sampler to use Texture Unit 0
+	    GLuint textureID = glGetUniformLocation(_programID, "textureSampler");
+	    glUniform1i(textureID, 0);
+	    glBindTexture(GL_TEXTURE_2D, t->getTexture());
+        m = _resMan.GetMesh(t->Width(), t->Height());
+        GLuint dColorID = glGetUniformLocation(_programID, "defaultColor");
+	    glUniform4f(dColorID, 0.0f, 0.0f, 0.0f, 0.0f);
+    }
+    else
+    {
+        m = _resMan.GetMesh(d->Width(), d->Height());
+        GLuint dColorID = glGetUniformLocation(_programID, "defaultColor");
+	    glUniform4f(dColorID, 255.0f, 255.0f, 255.0f, 255.0f);
+    }
+	GLuint uvOffset = glGetUniformLocation(_programID, "UVoffset");
+	glUniform2f(uvOffset, 0, 0);
+
+    GLuint colorID = glGetUniformLocation(_programID, "blendColor");
+	glUniform4f(colorID, 1.0f, 1.0f, 1.0f, 1.0f);
+
+    GLuint matrixID = glGetUniformLocation(_programID, "MVP");
+	glUniformMatrix4fv(matrixID, 1, GL_FALSE, &MVP[0][0]);
+
+	// 1st attribute buffer : vertices
+	GLuint vertexPositionID = glGetAttribLocation(_programID, "vertexPosition");
+	glEnableVertexAttribArray(vertexPositionID);
+	glBindBuffer(GL_ARRAY_BUFFER, m->vertexbuffer());
+	glVertexAttribPointer(
+		vertexPositionID, // The attribute we want to configure
+		3,          // size : x,y,z => 3
+		GL_FLOAT,   // type
+		GL_FALSE,   // normalized?
+		0,          // stride
+		(void*)0    // array buffer offset
+	);
+
+	// 2nd attribute buffer : UVs
+	GLuint vertexUVID = glGetAttribLocation(_programID, "vertexUV");
+	glEnableVertexAttribArray(vertexUVID);
+	glBindBuffer(GL_ARRAY_BUFFER, m->uvbuffer());
+	glVertexAttribPointer(
+		vertexUVID, // The attribute we want to configure
+		2,          // size : U,V => 2
+		GL_FLOAT,   // type
+		GL_FALSE,   // normalized?
+		0,          // stride
+		(void*)0    // array buffer offset
+	);
+
+	// Draw the triangles
+	glDrawArrays(GL_TRIANGLES, 0, 2*3); // 2*3 indices starting at 0 -> 2 triangles
+
+	// cleanup
+	glDisableVertexAttribArray(vertexPositionID);
+	glDisableVertexAttribArray(vertexUVID);
 }
 
 GLuint Renderer::loadShaders(const std::string& vertex_file_path, const std::string& fragment_file_path)

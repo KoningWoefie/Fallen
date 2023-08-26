@@ -70,12 +70,16 @@ add_library(src # ar rcs fallenlib.a
 	src/dynamic.h
 	src/game.cpp
 	src/game.h
+	src/mesh.cpp
+	src/mesh.h
 	src/renderer.cpp
 	src/renderer.h
 	src/resourcemanager.cpp
 	src/resourcemanager.h
 	src/scene.cpp
 	src/scene.h
+	src/texture.cpp
+	src/texture.h
 )
 
 add_executable(examples # g++ examples/main.cpp -o examples
