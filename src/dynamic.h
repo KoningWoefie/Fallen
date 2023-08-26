@@ -6,6 +6,8 @@
 #include <vector>
 #include <string>
 
+#include <src/config.h>
+
 class Dynamic
 {
 public:

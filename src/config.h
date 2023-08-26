@@ -1,2 +1,4 @@
 #define SWIDTH 1280
 #define SHEIGHT 960
+
+#define PI 3.14159265359f
