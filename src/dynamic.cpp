@@ -9,6 +9,8 @@ Dynamic::Dynamic()
     _width = 0;
     _height = 0;
 
+    _radius = 0;
+
     this->parent = nullptr;
 
     _texturePath = "";

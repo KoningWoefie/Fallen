@@ -31,11 +31,14 @@ public:
 
     int Width() { return _width; }
     int Height() { return _height; }
+    int Radius() { return _radius; }
 private:
     std::vector<Dynamic*> _children;
 protected:
     int _width;
     int _height;
+    int _radius;
+
 
     std::string _texturePath;
 };

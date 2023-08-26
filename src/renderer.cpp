@@ -122,13 +122,13 @@ void Renderer::RenderDynamic(Dynamic* d, glm::mat4 PaMa)
 	    GLuint textureID = glGetUniformLocation(_programID, "textureSampler");
 	    glUniform1i(textureID, 0);
 	    glBindTexture(GL_TEXTURE_2D, t->getTexture());
-        m = _resMan.GetMesh(t->Width(), t->Height());
+        m = _resMan.GetMesh(t->Width(), t->Height(), d->Radius());
         GLuint dColorID = glGetUniformLocation(_programID, "defaultColor");
 	    glUniform4f(dColorID, 0.0f, 0.0f, 0.0f, 0.0f);
     }
     else
     {
-        m = _resMan.GetMesh(d->Width(), d->Height());
+        m = _resMan.GetMesh(d->Width(), d->Height(), d->Radius());
         GLuint dColorID = glGetUniformLocation(_programID, "defaultColor");
 	    glUniform4f(dColorID, 255.0f, 255.0f, 255.0f, 255.0f);
     }
@@ -168,7 +168,7 @@ void Renderer::RenderDynamic(Dynamic* d, glm::mat4 PaMa)
 	);
 
 	// Draw the triangles
-	glDrawArrays(GL_TRIANGLES, 0, 2*3); // 2*3 indices starting at 0 -> 2 triangles
+	glDrawArrays(GL_TRIANGLES, 0, m->numverts());
 
 	// cleanup
 	glDisableVertexAttribArray(vertexPositionID);
