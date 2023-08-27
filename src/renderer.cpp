@@ -101,7 +101,7 @@ void Renderer::RenderScene(Scene* scene)
 
 void Renderer::RenderDynamic(Dynamic* d, glm::mat4 PaMa)
 {
-   // Build MVP matrix
+    // Build MVP matrix
 	// Send our transformation to the currently bound shader, in the "MVP" uniform
 	glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(d->position[0], d->position[1], 0));
 	glm::mat4 rotationMatrix = glm::eulerAngleYXZ(0.0f, 0.0f, d->rotation);
@@ -115,29 +115,43 @@ void Renderer::RenderDynamic(Dynamic* d, glm::mat4 PaMa)
     glActiveTexture(GL_TEXTURE0);
 	Texture* t = _resMan.GetTexture(d->FileName());
 	Mesh* m = nullptr;
+
+    // If texture exists
     if(t)
     {
+        // Bind texture for OpenGL
 	    glBindTexture(GL_TEXTURE_2D, t->getTexture());
+
 	    // Set our "textureSampler" sampler to use Texture Unit 0
 	    GLuint textureID = glGetUniformLocation(_programID, "textureSampler");
 	    glUniform1i(textureID, 0);
-	    glBindTexture(GL_TEXTURE_2D, t->getTexture());
+        
+        // Get mesh with texture width and height
         m = _resMan.GetMesh(t->Width(), t->Height(), d->Radius());
+
+        // Set default color
         GLuint dColorID = glGetUniformLocation(_programID, "defaultColor");
 	    glUniform4f(dColorID, 0.0f, 0.0f, 0.0f, 0.0f);
     }
     else
     {
+        // Get mesh with the dynamic's width and height
         m = _resMan.GetMesh(d->Width(), d->Height(), d->Radius());
+
+        // Set default color
         GLuint dColorID = glGetUniformLocation(_programID, "defaultColor");
 	    glUniform4f(dColorID, 255.0f, 255.0f, 255.0f, 255.0f);
     }
+
+    // Set UVoffset in the shader (not relevant yet)
 	GLuint uvOffset = glGetUniformLocation(_programID, "UVoffset");
 	glUniform2f(uvOffset, 0, 0);
 
+    // Set the color you want your texture to be blended with
     GLuint colorID = glGetUniformLocation(_programID, "blendColor");
-	glUniform4f(colorID, 1.0f, 1.0f, 1.0f, 1.0f);
+	glUniform4f(colorID, d->color[0]/255.0f, d->color[1]/255.0f, d->color[2]/255.0f, d->color[3]/255.0f);
 
+    // Set the Model, View, Projection matrix in the shader
     GLuint matrixID = glGetUniformLocation(_programID, "MVP");
 	glUniformMatrix4fv(matrixID, 1, GL_FALSE, &MVP[0][0]);
 

@@ -5,6 +5,7 @@ Dynamic::Dynamic()
     this->position = glm::vec3(0.0f, 0.0f, 0.0f);
     this->scale = glm::vec3(1.0f, 1.0f, 1.0f);
     this->rotation = 0.0f;
+    this->color = glm::vec4(255.0f, 255.0f, 255.0f, 255.0f);
 
     _width = 0;
     _height = 0;

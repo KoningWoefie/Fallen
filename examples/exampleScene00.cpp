@@ -9,6 +9,8 @@ ExampleScene00::ExampleScene00()
     _radius = 1;
 
     position = glm::vec3(200.0f, 300.0f, 0.0f);
+
+    color = glm::vec4(0,0,255,255);
 }
 
 ExampleScene00::~ExampleScene00()

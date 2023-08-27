@@ -27,6 +27,8 @@ public:
     glm::vec3 scale;
     float rotation;
 
+    glm::vec4 color;
+
     std::string FileName() { return _texturePath; }
 
     int Width() { return _width; }
@@ -38,7 +40,6 @@ protected:
     int _width;
     int _height;
     int _radius;
-
 
     std::string _texturePath;
 };

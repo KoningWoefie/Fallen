@@ -11,5 +11,5 @@ uniform vec4 defaultColor;
 void main()
 {
 	// Output color = color of the texture at the specified UV
-	gl_FragColor = defaultColor + texture2D( textureSampler, UV ) * blendColor;
+	gl_FragColor = (defaultColor + texture2D( textureSampler, UV )) * blendColor;
 }
