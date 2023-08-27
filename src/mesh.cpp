@@ -36,8 +36,6 @@ void Mesh::generateMesh(glm::vec2 pivot, float uvWidth, float uvHeight)
 	_uvs.push_back(glm::vec2(uvWidth, 0.0f));
 	_uvs.push_back(glm::vec2(uvWidth, uvHeight));
 
-    _numverts = 6;
-
     generateBuffers(vertices, _uvs);
 }
 
@@ -45,8 +43,6 @@ void Mesh::generateCircleMesh(glm::vec2 pivot, float uvWidth, float uvHeight, in
 {
     _radius = _width / 2;
     unsigned int step = segments;
-	_numverts = step*3; // n triangles with 3 vertices each
-    float angle = (2.0f * PI) / step;
 
 	std::vector<glm::vec3> vertices;
 	std::vector<glm::vec2> uvs;
@@ -90,6 +86,8 @@ void Mesh::generateCircleMesh(glm::vec2 pivot, float uvWidth, float uvHeight, in
 
 void Mesh::generateBuffers(std::vector<glm::vec3> vertices, std::vector<glm::vec2> uvs)
 {
+    _numverts = vertices.size();
+    
     glGenBuffers(1, &_vertexbuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, _vertexbuffer);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
