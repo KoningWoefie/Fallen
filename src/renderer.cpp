@@ -187,6 +187,12 @@ void Renderer::RenderDynamic(Dynamic* d, glm::mat4 PaMa)
 	// cleanup
 	glDisableVertexAttribArray(vertexPositionID);
 	glDisableVertexAttribArray(vertexUVID);
+
+    for (int i = 0; i < d->GetChildren().size(); i++)
+    {
+        RenderDynamic(d->GetChildren()[i], PaMa);
+    }
+    
 }
 
 GLuint Renderer::loadShaders(const std::string& vertex_file_path, const std::string& fragment_file_path)
