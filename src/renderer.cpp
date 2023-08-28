@@ -127,7 +127,7 @@ void Renderer::RenderDynamic(Dynamic* d, glm::mat4 PaMa)
 	    glUniform1i(textureID, 0);
         
         // Get mesh with texture width and height
-        m = _resMan.GetMesh(t->Width(), t->Height(), d->Radius());
+        m = _resMan.GetMesh(t->Width(), t->Height(), d->Radius(), d->UVWidth(), d->UVHeight());
 
         // Set default color
         GLuint dColorID = glGetUniformLocation(_programID, "defaultColor");
@@ -145,11 +145,11 @@ void Renderer::RenderDynamic(Dynamic* d, glm::mat4 PaMa)
 
     // Set UVoffset in the shader (not relevant yet)
 	GLuint uvOffset = glGetUniformLocation(_programID, "UVoffset");
-	glUniform2f(uvOffset, 0, 0);
+	glUniform2f(uvOffset, d->UVOffset().x, d->UVOffset().y);
 
     // Set the color you want your texture to be blended with
     GLuint colorID = glGetUniformLocation(_programID, "blendColor");
-	glUniform4f(colorID, d->color[0]/255.0f, d->color[1]/255.0f, d->color[2]/255.0f, d->color[3]/255.0f);
+	glUniform4f(colorID, d->color.r/255.0f, d->color.g/255.0f, d->color.b/255.0f, d->color.a/255.0f);
 
     // Set the Model, View, Projection matrix in the shader
     GLuint matrixID = glGetUniformLocation(_programID, "MVP");

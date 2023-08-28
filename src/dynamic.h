@@ -34,6 +34,12 @@ public:
     int Width() { return _width; }
     int Height() { return _height; }
     int Radius() { return _radius; }
+
+    float UVWidth() { return _uvWidth; }
+    float UVHeight() { return _uvHeight; }
+
+    glm::vec2 UVOffset() { return _uvOffset; }
+    
 private:
     std::vector<Dynamic*> _children;
 protected:
@@ -43,6 +49,8 @@ protected:
 
     float _uvWidth = 1.0f;
     float _uvHeight = 1.0f;
+
+    glm::vec2 _uvOffset;
 
     std::string _texturePath;
 };

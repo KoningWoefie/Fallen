@@ -80,14 +80,20 @@ add_library(src # ar rcs fallenlib.a
 	src/scene.h
 	src/sprite.cpp
 	src/sprite.h
+	src/spritesheet.cpp
+	src/spritesheet.h
 	src/texture.cpp
 	src/texture.h
+	src/timer.cpp
+	src/timer.h
 )
 
 add_executable(examples # g++ examples/main.cpp -o examples
 	examples/main.cpp
 	examples/exampleScene00.cpp
 	examples/exampleScene00.h
+	examples/SheetTest.cpp
+	examples/SheetTest.h
 )
 
 target_link_libraries(examples #g++ -lsrc

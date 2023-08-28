@@ -11,6 +11,9 @@ ExampleScene00::ExampleScene00()
     position = glm::vec3(200.0f, 300.0f, 0.0f);
 
     color = glm::vec4(0,0,255,255);
+
+    st = new SheetTest("assets/Sprite_Sheet_G4.tga", 4, 4);
+    this->AddChild(st);
 }
 
 ExampleScene00::~ExampleScene00()
