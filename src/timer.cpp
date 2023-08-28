@@ -6,6 +6,7 @@ Timer::Timer()
 { 
 	_seconds = 0;
 	startSec = 0;
+	_started = false;
 } 
 Timer::~Timer() 
 { 
@@ -14,16 +15,22 @@ Timer::~Timer()
 void Timer::StartTimer()
 {
 	startSec = _sec();
+	_started = true;
 }
 
 void Timer::StopTimer()
 {
 	_seconds = 0;
 	startSec = 0;
+	_started = false;
 }
 
 float Timer::Seconds()
 {
+	if(!_started)
+	{
+		return 0.0f;
+	}
 	_seconds = _sec() - startSec;
 	return _seconds;
 }

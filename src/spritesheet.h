@@ -43,6 +43,10 @@ struct AnimatedSprite : SpriteSheet
 
     int playAnimation(int index)
     {
+        if(!t->IsStarted())
+        {
+            t->StartTimer();
+        }
         if(t->Seconds() >= _animationDelay)
         {
             // Check if its out of range
@@ -51,6 +55,7 @@ struct AnimatedSprite : SpriteSheet
                 // if it's out of range set the frame as 0 and stop the timer
                 _nextFrame = 0;
                 this->Frame(_animations[index][_nextFrame]);
+                _nextFrame++;
                 t->StopTimer();
                 return 1;
             }

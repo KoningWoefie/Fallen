@@ -16,10 +16,13 @@ public:
 
 	float Seconds();
 
+	bool IsStarted() { return _started; }
 private:
 	double _sec();
 
 	float _seconds;
 	double startSec;
+
+	bool _started;
 }; 
 #endif // timer_H 
