@@ -12,6 +12,7 @@
 #include <src/renderer.h>
 #include <src/camera.h>
 #include <src/inputmanager.h>
+#include <src/sprite.h>
 
 //Copyright 2023 Sander Hoving (Fuck you Gideon)
 

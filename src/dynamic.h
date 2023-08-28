@@ -41,6 +41,9 @@ protected:
     int _height;
     int _radius;
 
+    float _uvWidth = 1.0f;
+    float _uvHeight = 1.0f;
+
     std::string _texturePath;
 };
 

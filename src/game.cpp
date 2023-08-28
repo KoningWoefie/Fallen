@@ -22,6 +22,7 @@ void Game::Run(Scene* scene)
 	// Render the scene
 	renderer.RenderScene(scene);
 
+    // Check if the game should still run
 	if (glfwGetKey(renderer.window(), GLFW_KEY_ESCAPE) != GLFW_PRESS && glfwWindowShouldClose(renderer.window()) == 0)
 	{
 		running = true;
@@ -35,6 +36,8 @@ void Game::Run(Scene* scene)
 void Game::UpdateDynamic(Dynamic* d, float deltaTime)
 {
 	d->update(deltaTime);
+
+    // Update all the children of this dynamic as well
 	for (Dynamic* cd : d->GetChildren())
 	{
 		UpdateDynamic(cd, deltaTime);

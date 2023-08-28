@@ -78,6 +78,8 @@ add_library(src # ar rcs fallenlib.a
 	src/resourcemanager.h
 	src/scene.cpp
 	src/scene.h
+	src/sprite.cpp
+	src/sprite.h
 	src/texture.cpp
 	src/texture.h
 )
