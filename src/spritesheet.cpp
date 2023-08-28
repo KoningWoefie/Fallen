@@ -41,30 +41,3 @@ int SpriteSheet::Frame(int f)
     // Return the frame you have just set
     return _currentFrame;
 }
-
-int SpriteSheet::playAnimation(int index)
-{
-    if(t->Seconds() >= _animationDelay)
-    {
-        // Check if its out of range
-        if(_nextFrame >= _animations[index].size())
-        {
-            // if it's out of range set the frame as 0 and stop the timer
-            _nextFrame = 0;
-            this->Frame(_animations[index][_nextFrame]);
-            t->StopTimer();
-            return 1;
-        }
-
-        // Set the next frame as the current frame
-        this->Frame(_animations[index][_nextFrame]);
-
-        // Set the next frame as the next frame
-        _nextFrame++;
-
-        // Reset timer
-        t->StopTimer();
-        t->StartTimer();
-    }
-    return 0;
-}

@@ -3,10 +3,10 @@
 
 #include <src/spritesheet.h>
 
-class SheetTest : public SpriteSheet
+class SheetTest : public AnimatedSprite
 {
 public:
-    SheetTest(const std::string& filePath, int spriteAmountX, int spriteAmountY);
+    SheetTest(const std::string& filePath, int spriteAmountX, int spriteAmountY, float animationDelay);
 
     virtual ~SheetTest();
 

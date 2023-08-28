@@ -1,15 +1,11 @@
 #include "SheetTest.h"
 
-SheetTest::SheetTest(const std::string& filePath, int spriteAmountX, int spriteAmountY) : SpriteSheet(filePath, spriteAmountX, spriteAmountY)
+SheetTest::SheetTest(const std::string& filePath, int spriteAmountX, int spriteAmountY, float animationDelay) : AnimatedSprite(filePath, spriteAmountX, spriteAmountY, animationDelay)
 {
-    _animations = 
-    {
-        { 0, 4, 8, 12},
-        { 1, 5, 9, 13},
-        { 2, 6, 10, 14},
-        { 3, 7, 11, 15},
-    };
-    _animationDelay = 1.0f;
+    this->setAnimation({0,4,8,12});
+    this->setAnimation({1,5,9,13});
+    this->setAnimation({2,6,10,14});
+    this->setAnimation({3,7,11,15});
 }
 
 SheetTest::~SheetTest()

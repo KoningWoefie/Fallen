@@ -12,7 +12,7 @@ ExampleScene00::ExampleScene00()
 
     color = glm::vec4(0,0,255,255);
 
-    st = new SheetTest("assets/Sprite_Sheet_G4.tga", 4, 4);
+    st = new SheetTest("assets/Sprite_Sheet_G4.tga", 4, 4, 1.0f);
     this->AddChild(st);
 }
 
