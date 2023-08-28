@@ -7,6 +7,7 @@
 #include <string>
 
 #include <src/config.h>
+#include <src/inputmanager.h>
 
 class Dynamic
 {
@@ -15,6 +16,8 @@ public:
     virtual ~Dynamic();
 
     virtual void update(float deltaTime) = 0;
+
+    InputManager* Input() { return _input; }
 
     void AddChild(Dynamic* child);
     void RemoveChild(Dynamic* child);
@@ -39,9 +42,10 @@ public:
     float UVHeight() { return _uvHeight; }
 
     glm::vec2 UVOffset() { return _uvOffset; }
-    
+
 private:
     std::vector<Dynamic*> _children;
+	InputManager* _input = InputManager::input();
 protected:
     int _width;
     int _height;

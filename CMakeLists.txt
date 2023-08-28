@@ -70,6 +70,8 @@ add_library(src # ar rcs fallenlib.a
 	src/dynamic.h
 	src/game.cpp
 	src/game.h
+	src/inputmanager.cpp
+	src/inputmanager.h
 	src/mesh.cpp
 	src/mesh.h
 	src/renderer.cpp

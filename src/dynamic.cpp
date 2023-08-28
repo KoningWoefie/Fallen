@@ -15,8 +15,6 @@ Dynamic::Dynamic()
 
     _radius = 0;
 
-
-
     _texturePath = "";
 }
 

@@ -33,6 +33,7 @@ private:
 
 	void UpdateDynamic(Dynamic* d, float deltaTime);
 
+	InputManager* _inMan = InputManager::input();
 	bool running;
 }; 
 

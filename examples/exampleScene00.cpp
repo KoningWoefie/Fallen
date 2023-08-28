@@ -22,4 +22,8 @@ ExampleScene00::~ExampleScene00()
 
 void ExampleScene00::update(float deltaTime)
 {
+    if(Input()->getKey(KeyCode::Right))
+    {
+        position.x += 100.0f * deltaTime;
+    }
 }

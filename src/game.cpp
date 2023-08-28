@@ -14,7 +14,9 @@ void Game::Run(Scene* scene)
 	//get deltaTime and update camera
 	float dt = this->UpdateDeltaTime();
 	scene->camera()->computeViewMatrixFromInput(renderer.window(), dt);
-	// _inMan->update(renderer.window());
+
+    // Update the input manager so it registers keys
+	_inMan->update(renderer.window());
 
 	// Update the scene
 	this->UpdateDynamic(scene, dt);
