@@ -48,6 +48,7 @@ include_directories( # g++ -Ipath/to/headerfiles
 	external/glfw-3.3/include/
 	external/glm-0.9.9.2/
 	external/glew-1.9.0/include/
+	external/freetype-2.13.2/include/
 	.
 )
 
