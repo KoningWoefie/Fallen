@@ -18,6 +18,8 @@ public:
     char * GetFontName() { return _font; }
     int GetSize() { return _size; }
 
+    glm::vec2 pivot = glm::vec2(0.0f, 0.0f);
+
     glm::vec4 color = glm::vec4(255, 255, 255, 255);
 
 private:

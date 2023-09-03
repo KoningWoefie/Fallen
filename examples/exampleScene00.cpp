@@ -21,6 +21,7 @@ ExampleScene00::ExampleScene00()
 
     _text = new Text("fonts/ponde___.ttf", 32);
     _text->Message("Heppo World!");
+    _text->pivot = glm::vec2(0.5f, 0.5f);
 }
 
 ExampleScene00::~ExampleScene00()
