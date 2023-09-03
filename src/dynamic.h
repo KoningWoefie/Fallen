@@ -8,6 +8,7 @@
 
 #include <src/config.h>
 #include <src/inputmanager.h>
+#include <src/text.h>
 
 class Dynamic
 {
@@ -38,10 +39,14 @@ public:
     int Height() { return _height; }
     int Radius() { return _radius; }
 
+    glm::vec2 Pivot() { return _pivot; }
+
     float UVWidth() { return _uvWidth; }
     float UVHeight() { return _uvHeight; }
 
     glm::vec2 UVOffset() { return _uvOffset; }
+
+    Text* text() { return _text; }
 
 private:
     std::vector<Dynamic*> _children;
@@ -55,8 +60,11 @@ protected:
     float _uvHeight = 1.0f;
 
     glm::vec2 _uvOffset;
+    glm::vec2 _pivot;
 
     std::string _texturePath;
+
+    Text* _text;
 };
 
 

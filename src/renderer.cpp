@@ -74,6 +74,7 @@ int Renderer::init()
 
 	// Create and compile our GLSL program from the shaders
 	_programID = this->loadShaders("shaders/sprite.vert", "shaders/sprite.frag");
+	_textShaderID = this->loadShaders("shaders/text.vert", "shaders/text.frag");
 
 	// Use our shader
 	glUseProgram(_programID);
@@ -101,6 +102,7 @@ void Renderer::RenderScene(Scene* scene)
 
 void Renderer::RenderDynamic(Dynamic* d, glm::mat4 PaMa)
 {
+    this->chooseShader(_programID);
     // Build MVP matrix
 	// Send our transformation to the currently bound shader, in the "MVP" uniform
 	glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(d->position[0], d->position[1], 0));
@@ -127,7 +129,7 @@ void Renderer::RenderDynamic(Dynamic* d, glm::mat4 PaMa)
 	    glUniform1i(textureID, 0);
         
         // Get mesh with texture width and height
-        m = _resMan.GetMesh(t->Width(), t->Height(), d->Radius(), d->UVWidth(), d->UVHeight());
+        m = _resMan.GetMesh(t->Width(), t->Height(), d->Radius(), d->Pivot(), d->UVWidth(), d->UVHeight());
 
         // Set default color
         GLuint dColorID = glGetUniformLocation(_programID, "defaultColor");
@@ -136,7 +138,7 @@ void Renderer::RenderDynamic(Dynamic* d, glm::mat4 PaMa)
     else
     {
         // Get mesh with the dynamic's width and height
-        m = _resMan.GetMesh(d->Width(), d->Height(), d->Radius());
+        m = _resMan.GetMesh(d->Width(), d->Height(), d->Radius(), d->Pivot());
 
         // Set default color
         GLuint dColorID = glGetUniformLocation(_programID, "defaultColor");
@@ -188,11 +190,108 @@ void Renderer::RenderDynamic(Dynamic* d, glm::mat4 PaMa)
 	glDisableVertexAttribArray(vertexPositionID);
 	glDisableVertexAttribArray(vertexUVID);
 
+    if(d->text())
+    {
+        RenderText(d->text(), PaMa);
+    }
+
     for (int i = 0; i < d->GetChildren().size(); i++)
     {
         RenderDynamic(d->GetChildren()[i], PaMa);
     }
     
+}
+
+void Renderer::RenderText(Text* text, glm::mat4 PaMa)
+{
+    this->chooseShader(_textShaderID);
+    float x = 0;
+    float y = 0;
+    // _fontMan.getFont(text->GetFont(), text->GetSize());
+    for (int i = 0; i < text->GetMessage().size(); i++)
+    {
+        glm::mat4 pama = PaMa;
+        char g = text->GetMessage()[i];
+        glyph* gl = _fontMan.getFont(text->GetFontName(), text->GetSize())[g];
+
+        float posX = x + gl->bearing.x + 1;
+        float posY = y - gl->bearing.y;
+
+        float width = gl->size.x;
+        float height = gl->size.y;
+
+        Mesh* mesh = _resMan.GetMesh(width, height, 0, glm::vec2(0.0f, 0.0f), 1.0f, 1.0f);
+        // Build MVP matrix
+        // Send our transformation to the currently bound shader, in the "MVP" uniform
+        glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(posX, posY, 0));
+        glm::mat4 rotationMatrix = glm::eulerAngleYXZ(0.0f, 0.0f, 0.0f);
+        glm::mat4 scalingMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
+        glm::mat4 modelMatrix = translationMatrix * rotationMatrix * scalingMatrix;
+
+        pama *= modelMatrix;
+
+        glm::mat4 MVP = _projectionMatrix * _viewMatrix * pama;
+
+        // Bind our texture in Texture Unit 0
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, gl->texture);
+
+        // Set our "textureSampler" sampler to use Texture Unit 0
+        GLuint textureID = glGetUniformLocation(_textShaderID, "textureSampler");
+        glUniform1i(textureID, 0);
+
+        // Set UVoffset in the shader
+        GLuint uvOffset = glGetUniformLocation(_textShaderID, "UVoffset");
+        glUniform2f(uvOffset, 0.0f, 0.0f);
+
+        // Set the default color
+        // GLuint dColorID = glGetUniformLocation(_textShaderID, "defaultColor");
+        // glUniform4f(dColorID, 255.0f, 255.0f, 255.0f, 255.0f);
+
+        // Set the color you want your texture to be blended with
+        GLuint colorID = glGetUniformLocation(_textShaderID, "textColor");
+        glUniform4f(colorID, text->color.r, text->color.g, text->color.b, text->color.a);
+
+        // Set the Model, View, Projection matrix in the shader
+        GLuint matrixID = glGetUniformLocation(_textShaderID, "MVP");
+        glUniformMatrix4fv(matrixID, 1, GL_FALSE, &MVP[0][0]);
+
+        // 1st attribute buffer : vertices
+        GLuint vertexPositionID = glGetAttribLocation(_textShaderID, "vertexPosition");
+        glEnableVertexAttribArray(vertexPositionID);
+        glBindBuffer(GL_ARRAY_BUFFER, mesh->vertexbuffer());
+
+        glVertexAttribPointer(
+            vertexPositionID, // The attribute we want to configure
+            3,          // size : x,y,z => 3
+            GL_FLOAT,   // type
+            GL_FALSE,   // normalized?
+            0,          // stride
+            (void*)0    // array buffer offset
+        );
+
+        // 2nd attribute buffer : UVs
+        GLuint vertexUVID = glGetAttribLocation(_textShaderID, "vertexUV");
+        glEnableVertexAttribArray(vertexUVID);
+        glBindBuffer(GL_ARRAY_BUFFER, mesh->uvbuffer());
+        glVertexAttribPointer(
+            vertexUVID, // The attribute we want to configure
+            2,          // size : U,V => 2
+            GL_FLOAT,   // type
+            GL_FALSE,   // normalized?
+            0,          // stride
+            (void*)0    // array buffer offset
+        );
+
+        // Draw the triangles
+        glDrawArrays(GL_TRIANGLES, 0, mesh->numverts());
+
+        // cleanup
+        glDisableVertexAttribArray(vertexPositionID);
+        glDisableVertexAttribArray(vertexUVID);
+
+        x += (gl->advance >> 6);
+    }
 }
 
 GLuint Renderer::loadShaders(const std::string& vertex_file_path, const std::string& fragment_file_path)
@@ -282,4 +381,15 @@ GLuint Renderer::loadShaders(const std::string& vertex_file_path, const std::str
 	glDeleteShader(fragmentShaderID);
 
 	return programID;
+}
+
+GLuint Renderer::chooseShader(GLuint shaderID)
+{
+    if(_activeID == shaderID)
+    {
+        return _activeID;
+    }
+    glUseProgram(shaderID);
+    _activeID = shaderID;
+    return _activeID;
 }

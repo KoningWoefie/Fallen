@@ -6,7 +6,7 @@
 #include <iostream>
 
 #include <glm/glm.hpp>
-#include <glfw3.h>
+#include <GLFW/glfw3.h>
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -32,7 +32,6 @@ public:
     void addFont(const char * fontPath, int size);
 
 private :
-    std::map<const char *, int> _fontSizes;
     std::map<std::pair<const char *, int>, std::map<char, glyph*>> _fonts;
 };
 

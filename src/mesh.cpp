@@ -19,22 +19,23 @@ Mesh::~Mesh()
 void Mesh::generateMesh(glm::vec2 pivot, float uvWidth, float uvHeight)
 {
     std::vector<glm::vec3> vertices;
-    //first triangle
-    vertices.push_back(glm::vec3(_width - (pivot.x * _width), -pivot.y * _height, 0.0f));
-	vertices.push_back(glm::vec3(-pivot.x * _width, -pivot.y * _height, 0.0f));
-	vertices.push_back(glm::vec3(-pivot.x * _width,  _height - (pivot.y * _height), 0.0f));
-	// second triangle
-	vertices.push_back(glm::vec3(-pivot.x * _width,  _height - (pivot.y * _height), 0.0f));
-	vertices.push_back(glm::vec3(_width - (pivot.x * _width), _height - (pivot.y * _height), 0.0f));
-	vertices.push_back(glm::vec3(_width - (pivot.x * _width), -pivot.y * _height, 0.0f));
+    // Second triangle
+    vertices.push_back(glm::vec3(_width - (pivot.x * _width), -pivot.y * _height, 0.0f)); // 1, 0
+	vertices.push_back(glm::vec3(-pivot.x * _width, -pivot.y * _height, 0.0f)); // 0, 0
+	vertices.push_back(glm::vec3(-pivot.x * _width,  _height - (pivot.y * _height), 0.0f)); // 0, 1
+	// First triangle
+	vertices.push_back(glm::vec3(-pivot.x * _width,  _height - (pivot.y * _height), 0.0f)); // 0, 1
+	vertices.push_back(glm::vec3(_width - (pivot.x * _width), _height - (pivot.y * _height), 0.0f)); // 1, 1
+	vertices.push_back(glm::vec3(_width - (pivot.x * _width), -pivot.y * _height, 0.0f)); // 1, 0
 
-    _uvs.push_back(glm::vec2(uvWidth, uvHeight));
-	_uvs.push_back(glm::vec2(0.0f, uvHeight));
-	_uvs.push_back(glm::vec2(0.0f, 0.0f));
+	_uvs.push_back(glm::vec2(uvWidth, 0.0f)); // 1, 0
+	_uvs.push_back(glm::vec2(0.0f, 0.0f)); // 0, 0
+	_uvs.push_back(glm::vec2(0.0f, uvHeight)); // 0, 1
 
-	_uvs.push_back(glm::vec2(0.0f, 0.0f));
-	_uvs.push_back(glm::vec2(uvWidth, 0.0f));
-	_uvs.push_back(glm::vec2(uvWidth, uvHeight));
+	_uvs.push_back(glm::vec2(0.0f, uvHeight)); // 0, 1
+	_uvs.push_back(glm::vec2(uvWidth, uvHeight)); // 1, 1
+	_uvs.push_back(glm::vec2(uvWidth, 0.0f)); // 1, 0
+
 
     generateBuffers(vertices, _uvs);
 }

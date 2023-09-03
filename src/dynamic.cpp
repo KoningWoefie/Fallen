@@ -7,8 +7,10 @@ Dynamic::Dynamic()
     this->rotation = 0.0f;
     this->color = glm::vec4(255.0f, 255.0f, 255.0f, 255.0f);
     _uvOffset = glm::vec2(0.0f,0.0f);
+    _pivot = glm::vec2(0.5f,0.5f);
 
     this->parent = nullptr;
+    this->_text = nullptr;
 
     _width = 0;
     _height = 0;

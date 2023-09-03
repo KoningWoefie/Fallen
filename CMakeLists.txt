@@ -15,6 +15,7 @@ endif()
 # Compile external dependencies
 set(OpenGL_GL_PREFERENCE GLVND)
 find_package(OpenGL REQUIRED)
+find_package(Freetype REQUIRED)
 
 if(UNIX)
 	set(CMAKE_CXX_FLAGS "-Wall -std=c++11 -O2")
@@ -69,6 +70,8 @@ add_library(src # ar rcs fallenlib.a
 	src/config.h
 	src/dynamic.cpp
 	src/dynamic.h
+	src/fontmanager.cpp
+	src/fontmanager.h
 	src/game.cpp
 	src/game.h
 	src/inputmanager.cpp
@@ -85,6 +88,7 @@ add_library(src # ar rcs fallenlib.a
 	src/sprite.h
 	src/spritesheet.cpp
 	src/spritesheet.h
+	src/text.h
 	src/texture.cpp
 	src/texture.h
 	src/timer.cpp
@@ -101,6 +105,7 @@ add_executable(examples # g++ examples/main.cpp -o examples
 
 target_link_libraries(examples #g++ -lsrc
 	src
+	${FREETYPE_LIBRARIES}
 	${ALL_GRAPHICS_LIBS}
 )
 # Copy assets and shaders to the build directory
