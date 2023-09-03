@@ -205,17 +205,29 @@ void Renderer::RenderDynamic(Dynamic* d, glm::mat4 PaMa)
 void Renderer::RenderText(Text* text, glm::mat4 PaMa)
 {
     this->chooseShader(_textShaderID);
+    float bigHeight = 0;
     float x = 0;
     float y = 0;
-    // _fontMan.getFont(text->GetFont(), text->GetSize());
+    for (int i = 0; i < text->GetMessage().size(); i++)
+    {
+        char g = text->GetMessage()[i];
+        glyph* gl = _fontMan.getFont(text->GetFontName(), text->GetSize())[g];
+        if((gl->size.y - gl->bearing.y) > bigHeight)
+        {
+            bigHeight = gl->size.y;
+        }
+    }
     for (int i = 0; i < text->GetMessage().size(); i++)
     {
         glm::mat4 pama = PaMa;
         char g = text->GetMessage()[i];
         glyph* gl = _fontMan.getFont(text->GetFontName(), text->GetSize())[g];
-
-        float posX = x + gl->bearing.x + 1;
-        float posY = y - gl->bearing.y;
+        float posX = 0;
+        if(x)
+        {
+            posX = x + gl->bearing.x;
+        }
+        float posY = (y - gl->bearing.y) + bigHeight;
 
         float width = gl->size.x;
         float height = gl->size.y;

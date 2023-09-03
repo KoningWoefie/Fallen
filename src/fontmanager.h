@@ -16,6 +16,7 @@ struct glyph
     GLuint texture;
     glm::ivec2 size;
     glm::ivec2 bearing;
+    GLuint yMax;
     GLuint advance;
 };
 

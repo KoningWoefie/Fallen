@@ -19,8 +19,8 @@ ExampleScene00::ExampleScene00()
     this->AddChild(st);
     st->position = glm::vec3(400.0f, 0.0f, 0.0f);
 
-    _text = new Text("fonts/ponde___.ttf", 16);
-    _text->Message("Hello World!");
+    _text = new Text("fonts/ponde___.ttf", 32);
+    _text->Message("Heppo World!");
 }
 
 ExampleScene00::~ExampleScene00()

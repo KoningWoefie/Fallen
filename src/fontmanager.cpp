@@ -76,8 +76,10 @@ void FontManager::addFont(const char * fontPath, int size)
 			texture,
 			glm::ivec2(fontFace->glyph->bitmap.width, fontFace->glyph->bitmap.rows),
 			glm::ivec2(fontFace->glyph->bitmap_left, fontFace->glyph->bitmap_top),
+            GLuint(fontFace->glyph->face->bbox.yMax),
 			GLuint(fontFace->glyph->advance.x)
 		};
+        std::cout << (fontFace->glyph->face->bbox.yMax >> 6) << std::endl;
 		// add char to chars list
         chars[c] = ch;
         // Unbind the texture
