@@ -26,12 +26,17 @@ public:
 
     GLuint vertexbuffer() { return _vertexbuffer; };
     GLuint uvbuffer() { return _uvbuffer; };
+
+    glm::vec2 UV() { return _uv; };
+    
     int numverts() { return _numverts; };
 private:
     int _width;
     int _height;
     int _numverts;
     int _radius;
+
+    glm::vec2 _uv;
 
     GLuint _vertexbuffer;
     GLuint _uvbuffer;

@@ -41,11 +41,12 @@ Texture* ResourceManager::GetTexture(std::string fileName, int width, int height
 Mesh* ResourceManager::GetMesh(int width, int height, int radius, glm::vec2 pivot, float uvWidth, float uvHeight)
 {
     char temp[64];
-    sprintf(temp, "%d_%d_%d_%.5f_%.5f_%.5f_%.5f", width, height, radius, pivot.x, pivot.y, uvWidth, uvHeight);
+    sprintf(temp, "%d_%d_%d_%.5f_%.5f", width, height, radius, pivot.x, pivot.y); //, uvWidth, uvHeight);
     std::string name(temp);
     if(_meshes[name])
     {
-        return _meshes[name];
+        if(_meshes[name]->UV() != glm::vec2(uvWidth, uvHeight)) { delete _meshes[name]; _meshes[name] = nullptr; }
+        else { return _meshes[name]; }
     }
     if(radius)
     {

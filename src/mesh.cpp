@@ -19,19 +19,29 @@ Mesh::~Mesh()
 void Mesh::generateMesh(glm::vec2 pivot, float uvWidth, float uvHeight)
 {
     std::vector<glm::vec3> vertices;
-    // Second triangle
+
+    // Scale the width and height by the UV's so that you don't get a stretched texture
+    _width *= uvWidth;
+    _height *= uvHeight;
+
+    // Remember the UV's for resourcemanager
+    _uv = glm::vec2(uvWidth, uvHeight);
+
+    // First triangle
     vertices.push_back(glm::vec3(_width - (pivot.x * _width), -pivot.y * _height, 0.0f)); // 1, 0
 	vertices.push_back(glm::vec3(-pivot.x * _width, -pivot.y * _height, 0.0f)); // 0, 0
 	vertices.push_back(glm::vec3(-pivot.x * _width,  _height - (pivot.y * _height), 0.0f)); // 0, 1
-	// First triangle
+	// Second triangle
 	vertices.push_back(glm::vec3(-pivot.x * _width,  _height - (pivot.y * _height), 0.0f)); // 0, 1
 	vertices.push_back(glm::vec3(_width - (pivot.x * _width), _height - (pivot.y * _height), 0.0f)); // 1, 1
 	vertices.push_back(glm::vec3(_width - (pivot.x * _width), -pivot.y * _height, 0.0f)); // 1, 0
 
+    // UV's for the first triangle
 	_uvs.push_back(glm::vec2(uvWidth, 0.0f)); // 1, 0
 	_uvs.push_back(glm::vec2(0.0f, 0.0f)); // 0, 0
 	_uvs.push_back(glm::vec2(0.0f, uvHeight)); // 0, 1
 
+    // UV's for the second triangle
 	_uvs.push_back(glm::vec2(0.0f, uvHeight)); // 0, 1
 	_uvs.push_back(glm::vec2(uvWidth, uvHeight)); // 1, 1
 	_uvs.push_back(glm::vec2(uvWidth, 0.0f)); // 1, 0
