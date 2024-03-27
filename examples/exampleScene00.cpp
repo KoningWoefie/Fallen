@@ -15,13 +15,18 @@ ExampleScene00::ExampleScene00()
     st = new SheetTest("assets/Sprite_Sheet_G4.tga", 4, 4, 1.0f);
 
     _pivot = glm::vec2(0.0f,0.0f);
-    
+
     this->AddChild(st);
     st->position = glm::vec3(400.0f, 0.0f, 0.0f);
 
-    _text = new Text("fonts/ponde___.ttf", 32);
+    _text = new Text((char *)"fonts/ponde___.ttf", 32);
     _text->Message("Heppo World!");
     _text->pivot = glm::vec2(0.5f, 0.5f);
+
+    sprite = new UISprite("assets/buttons-down.tga", 25, 25, 25, 25);
+    this->AddChild(sprite);
+    sprite->scale = glm::vec3(3.0f, 3.0f, 3.0f);
+    sprite->position = glm::vec3(400.0f, 300.0f, 0.0f);
 }
 
 ExampleScene00::~ExampleScene00()

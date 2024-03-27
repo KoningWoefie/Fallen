@@ -1,0 +1,200 @@
+[
+{
+  "directory": "/Users/sander/Documents/Fallen/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -I/Users/sander/Documents/Fallen/external/glfw-3.3/include -I/Users/sander/Documents/Fallen/external/glm-0.9.9.2 -I/Users/sander/Documents/Fallen/external/glew-1.9.0/include -I/Users/sander/Documents/Fallen/external/freetype-2.13.2/include -I/Users/sander/Documents/Fallen/. -Wall -std=c++11 -O2 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.0 -o CMakeFiles/src.dir/src/camera.cpp.o -c /Users/sander/Documents/Fallen/src/camera.cpp",
+  "file": "/Users/sander/Documents/Fallen/src/camera.cpp",
+  "output": "CMakeFiles/src.dir/src/camera.cpp.o"
+},
+{
+  "directory": "/Users/sander/Documents/Fallen/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -I/Users/sander/Documents/Fallen/external/glfw-3.3/include -I/Users/sander/Documents/Fallen/external/glm-0.9.9.2 -I/Users/sander/Documents/Fallen/external/glew-1.9.0/include -I/Users/sander/Documents/Fallen/external/freetype-2.13.2/include -I/Users/sander/Documents/Fallen/. -Wall -std=c++11 -O2 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.0 -o CMakeFiles/src.dir/src/dynamic.cpp.o -c /Users/sander/Documents/Fallen/src/dynamic.cpp",
+  "file": "/Users/sander/Documents/Fallen/src/dynamic.cpp",
+  "output": "CMakeFiles/src.dir/src/dynamic.cpp.o"
+},
+{
+  "directory": "/Users/sander/Documents/Fallen/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -I/Users/sander/Documents/Fallen/external/glfw-3.3/include -I/Users/sander/Documents/Fallen/external/glm-0.9.9.2 -I/Users/sander/Documents/Fallen/external/glew-1.9.0/include -I/Users/sander/Documents/Fallen/external/freetype-2.13.2/include -I/Users/sander/Documents/Fallen/. -Wall -std=c++11 -O2 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.0 -o CMakeFiles/src.dir/src/fontmanager.cpp.o -c /Users/sander/Documents/Fallen/src/fontmanager.cpp",
+  "file": "/Users/sander/Documents/Fallen/src/fontmanager.cpp",
+  "output": "CMakeFiles/src.dir/src/fontmanager.cpp.o"
+},
+{
+  "directory": "/Users/sander/Documents/Fallen/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -I/Users/sander/Documents/Fallen/external/glfw-3.3/include -I/Users/sander/Documents/Fallen/external/glm-0.9.9.2 -I/Users/sander/Documents/Fallen/external/glew-1.9.0/include -I/Users/sander/Documents/Fallen/external/freetype-2.13.2/include -I/Users/sander/Documents/Fallen/. -Wall -std=c++11 -O2 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.0 -o CMakeFiles/src.dir/src/game.cpp.o -c /Users/sander/Documents/Fallen/src/game.cpp",
+  "file": "/Users/sander/Documents/Fallen/src/game.cpp",
+  "output": "CMakeFiles/src.dir/src/game.cpp.o"
+},
+{
+  "directory": "/Users/sander/Documents/Fallen/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -I/Users/sander/Documents/Fallen/external/glfw-3.3/include -I/Users/sander/Documents/Fallen/external/glm-0.9.9.2 -I/Users/sander/Documents/Fallen/external/glew-1.9.0/include -I/Users/sander/Documents/Fallen/external/freetype-2.13.2/include -I/Users/sander/Documents/Fallen/. -Wall -std=c++11 -O2 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.0 -o CMakeFiles/src.dir/src/inputmanager.cpp.o -c /Users/sander/Documents/Fallen/src/inputmanager.cpp",
+  "file": "/Users/sander/Documents/Fallen/src/inputmanager.cpp",
+  "output": "CMakeFiles/src.dir/src/inputmanager.cpp.o"
+},
+{
+  "directory": "/Users/sander/Documents/Fallen/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -I/Users/sander/Documents/Fallen/external/glfw-3.3/include -I/Users/sander/Documents/Fallen/external/glm-0.9.9.2 -I/Users/sander/Documents/Fallen/external/glew-1.9.0/include -I/Users/sander/Documents/Fallen/external/freetype-2.13.2/include -I/Users/sander/Documents/Fallen/. -Wall -std=c++11 -O2 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.0 -o CMakeFiles/src.dir/src/mesh.cpp.o -c /Users/sander/Documents/Fallen/src/mesh.cpp",
+  "file": "/Users/sander/Documents/Fallen/src/mesh.cpp",
+  "output": "CMakeFiles/src.dir/src/mesh.cpp.o"
+},
+{
+  "directory": "/Users/sander/Documents/Fallen/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -I/Users/sander/Documents/Fallen/external/glfw-3.3/include -I/Users/sander/Documents/Fallen/external/glm-0.9.9.2 -I/Users/sander/Documents/Fallen/external/glew-1.9.0/include -I/Users/sander/Documents/Fallen/external/freetype-2.13.2/include -I/Users/sander/Documents/Fallen/. -Wall -std=c++11 -O2 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.0 -o CMakeFiles/src.dir/src/renderer.cpp.o -c /Users/sander/Documents/Fallen/src/renderer.cpp",
+  "file": "/Users/sander/Documents/Fallen/src/renderer.cpp",
+  "output": "CMakeFiles/src.dir/src/renderer.cpp.o"
+},
+{
+  "directory": "/Users/sander/Documents/Fallen/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -I/Users/sander/Documents/Fallen/external/glfw-3.3/include -I/Users/sander/Documents/Fallen/external/glm-0.9.9.2 -I/Users/sander/Documents/Fallen/external/glew-1.9.0/include -I/Users/sander/Documents/Fallen/external/freetype-2.13.2/include -I/Users/sander/Documents/Fallen/. -Wall -std=c++11 -O2 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.0 -o CMakeFiles/src.dir/src/resourcemanager.cpp.o -c /Users/sander/Documents/Fallen/src/resourcemanager.cpp",
+  "file": "/Users/sander/Documents/Fallen/src/resourcemanager.cpp",
+  "output": "CMakeFiles/src.dir/src/resourcemanager.cpp.o"
+},
+{
+  "directory": "/Users/sander/Documents/Fallen/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -I/Users/sander/Documents/Fallen/external/glfw-3.3/include -I/Users/sander/Documents/Fallen/external/glm-0.9.9.2 -I/Users/sander/Documents/Fallen/external/glew-1.9.0/include -I/Users/sander/Documents/Fallen/external/freetype-2.13.2/include -I/Users/sander/Documents/Fallen/. -Wall -std=c++11 -O2 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.0 -o CMakeFiles/src.dir/src/scene.cpp.o -c /Users/sander/Documents/Fallen/src/scene.cpp",
+  "file": "/Users/sander/Documents/Fallen/src/scene.cpp",
+  "output": "CMakeFiles/src.dir/src/scene.cpp.o"
+},
+{
+  "directory": "/Users/sander/Documents/Fallen/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -I/Users/sander/Documents/Fallen/external/glfw-3.3/include -I/Users/sander/Documents/Fallen/external/glm-0.9.9.2 -I/Users/sander/Documents/Fallen/external/glew-1.9.0/include -I/Users/sander/Documents/Fallen/external/freetype-2.13.2/include -I/Users/sander/Documents/Fallen/. -Wall -std=c++11 -O2 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.0 -o CMakeFiles/src.dir/src/sprite.cpp.o -c /Users/sander/Documents/Fallen/src/sprite.cpp",
+  "file": "/Users/sander/Documents/Fallen/src/sprite.cpp",
+  "output": "CMakeFiles/src.dir/src/sprite.cpp.o"
+},
+{
+  "directory": "/Users/sander/Documents/Fallen/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -I/Users/sander/Documents/Fallen/external/glfw-3.3/include -I/Users/sander/Documents/Fallen/external/glm-0.9.9.2 -I/Users/sander/Documents/Fallen/external/glew-1.9.0/include -I/Users/sander/Documents/Fallen/external/freetype-2.13.2/include -I/Users/sander/Documents/Fallen/. -Wall -std=c++11 -O2 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.0 -o CMakeFiles/src.dir/src/spritesheet.cpp.o -c /Users/sander/Documents/Fallen/src/spritesheet.cpp",
+  "file": "/Users/sander/Documents/Fallen/src/spritesheet.cpp",
+  "output": "CMakeFiles/src.dir/src/spritesheet.cpp.o"
+},
+{
+  "directory": "/Users/sander/Documents/Fallen/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -I/Users/sander/Documents/Fallen/external/glfw-3.3/include -I/Users/sander/Documents/Fallen/external/glm-0.9.9.2 -I/Users/sander/Documents/Fallen/external/glew-1.9.0/include -I/Users/sander/Documents/Fallen/external/freetype-2.13.2/include -I/Users/sander/Documents/Fallen/. -Wall -std=c++11 -O2 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.0 -o CMakeFiles/src.dir/src/texture.cpp.o -c /Users/sander/Documents/Fallen/src/texture.cpp",
+  "file": "/Users/sander/Documents/Fallen/src/texture.cpp",
+  "output": "CMakeFiles/src.dir/src/texture.cpp.o"
+},
+{
+  "directory": "/Users/sander/Documents/Fallen/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -I/Users/sander/Documents/Fallen/external/glfw-3.3/include -I/Users/sander/Documents/Fallen/external/glm-0.9.9.2 -I/Users/sander/Documents/Fallen/external/glew-1.9.0/include -I/Users/sander/Documents/Fallen/external/freetype-2.13.2/include -I/Users/sander/Documents/Fallen/. -Wall -std=c++11 -O2 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.0 -o CMakeFiles/src.dir/src/timer.cpp.o -c /Users/sander/Documents/Fallen/src/timer.cpp",
+  "file": "/Users/sander/Documents/Fallen/src/timer.cpp",
+  "output": "CMakeFiles/src.dir/src/timer.cpp.o"
+},
+{
+  "directory": "/Users/sander/Documents/Fallen/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -I/Users/sander/Documents/Fallen/external/glfw-3.3/include -I/Users/sander/Documents/Fallen/external/glm-0.9.9.2 -I/Users/sander/Documents/Fallen/external/glew-1.9.0/include -I/Users/sander/Documents/Fallen/external/freetype-2.13.2/include -I/Users/sander/Documents/Fallen/. -Wall -std=c++11 -O2 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.0 -o CMakeFiles/src.dir/src/uisprite.cpp.o -c /Users/sander/Documents/Fallen/src/uisprite.cpp",
+  "file": "/Users/sander/Documents/Fallen/src/uisprite.cpp",
+  "output": "CMakeFiles/src.dir/src/uisprite.cpp.o"
+},
+{
+  "directory": "/Users/sander/Documents/Fallen/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -I/Users/sander/Documents/Fallen/external/glfw-3.3/include -I/Users/sander/Documents/Fallen/external/glm-0.9.9.2 -I/Users/sander/Documents/Fallen/external/glew-1.9.0/include -I/Users/sander/Documents/Fallen/external/freetype-2.13.2/include -I/Users/sander/Documents/Fallen/. -F/Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/System/Library/Frameworks -Wall -std=c++11 -O2 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.0 -o CMakeFiles/examples.dir/examples/main.cpp.o -c /Users/sander/Documents/Fallen/examples/main.cpp",
+  "file": "/Users/sander/Documents/Fallen/examples/main.cpp",
+  "output": "CMakeFiles/examples.dir/examples/main.cpp.o"
+},
+{
+  "directory": "/Users/sander/Documents/Fallen/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -I/Users/sander/Documents/Fallen/external/glfw-3.3/include -I/Users/sander/Documents/Fallen/external/glm-0.9.9.2 -I/Users/sander/Documents/Fallen/external/glew-1.9.0/include -I/Users/sander/Documents/Fallen/external/freetype-2.13.2/include -I/Users/sander/Documents/Fallen/. -F/Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/System/Library/Frameworks -Wall -std=c++11 -O2 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.0 -o CMakeFiles/examples.dir/examples/exampleScene00.cpp.o -c /Users/sander/Documents/Fallen/examples/exampleScene00.cpp",
+  "file": "/Users/sander/Documents/Fallen/examples/exampleScene00.cpp",
+  "output": "CMakeFiles/examples.dir/examples/exampleScene00.cpp.o"
+},
+{
+  "directory": "/Users/sander/Documents/Fallen/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -I/Users/sander/Documents/Fallen/external/glfw-3.3/include -I/Users/sander/Documents/Fallen/external/glm-0.9.9.2 -I/Users/sander/Documents/Fallen/external/glew-1.9.0/include -I/Users/sander/Documents/Fallen/external/freetype-2.13.2/include -I/Users/sander/Documents/Fallen/. -F/Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/System/Library/Frameworks -Wall -std=c++11 -O2 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.0 -o CMakeFiles/examples.dir/examples/SheetTest.cpp.o -c /Users/sander/Documents/Fallen/examples/SheetTest.cpp",
+  "file": "/Users/sander/Documents/Fallen/examples/SheetTest.cpp",
+  "output": "CMakeFiles/examples.dir/examples/SheetTest.cpp.o"
+},
+{
+  "directory": "/Users/sander/Documents/Fallen/build/external",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/cc -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -I/Users/sander/Documents/Fallen/external/glfw-3.3/include/GLFW -I/Users/sander/Documents/Fallen/external/glew-1.9.0/include -F/Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/System/Library/Frameworks  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.0 -o CMakeFiles/GLEW_190.dir/glew-1.9.0/src/glew.c.o -c /Users/sander/Documents/Fallen/external/glew-1.9.0/src/glew.c",
+  "file": "/Users/sander/Documents/Fallen/external/glew-1.9.0/src/glew.c",
+  "output": "external/CMakeFiles/GLEW_190.dir/glew-1.9.0/src/glew.c.o"
+},
+{
+  "directory": "/Users/sander/Documents/Fallen/build/external/glfw-3.3/src",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/cc -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -I/Users/sander/Documents/Fallen/external/glfw-3.3/include -I/Users/sander/Documents/Fallen/external/glfw-3.3/src -I/Users/sander/Documents/Fallen/build/external/glfw-3.3/src  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.0 -fPIC -Wall -Wdeclaration-after-statement -o CMakeFiles/glfw.dir/context.c.o -c /Users/sander/Documents/Fallen/external/glfw-3.3/src/context.c",
+  "file": "/Users/sander/Documents/Fallen/external/glfw-3.3/src/context.c",
+  "output": "external/glfw-3.3/src/CMakeFiles/glfw.dir/context.c.o"
+},
+{
+  "directory": "/Users/sander/Documents/Fallen/build/external/glfw-3.3/src",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/cc -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -I/Users/sander/Documents/Fallen/external/glfw-3.3/include -I/Users/sander/Documents/Fallen/external/glfw-3.3/src -I/Users/sander/Documents/Fallen/build/external/glfw-3.3/src  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.0 -fPIC -Wall -Wdeclaration-after-statement -o CMakeFiles/glfw.dir/init.c.o -c /Users/sander/Documents/Fallen/external/glfw-3.3/src/init.c",
+  "file": "/Users/sander/Documents/Fallen/external/glfw-3.3/src/init.c",
+  "output": "external/glfw-3.3/src/CMakeFiles/glfw.dir/init.c.o"
+},
+{
+  "directory": "/Users/sander/Documents/Fallen/build/external/glfw-3.3/src",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/cc -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -I/Users/sander/Documents/Fallen/external/glfw-3.3/include -I/Users/sander/Documents/Fallen/external/glfw-3.3/src -I/Users/sander/Documents/Fallen/build/external/glfw-3.3/src  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.0 -fPIC -Wall -Wdeclaration-after-statement -o CMakeFiles/glfw.dir/input.c.o -c /Users/sander/Documents/Fallen/external/glfw-3.3/src/input.c",
+  "file": "/Users/sander/Documents/Fallen/external/glfw-3.3/src/input.c",
+  "output": "external/glfw-3.3/src/CMakeFiles/glfw.dir/input.c.o"
+},
+{
+  "directory": "/Users/sander/Documents/Fallen/build/external/glfw-3.3/src",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/cc -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -I/Users/sander/Documents/Fallen/external/glfw-3.3/include -I/Users/sander/Documents/Fallen/external/glfw-3.3/src -I/Users/sander/Documents/Fallen/build/external/glfw-3.3/src  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.0 -fPIC -Wall -Wdeclaration-after-statement -o CMakeFiles/glfw.dir/monitor.c.o -c /Users/sander/Documents/Fallen/external/glfw-3.3/src/monitor.c",
+  "file": "/Users/sander/Documents/Fallen/external/glfw-3.3/src/monitor.c",
+  "output": "external/glfw-3.3/src/CMakeFiles/glfw.dir/monitor.c.o"
+},
+{
+  "directory": "/Users/sander/Documents/Fallen/build/external/glfw-3.3/src",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/cc -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -I/Users/sander/Documents/Fallen/external/glfw-3.3/include -I/Users/sander/Documents/Fallen/external/glfw-3.3/src -I/Users/sander/Documents/Fallen/build/external/glfw-3.3/src  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.0 -fPIC -Wall -Wdeclaration-after-statement -o CMakeFiles/glfw.dir/vulkan.c.o -c /Users/sander/Documents/Fallen/external/glfw-3.3/src/vulkan.c",
+  "file": "/Users/sander/Documents/Fallen/external/glfw-3.3/src/vulkan.c",
+  "output": "external/glfw-3.3/src/CMakeFiles/glfw.dir/vulkan.c.o"
+},
+{
+  "directory": "/Users/sander/Documents/Fallen/build/external/glfw-3.3/src",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/cc -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -I/Users/sander/Documents/Fallen/external/glfw-3.3/include -I/Users/sander/Documents/Fallen/external/glfw-3.3/src -I/Users/sander/Documents/Fallen/build/external/glfw-3.3/src  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.0 -fPIC -Wall -Wdeclaration-after-statement -o CMakeFiles/glfw.dir/window.c.o -c /Users/sander/Documents/Fallen/external/glfw-3.3/src/window.c",
+  "file": "/Users/sander/Documents/Fallen/external/glfw-3.3/src/window.c",
+  "output": "external/glfw-3.3/src/CMakeFiles/glfw.dir/window.c.o"
+},
+{
+  "directory": "/Users/sander/Documents/Fallen/build/external/glfw-3.3/src",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/cc -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -I/Users/sander/Documents/Fallen/external/glfw-3.3/include -I/Users/sander/Documents/Fallen/external/glfw-3.3/src -I/Users/sander/Documents/Fallen/build/external/glfw-3.3/src  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.0 -fPIC -Wall -o CMakeFiles/glfw.dir/cocoa_init.m.o -c /Users/sander/Documents/Fallen/external/glfw-3.3/src/cocoa_init.m",
+  "file": "/Users/sander/Documents/Fallen/external/glfw-3.3/src/cocoa_init.m",
+  "output": "external/glfw-3.3/src/CMakeFiles/glfw.dir/cocoa_init.m.o"
+},
+{
+  "directory": "/Users/sander/Documents/Fallen/build/external/glfw-3.3/src",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/cc -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -I/Users/sander/Documents/Fallen/external/glfw-3.3/include -I/Users/sander/Documents/Fallen/external/glfw-3.3/src -I/Users/sander/Documents/Fallen/build/external/glfw-3.3/src  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.0 -fPIC -Wall -o CMakeFiles/glfw.dir/cocoa_joystick.m.o -c /Users/sander/Documents/Fallen/external/glfw-3.3/src/cocoa_joystick.m",
+  "file": "/Users/sander/Documents/Fallen/external/glfw-3.3/src/cocoa_joystick.m",
+  "output": "external/glfw-3.3/src/CMakeFiles/glfw.dir/cocoa_joystick.m.o"
+},
+{
+  "directory": "/Users/sander/Documents/Fallen/build/external/glfw-3.3/src",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/cc -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -I/Users/sander/Documents/Fallen/external/glfw-3.3/include -I/Users/sander/Documents/Fallen/external/glfw-3.3/src -I/Users/sander/Documents/Fallen/build/external/glfw-3.3/src  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.0 -fPIC -Wall -o CMakeFiles/glfw.dir/cocoa_monitor.m.o -c /Users/sander/Documents/Fallen/external/glfw-3.3/src/cocoa_monitor.m",
+  "file": "/Users/sander/Documents/Fallen/external/glfw-3.3/src/cocoa_monitor.m",
+  "output": "external/glfw-3.3/src/CMakeFiles/glfw.dir/cocoa_monitor.m.o"
+},
+{
+  "directory": "/Users/sander/Documents/Fallen/build/external/glfw-3.3/src",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/cc -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -I/Users/sander/Documents/Fallen/external/glfw-3.3/include -I/Users/sander/Documents/Fallen/external/glfw-3.3/src -I/Users/sander/Documents/Fallen/build/external/glfw-3.3/src  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.0 -fPIC -Wall -o CMakeFiles/glfw.dir/cocoa_window.m.o -c /Users/sander/Documents/Fallen/external/glfw-3.3/src/cocoa_window.m",
+  "file": "/Users/sander/Documents/Fallen/external/glfw-3.3/src/cocoa_window.m",
+  "output": "external/glfw-3.3/src/CMakeFiles/glfw.dir/cocoa_window.m.o"
+},
+{
+  "directory": "/Users/sander/Documents/Fallen/build/external/glfw-3.3/src",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/cc -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -I/Users/sander/Documents/Fallen/external/glfw-3.3/include -I/Users/sander/Documents/Fallen/external/glfw-3.3/src -I/Users/sander/Documents/Fallen/build/external/glfw-3.3/src  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.0 -fPIC -Wall -o CMakeFiles/glfw.dir/cocoa_time.c.o -c /Users/sander/Documents/Fallen/external/glfw-3.3/src/cocoa_time.c",
+  "file": "/Users/sander/Documents/Fallen/external/glfw-3.3/src/cocoa_time.c",
+  "output": "external/glfw-3.3/src/CMakeFiles/glfw.dir/cocoa_time.c.o"
+},
+{
+  "directory": "/Users/sander/Documents/Fallen/build/external/glfw-3.3/src",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/cc -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -I/Users/sander/Documents/Fallen/external/glfw-3.3/include -I/Users/sander/Documents/Fallen/external/glfw-3.3/src -I/Users/sander/Documents/Fallen/build/external/glfw-3.3/src  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.0 -fPIC -Wall -o CMakeFiles/glfw.dir/posix_thread.c.o -c /Users/sander/Documents/Fallen/external/glfw-3.3/src/posix_thread.c",
+  "file": "/Users/sander/Documents/Fallen/external/glfw-3.3/src/posix_thread.c",
+  "output": "external/glfw-3.3/src/CMakeFiles/glfw.dir/posix_thread.c.o"
+},
+{
+  "directory": "/Users/sander/Documents/Fallen/build/external/glfw-3.3/src",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/cc -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -I/Users/sander/Documents/Fallen/external/glfw-3.3/include -I/Users/sander/Documents/Fallen/external/glfw-3.3/src -I/Users/sander/Documents/Fallen/build/external/glfw-3.3/src  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.0 -fPIC -Wall -o CMakeFiles/glfw.dir/nsgl_context.m.o -c /Users/sander/Documents/Fallen/external/glfw-3.3/src/nsgl_context.m",
+  "file": "/Users/sander/Documents/Fallen/external/glfw-3.3/src/nsgl_context.m",
+  "output": "external/glfw-3.3/src/CMakeFiles/glfw.dir/nsgl_context.m.o"
+},
+{
+  "directory": "/Users/sander/Documents/Fallen/build/external/glfw-3.3/src",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/cc -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -I/Users/sander/Documents/Fallen/external/glfw-3.3/include -I/Users/sander/Documents/Fallen/external/glfw-3.3/src -I/Users/sander/Documents/Fallen/build/external/glfw-3.3/src  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.0 -fPIC -Wall -o CMakeFiles/glfw.dir/egl_context.c.o -c /Users/sander/Documents/Fallen/external/glfw-3.3/src/egl_context.c",
+  "file": "/Users/sander/Documents/Fallen/external/glfw-3.3/src/egl_context.c",
+  "output": "external/glfw-3.3/src/CMakeFiles/glfw.dir/egl_context.c.o"
+},
+{
+  "directory": "/Users/sander/Documents/Fallen/build/external/glfw-3.3/src",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/cc -DGLEW_STATIC -DTW_NO_DIRECT3D -DTW_NO_LIB_PRAGMA -DTW_STATIC -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -I/Users/sander/Documents/Fallen/external/glfw-3.3/include -I/Users/sander/Documents/Fallen/external/glfw-3.3/src -I/Users/sander/Documents/Fallen/build/external/glfw-3.3/src  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.0 -fPIC -Wall -o CMakeFiles/glfw.dir/osmesa_context.c.o -c /Users/sander/Documents/Fallen/external/glfw-3.3/src/osmesa_context.c",
+  "file": "/Users/sander/Documents/Fallen/external/glfw-3.3/src/osmesa_context.c",
+  "output": "external/glfw-3.3/src/CMakeFiles/glfw.dir/osmesa_context.c.o"
+}
+]

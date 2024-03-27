@@ -14,6 +14,7 @@ endif()
 
 # Compile external dependencies
 set(OpenGL_GL_PREFERENCE GLVND)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 find_package(OpenGL REQUIRED)
 find_package(Freetype REQUIRED)
 
@@ -93,6 +94,8 @@ add_library(src # ar rcs fallenlib.a
 	src/texture.h
 	src/timer.cpp
 	src/timer.h
+	src/uisprite.cpp
+	src/uisprite.h
 )
 
 add_executable(examples # g++ examples/main.cpp -o examples
@@ -121,4 +124,8 @@ file(
 file(
 	COPY src/fonts
 	DESTINATION ${CMAKE_BINARY_DIR}
+)
+file(
+    COPY ${CMAKE_BINARY_DIR}/compile_commands.json
+    DESTINATION .
 )

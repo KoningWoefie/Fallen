@@ -16,7 +16,7 @@ public:
     virtual ~Mesh();
 
     //make rectangle and or square mesh
-    void generateMesh(glm::vec2 pivot, float uvWidth, float uvHeight);
+    void generateMesh(glm::vec2 pivot, float uvWidth, float uvHeight, bool nineSlice = false);
 
     //make circle mesh
     void generateCircleMesh(glm::vec2 pivot, float uvWidth, float uvHeight, int segments);
@@ -28,7 +28,7 @@ public:
     GLuint uvbuffer() { return _uvbuffer; };
 
     glm::vec2 UV() { return _uv; };
-    
+
     int numverts() { return _numverts; };
 private:
     int _width;

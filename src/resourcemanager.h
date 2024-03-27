@@ -13,7 +13,7 @@ public:
     virtual ~ResourceManager();
 
     Texture* GetTexture(std::string fileName, int width = 0, int height = 0);
-    Mesh* GetMesh(int width, int height, int radius, glm::vec2 pivot, float uvWidth = 1.0f, float uvHeight = 1.0f);
+    Mesh* GetMesh(int width, int height, int radius, glm::vec2 pivot, float uvWidth = 1.0f, float uvHeight = 1.0f, bool nineSlice = false);
 private:
     std::map<std::string, Texture*> _textures;
     std::map<std::string, Mesh*> _meshes;

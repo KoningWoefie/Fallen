@@ -12,6 +12,7 @@
 #include <src/text.h>
 #include <src/texture.h>
 #include <src/mesh.h>
+#include <src/uisprite.h>
 
 class Renderer
 {
@@ -24,6 +25,7 @@ public:
     GLFWwindow* window() { return _window; }
 private:
     void RenderDynamic(Dynamic* d, glm::mat4 PaMa);
+    void RenderNineSlices(UISprite* sprite, glm::mat4 PaMa);
     void RenderText(Text* text, glm::mat4 PaMa);
 
     int init();
@@ -48,6 +50,9 @@ private:
 
 	glm::mat4 _viewMatrix;
 	glm::mat4 _projectionMatrix;
+
+    float scaleX = 0;
+    float scaleY = 0;
 };
 
 #endif

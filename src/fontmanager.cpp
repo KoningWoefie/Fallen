@@ -5,7 +5,7 @@ FontManager::FontManager()
 }
 
 FontManager::~FontManager()
-{   
+{
 }
 
 std::map<char, glyph*> FontManager::getFont(const char * fontPath, int size)
@@ -37,18 +37,22 @@ void FontManager::addFont(const char * fontPath, int size)
 		std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
 		return;
 	}
-    else{ std::cout << "FREETYPE: loaded freetype font" << std::endl; }
+
+	else
+    {
+        std::cout << "FREETYPE: loaded freetype font" << std::endl;
+    }
 
     // Set the font size
     FT_Set_Pixel_Sizes(fontFace, 0, size);
 
     // Disable byte-alignment restriction
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1); 
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
     // create temp chars list
 	std::map<char, glyph*> chars;
 	for (GLubyte c = 0; c < 128; c++){ // Load first 128 characters of ASCII set
-		// Load character glyph 
+		// Load character glyph
 		if (FT_Load_Char(fontFace, c, FT_LOAD_RENDER)){
 			std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;
 			continue;
@@ -58,7 +62,7 @@ void FontManager::addFont(const char * fontPath, int size)
 		GLuint texture;
 		glGenTextures(1, &texture);
 		glBindTexture(GL_TEXTURE_2D, texture);
-		
+
 		// Set texture options
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -79,7 +83,7 @@ void FontManager::addFont(const char * fontPath, int size)
             GLuint(fontFace->glyph->face->bbox.yMax),
 			GLuint(fontFace->glyph->advance.x)
 		};
-        std::cout << (fontFace->glyph->face->bbox.yMax >> 6) << std::endl;
+
 		// add char to chars list
         chars[c] = ch;
         // Unbind the texture

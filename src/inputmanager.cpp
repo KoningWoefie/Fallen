@@ -2,14 +2,14 @@
 
 //Copyright 2023 Sander Hoving (Fuck you Gideon)
 
-InputManager::InputManager() 
+InputManager::InputManager()
 {
 	_window = nullptr;
 	std::cout << "creating inputmanager" << std::endl;
-} 
-InputManager::~InputManager() 
+}
+InputManager::~InputManager()
 {
-}   
+}
 
 void InputManager::update(GLFWwindow* w)
 {

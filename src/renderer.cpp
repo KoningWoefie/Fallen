@@ -103,6 +103,10 @@ void Renderer::RenderScene(Scene* scene)
 void Renderer::RenderDynamic(Dynamic* d, glm::mat4 PaMa)
 {
     this->chooseShader(_programID);
+
+	scaleX += d->scale[0];
+	scaleY += d->scale[1];
+
     // Build MVP matrix
 	// Send our transformation to the currently bound shader, in the "MVP" uniform
 	glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(d->position[0], d->position[1], 0));
@@ -127,7 +131,7 @@ void Renderer::RenderDynamic(Dynamic* d, glm::mat4 PaMa)
 	    // Set our "textureSampler" sampler to use Texture Unit 0
 	    GLuint textureID = glGetUniformLocation(_programID, "textureSampler");
 	    glUniform1i(textureID, 0);
-        
+
         // Get mesh with texture width and height
         m = _resMan.GetMesh(t->Width(), t->Height(), d->Radius(), d->Pivot(), d->UVWidth(), d->UVHeight());
 
@@ -195,11 +199,192 @@ void Renderer::RenderDynamic(Dynamic* d, glm::mat4 PaMa)
         RenderText(d->text(), PaMa);
     }
 
+
     for (int i = 0; i < d->GetChildren().size(); i++)
     {
+		if(d->GetChildren()[i]->Type() == 1)
+		{
+			RenderNineSlices((UISprite*)d->GetChildren()[i], PaMa);
+			continue;
+		}
         RenderDynamic(d->GetChildren()[i], PaMa);
     }
-    
+	scaleX = 0;
+	scaleY = 0;
+}
+
+void Renderer::RenderNineSlices(UISprite* sprite, glm::mat4 PaMa)
+{
+	this->chooseShader(_programID);
+
+	scaleX += sprite->scale[0];
+	scaleY += sprite->scale[1];
+
+
+	// Build MVP matrix
+	// Send our transformation to the currently bound shader, in the "MVP" uniform
+	glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(sprite->position[0], sprite->position[1], 0));
+	glm::mat4 rotationMatrix = glm::eulerAngleYXZ(0.0f, 0.0f, sprite->rotation);
+	glm::mat4 scalingMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(sprite->scale[0], sprite->scale[1], 1));
+	glm::mat4 modelMatrix = translationMatrix * rotationMatrix * scalingMatrix;
+	// glm::mat4 mdm = PaMa;
+	PaMa *= modelMatrix;
+
+	// Bind our texture in Texture Unit 0
+    glActiveTexture(GL_TEXTURE0);
+	Texture* t = _resMan.GetTexture(sprite->FileName());
+	// If texture exists
+    if(t)
+    {
+		sprite->changeMeshData(t->Width(), t->Height());
+        // Bind texture for OpenGL
+	    glBindTexture(GL_TEXTURE_2D, t->getTexture());
+
+	    // Set our "textureSampler" sampler to use Texture Unit 0
+	    GLuint textureID = glGetUniformLocation(_programID, "textureSampler");
+	    glUniform1i(textureID, 0);
+
+        // Set default color
+        GLuint dColorID = glGetUniformLocation(_programID, "defaultColor");
+	    glUniform4f(dColorID, 0.0f, 0.0f, 0.0f, 0.0f);
+    }
+	for (int i = 0; i < sprite->GetMeshData().size(); i++)
+	{
+		float x = 0;
+		float y = 0;
+
+		// corrects the difference of scale so that the pixel size lines up with the texture size
+		float sX = (t->Width() * scaleX - sprite->GetMeshData()[1].width - sprite->GetMeshData()[2].width) / (sprite->GetMeshData()[0].width * scaleX);
+		float sY = (t->Height() * scaleY - sprite->GetMeshData()[3].height - sprite->GetMeshData()[4].height) / (sprite->GetMeshData()[0].height * scaleY);
+
+		glm::vec3 scale = glm::vec3(1.0f, 1.0f, 1.0f);
+		switch(i)
+		{
+			case 0:
+			    //center
+			    scale = glm::vec3(sX, sY, 1.0f);
+				break;
+			case 1:
+				//left
+				x = -((sprite->GetMeshData()[0].width * sX / 2.0f) + (sprite->GetMeshData()[i].width / 2.0f) / scaleX);
+				scale = glm::vec3(1/scaleX, sY, 1);
+				break;
+			case 2:
+				//right
+				x = ((sprite->GetMeshData()[0].width * sX / 2.0f) + (sprite->GetMeshData()[i].width / 2.0f)/scaleX);
+				scale = glm::vec3(1/scaleX, sY, 1);
+				break;
+			case 3:
+				//top
+				y = -(((sprite->GetMeshData()[0].height * sY) / 2.0f) + ((sprite->GetMeshData()[i].height / 2.0f) / scaleY));
+				scale = glm::vec3(sX, 1/scaleY, 1);
+				break;
+			case 4:
+				//bottom
+				y = ((sprite->GetMeshData()[0].height * sY) / 2.0f) + ((sprite->GetMeshData()[i].height / 2.0f) / scaleY);
+				scale = glm::vec3(sX, 1/scaleY, 1);
+				break;
+			case 5:
+				//top left
+				x = -((sprite->GetMeshData()[0].width * sX / 2.0f) + (sprite->GetMeshData()[i].width / 2.0f)/scaleX);
+				y = -(((sprite->GetMeshData()[0].height * sY) / 2.0f) + ((sprite->GetMeshData()[i].height / 2.0f) / scaleY));
+				scale = glm::vec3(1/scaleX, 1/scaleY, 1);
+				break;
+			case 6:
+				//top right
+				x = (sprite->GetMeshData()[0].width * sX / 2.0f) + (sprite->GetMeshData()[i].width / 2.0f)/scaleX;
+				y = -(((sprite->GetMeshData()[0].height * sY) / 2.0f) + ((sprite->GetMeshData()[i].height / 2.0f) / scaleY));
+				scale = glm::vec3(1/scaleX, 1/scaleY, 1);
+				break;
+			case 7:
+				//bottom left
+				x = -((sprite->GetMeshData()[0].width * sX / 2.0f) + (sprite->GetMeshData()[i].width / 2.0f)/scaleX);
+				y = (sprite->GetMeshData()[0].height * sY / 2.0f) + (sprite->GetMeshData()[i].height / 2.0f) / scaleY;
+				scale = glm::vec3(1/scaleX, 1/scaleY, 1);
+				break;
+			case 8:
+				//bottom right
+				x = (sprite->GetMeshData()[0].width * sX / 2.0f) + (sprite->GetMeshData()[i].width / 2.0f)/scaleX;
+				y = ((sprite->GetMeshData()[0].height * sY) / 2.0f) + ((sprite->GetMeshData()[i].height / 2.0f) / scaleY);
+				scale = glm::vec3(1/scaleX, 1/scaleY, 1);
+				break;
+			default:
+				break;
+		}
+		glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(x, y, 0));
+		glm::mat4 rotationMatrix = glm::eulerAngleYXZ(0.0f, 0.0f, sprite->rotation);
+		glm::mat4 scalingMatrix = glm::scale(glm::mat4(1.0f), scale);
+		glm::mat4 modelMatrix = translationMatrix * rotationMatrix * scalingMatrix;
+
+		glm::mat4 mdm = PaMa;
+		mdm *= modelMatrix;
+		glm::mat4 MVP = _projectionMatrix * _viewMatrix * mdm;
+
+		meshData md = sprite->GetMeshData()[i];
+		Mesh* m = _resMan.GetMesh(md.width, md.height, md.radius, md.pivot, md.uvWidth, md.uvHeight, true);
+
+		// Set UVoffset in the shader (not relevant yet)
+		GLuint uvOffset = glGetUniformLocation(_programID, "UVoffset");
+		glUniform2f(uvOffset, md.uvOffsetX, md.uvOffsetY);
+
+    	// Set the color you want your texture to be blended with
+    	GLuint colorID = glGetUniformLocation(_programID, "blendColor");
+		glUniform4f(colorID, sprite->color.r/255.0f, sprite->color.g/255.0f, sprite->color.b/255.0f, sprite->color.a/255.0f);
+
+    	// Set the Model, View, Projection matrix in the shader
+    	GLuint matrixID = glGetUniformLocation(_programID, "MVP");
+		glUniformMatrix4fv(matrixID, 1, GL_FALSE, &MVP[0][0]);
+
+		// 1st attribute buffer : vertices
+		GLuint vertexPositionID = glGetAttribLocation(_programID, "vertexPosition");
+		glEnableVertexAttribArray(vertexPositionID);
+		glBindBuffer(GL_ARRAY_BUFFER, m->vertexbuffer());
+		glVertexAttribPointer(
+			vertexPositionID, // The attribute we want to configure
+			3,          // size : x,y,z => 3
+			GL_FLOAT,   // type
+			GL_FALSE,   // normalized?
+			0,          // stride
+			(void*)0    // array buffer offset
+		);
+
+		// 2nd attribute buffer : UVs
+		GLuint vertexUVID = glGetAttribLocation(_programID, "vertexUV");
+		glEnableVertexAttribArray(vertexUVID);
+		glBindBuffer(GL_ARRAY_BUFFER, m->uvbuffer());
+		glVertexAttribPointer(
+			vertexUVID, // The attribute we want to configure
+			2,          // size : U,V => 2
+			GL_FLOAT,   // type
+			GL_FALSE,   // normalized?
+			0,          // stride
+			(void*)0    // array buffer offset
+		);
+
+		// Draw the triangles
+		glDrawArrays(GL_TRIANGLES, 0, m->numverts());
+
+		// cleanup
+		glDisableVertexAttribArray(vertexPositionID);
+		glDisableVertexAttribArray(vertexUVID);
+	}
+
+    if(sprite->text())
+    {
+        RenderText(sprite->text(), PaMa);
+    }
+
+    for (int i = 0; i < sprite->GetChildren().size(); i++)
+    {
+		if(sprite->GetChildren()[i]->Type() == 1)
+		{
+			RenderNineSlices((UISprite*)sprite->GetChildren()[i], PaMa);
+			continue;
+		}
+        RenderDynamic(sprite->GetChildren()[i], PaMa);
+    }
+	scaleX = 0;
+	scaleY = 0;
 }
 
 void Renderer::RenderText(Text* text, glm::mat4 PaMa)

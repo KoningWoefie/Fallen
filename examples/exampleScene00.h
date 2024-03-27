@@ -2,6 +2,7 @@
 #define EXAMPLESCENE00_H
 
 #include <src/scene.h>
+#include <src/uisprite.h>
 #include "SheetTest.h"
 
 class ExampleScene00 : public Scene
@@ -13,6 +14,7 @@ public:
     virtual void update(float deltaTime);
 private:
     SheetTest* st;
+    UISprite* sprite;
 };
 
 

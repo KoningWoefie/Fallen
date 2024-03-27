@@ -6,8 +6,6 @@ Mesh::Mesh(int width, int height)
     _height = height;
 
     _radius = 0;
-
-    std::cout << _width << ", " << _height << std::endl;
 }
 
 Mesh::~Mesh()
@@ -16,35 +14,38 @@ Mesh::~Mesh()
     glDeleteBuffers(1, &_uvbuffer);
 }
 
-void Mesh::generateMesh(glm::vec2 pivot, float uvWidth, float uvHeight)
+void Mesh::generateMesh(glm::vec2 pivot, float uvWidth, float uvHeight, bool nineSlice)
 {
     std::vector<glm::vec3> vertices;
 
     // Scale the width and height by the UV's so that you don't get a stretched texture
-    _width *= uvWidth;
-    _height *= uvHeight;
+    if(!nineSlice)
+    {
+        _width *= uvWidth;
+        _height *= uvHeight;
+    }
 
     // Remember the UV's for resourcemanager
     _uv = glm::vec2(uvWidth, uvHeight);
 
-    // First triangle
-    vertices.push_back(glm::vec3(_width - (pivot.x * _width), -pivot.y * _height, 0.0f)); // 1, 0
-	vertices.push_back(glm::vec3(-pivot.x * _width, -pivot.y * _height, 0.0f)); // 0, 0
-	vertices.push_back(glm::vec3(-pivot.x * _width,  _height - (pivot.y * _height), 0.0f)); // 0, 1
 	// Second triangle
 	vertices.push_back(glm::vec3(-pivot.x * _width,  _height - (pivot.y * _height), 0.0f)); // 0, 1
 	vertices.push_back(glm::vec3(_width - (pivot.x * _width), _height - (pivot.y * _height), 0.0f)); // 1, 1
 	vertices.push_back(glm::vec3(_width - (pivot.x * _width), -pivot.y * _height, 0.0f)); // 1, 0
-
-    // UV's for the first triangle
-	_uvs.push_back(glm::vec2(uvWidth, 0.0f)); // 1, 0
-	_uvs.push_back(glm::vec2(0.0f, 0.0f)); // 0, 0
-	_uvs.push_back(glm::vec2(0.0f, uvHeight)); // 0, 1
+    // First triangle
+    vertices.push_back(glm::vec3(_width - (pivot.x * _width), -pivot.y * _height, 0.0f)); // 1, 0
+	vertices.push_back(glm::vec3(-pivot.x * _width, -pivot.y * _height, 0.0f)); // 0, 0
+	vertices.push_back(glm::vec3(-pivot.x * _width,  _height - (pivot.y * _height), 0.0f)); // 0, 1
 
     // UV's for the second triangle
 	_uvs.push_back(glm::vec2(0.0f, uvHeight)); // 0, 1
 	_uvs.push_back(glm::vec2(uvWidth, uvHeight)); // 1, 1
 	_uvs.push_back(glm::vec2(uvWidth, 0.0f)); // 1, 0
+    // UV's for the first triangle
+	_uvs.push_back(glm::vec2(uvWidth, 0.0f)); // 1, 0
+	_uvs.push_back(glm::vec2(0.0f, 0.0f)); // 0, 0
+	_uvs.push_back(glm::vec2(0.0f, uvHeight)); // 0, 1
+
 
 
     generateBuffers(vertices, _uvs);
@@ -98,7 +99,7 @@ void Mesh::generateCircleMesh(glm::vec2 pivot, float uvWidth, float uvHeight, in
 void Mesh::generateBuffers(std::vector<glm::vec3> vertices, std::vector<glm::vec2> uvs)
 {
     _numverts = vertices.size();
-    
+
     glGenBuffers(1, &_vertexbuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, _vertexbuffer);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);

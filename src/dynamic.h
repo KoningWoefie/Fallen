@@ -1,7 +1,6 @@
 #ifndef DYNAMIC_H
 #define DYNAMIC_H
 
-#include <iostream>
 #include <glm/glm.hpp>
 #include <vector>
 #include <string>
@@ -48,6 +47,8 @@ public:
 
     Text* text() { return _text; }
 
+    int Type() { return _type; }
+
 private:
     std::vector<Dynamic*> _children;
 	InputManager* _input = InputManager::input();
@@ -65,6 +66,8 @@ protected:
     std::string _texturePath;
 
     Text* _text;
+
+    int _type;
 };
 
 
