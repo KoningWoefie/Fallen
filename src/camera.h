@@ -18,6 +18,8 @@ public:
 	glm::mat4 getProjectionMatrix() { return _projectionMatrix; };
 	glm::vec3 getCursor() { return _cursor; };
 
+	void UpdateProjectionMatrix();
+
 private:
 	glm::mat4 _viewMatrix;
 	glm::mat4 _projectionMatrix;

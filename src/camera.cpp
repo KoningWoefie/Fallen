@@ -5,14 +5,19 @@
 
 Camera::Camera()
 {
-	_projectionMatrix = glm::ortho(0.0f, (float)SWIDTH, (float)SHEIGHT, 0.0f, 0.1f, 100.0f);
+	_projectionMatrix = glm::ortho(0.0f, (float)Config::ScreenWidth, (float)Config::ScreenHeight, 0.0f, 0.1f, 100.0f);
 	_viewMatrix = glm::mat4(1.0f);
 	_cursor = glm::vec3( 0, 0, 0 );
 }
 
 Camera::~Camera()
 {
-	
+
+}
+
+void Camera::UpdateProjectionMatrix()
+{
+    _projectionMatrix = glm::ortho(0.0f, (float)Config::ScreenWidth, (float)Config::ScreenHeight, 0.0f, 0.1f, 100.0f);
 }
 
 void Camera::computeViewMatrixFromInput(GLFWwindow* window, float deltaTime)

@@ -1,18 +1,27 @@
+#include "src/config.h"
 #include <src/game.h>
+#include "GLFW/glfw3.h"
 
-Game::Game() 
+Game::Game()
 {
 	running = true;
-} 
+}
 
-Game::~Game() 
+Game::~Game()
 {
 }
 
 void Game::Run(Scene* scene)
 {
+    int width, height;
+	glfwGetWindowSize(renderer.window(), &width, &height);
+
+	Config::ScreenWidth = width;
+	Config::ScreenHeight = height;
+
 	//get deltaTime and update camera
 	float dt = this->UpdateDeltaTime();
+	scene->camera()->UpdateProjectionMatrix();
 	scene->camera()->computeViewMatrixFromInput(renderer.window(), dt);
 
     // Update the input manager so it registers keys

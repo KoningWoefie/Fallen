@@ -43,13 +43,24 @@ int Renderer::init()
 		return -1;
 	}
 
+	// Open a fullscreen window
+	// GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+	// const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+
+	// glfwWindowHint(GLFW_RED_BITS, mode->redBits);
+	// glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
+	// glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
+	// glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
+
+	// _window = glfwCreateWindow(mode->width, mode->height, Config::Title.c_str(), monitor, NULL);
+
 	// Set OpenGL version (2.1)
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
 	glfwWindowHint(GLFW_SAMPLES, 4);
 
-	// Open a window and create its OpenGL context
-	_window = glfwCreateWindow( SWIDTH, SHEIGHT, "exmaples", NULL, NULL);
+	_window = glfwCreateWindow(Config::ScreenWidth, Config::ScreenHeight, Config::Title.c_str(), NULL, NULL);
+
 	if( _window == NULL ){
 		fprintf( stderr, "Failed to open GLFW window.\n" );
 		glfwTerminate();

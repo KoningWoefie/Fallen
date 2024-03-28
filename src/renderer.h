@@ -23,6 +23,7 @@ public:
     void RenderScene(Scene* scene);
 
     GLFWwindow* window() { return _window; }
+    void setWindow(GLFWwindow* window) { _window = window; }
 private:
     void RenderDynamic(Dynamic* d, glm::mat4 PaMa);
     void RenderNineSlices(UISprite* sprite, glm::mat4 PaMa);

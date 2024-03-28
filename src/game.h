@@ -1,4 +1,4 @@
-#ifndef GAME_H 
+#ifndef GAME_H
 #define GAME_H
 
 // Include GLEW
@@ -16,10 +16,10 @@
 
 //Copyright 2023 Sander Hoving (Fuck you Gideon)
 
-class Game 
-{ 
-public: 
-    Game(); 
+class Game
+{
+public:
+    Game();
     virtual ~Game();
 
 	void Run(Scene* scene);
@@ -35,6 +35,8 @@ private:
 
 	InputManager* _inMan = InputManager::input();
 	bool running;
-}; 
 
-#endif // game_H 
+	GLFWmonitor* _monitor;
+};
+
+#endif // game_H
