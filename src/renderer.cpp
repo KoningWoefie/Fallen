@@ -1,3 +1,5 @@
+#include <src/camera.h>
+#include "GLFW/glfw3.h"
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
@@ -11,13 +13,13 @@
 #include <glm/gtx/euler_angles.hpp>
 
 #include <src/config.h>
-#include <src/camera.h>
 #include <src/renderer.h>
 
 Renderer::Renderer()
 {
     //get this in renderScene
     _camera = nullptr;
+    _window = nullptr;
 
     _viewMatrix = glm::mat4(1.0f);
 	_projectionMatrix = glm::mat4(1.0f);
@@ -43,29 +45,19 @@ int Renderer::init()
 		return -1;
 	}
 
-	// Open a fullscreen window
-	// GLFWmonitor* monitor = glfwGetPrimaryMonitor();
-	// const GLFWvidmode* mode = glfwGetVideoMode(monitor);
-
-	// glfwWindowHint(GLFW_RED_BITS, mode->redBits);
-	// glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
-	// glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
-	// glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
-
-	// _window = glfwCreateWindow(mode->width, mode->height, Config::Title.c_str(), monitor, NULL);
-
-	// Set OpenGL version (2.1)
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
 	glfwWindowHint(GLFW_SAMPLES, 4);
 
 	_window = glfwCreateWindow(Config::ScreenWidth, Config::ScreenHeight, Config::Title.c_str(), NULL, NULL);
 
+
 	if( _window == NULL ){
 		fprintf( stderr, "Failed to open GLFW window.\n" );
 		glfwTerminate();
 		return -1;
 	}
+
 	glfwMakeContextCurrent(_window);
 
 	// Initialize GLEW
@@ -77,10 +69,10 @@ int Renderer::init()
 	// Ensure we can capture the escape key being pressed below
 	glfwSetInputMode(_window, GLFW_STICKY_KEYS, GL_TRUE);
 
-	// Dark blue background
+	// Red background
 	glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
 
-	// Cull triangles which normal is not towards the camera
+	// Backface culling
 	glEnable(GL_CULL_FACE);
 
 	// Create and compile our GLSL program from the shaders
@@ -90,7 +82,25 @@ int Renderer::init()
 	// Use our shader
 	glUseProgram(_programID);
 
+	ChangeScreenMode();
 	return 0;
+}
+
+void Renderer::ChangeScreenMode()
+{
+    GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+    switch (Config::GetScreenMode())
+    {
+        case 0:
+            glfwSetWindowMonitor(_window, nullptr, 0, 0, Config::ScreenWidth, Config::ScreenHeight, 60);
+            break;
+        case 1:
+            const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+
+            glfwSetWindowMonitor(_window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+
+            break;
+    }
 }
 
 void Renderer::RenderScene(Scene* scene)
@@ -107,7 +117,7 @@ void Renderer::RenderScene(Scene* scene)
 
     this->RenderDynamic(scene, im);
 
-    glfwSwapBuffers(this->window());
+    if(_window != nullptr) glfwSwapBuffers(this->window());
 	glfwPollEvents();
 }
 

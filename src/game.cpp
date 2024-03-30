@@ -13,6 +13,11 @@ Game::~Game()
 
 void Game::Run(Scene* scene)
 {
+    if(Config::ChangedScreenMode)
+    {
+        renderer.ChangeScreenMode();
+        Config::ChangedScreenMode = false;
+    }
     int width, height;
 	glfwGetWindowSize(renderer.window(), &width, &height);
 

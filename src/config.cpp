@@ -1,6 +1,15 @@
 #include <src/config.h>
 
-int Config::ScreenWidth = 1920;
-int Config::ScreenHeight = 1080;
+int Config::ScreenWidth = 1280;
+int Config::ScreenHeight = 720;
 
 std::string Config::Title = "DefaultGameTitle";
+int Config::Screenmode = (int)ScreenMode::Windowed;
+
+bool Config::ChangedScreenMode = false;
+
+void Config::SetScreenMode(ScreenMode mode)
+{
+    Config::Screenmode = (int)mode;
+    Config::ChangedScreenMode = true;
+}

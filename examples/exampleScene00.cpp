@@ -1,4 +1,5 @@
 #include "exampleScene00.h"
+#include "src/config.h"
 
 ExampleScene00::ExampleScene00()
 {
