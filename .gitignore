@@ -3,3 +3,4 @@ Build
 .DS_Store
 .vs*
 .cache/
+compile_commands.json
