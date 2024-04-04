@@ -1,10 +1,16 @@
+#ifndef COMPONENT_H
+#define COMPONENT_H
+
+class Object;
+
 class Component
 {
 public:
     Component();
     virtual ~Component();
 
-    unsigned int getId() { return id; };
+    Object* object;
 private:
-    unsigned int id;
 };
+
+#endif

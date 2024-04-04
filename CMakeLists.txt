@@ -101,6 +101,8 @@ add_library(src # ar rcs fallenlib.a
 	src/object.h
 	src/component.cpp
 	src/component.h
+	src/transform.cpp
+	src/transform.h
 )
 
 add_executable(examples # g++ examples/main.cpp -o examples

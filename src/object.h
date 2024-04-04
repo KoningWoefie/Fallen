@@ -3,7 +3,8 @@
 
 #include <iostream>
 #include <vector>
-#include <src/Component.h>
+
+#include <src/transform.h>
 
 class Object
 {
@@ -26,6 +27,8 @@ public:
     T* GetComponent();
 
     Object* parent;
+
+    Transform* transform;
 private:
     std::vector<Object*> m_children;
 

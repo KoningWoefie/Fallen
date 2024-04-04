@@ -1,3 +1,4 @@
+#include <src/object.h>
 #include <src/component.h>
 
 Component::Component()
