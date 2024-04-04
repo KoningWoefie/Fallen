@@ -1,5 +1,5 @@
 #include "exampleScene00.h"
-#include "src/config.h"
+#include "src/object.h"
 
 ExampleScene00::ExampleScene00()
 {
@@ -28,6 +28,8 @@ ExampleScene00::ExampleScene00()
     this->AddChild(sprite);
     sprite->scale = glm::vec3(3.0f, 3.0f, 3.0f);
     sprite->position = glm::vec3(400.0f, 300.0f, 0.0f);
+
+    Object* obj = new Object();
 }
 
 ExampleScene00::~ExampleScene00()

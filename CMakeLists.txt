@@ -97,6 +97,10 @@ add_library(src # ar rcs fallenlib.a
 	src/timer.h
 	src/uisprite.cpp
 	src/uisprite.h
+	src/object.cpp
+	src/object.h
+	src/component.cpp
+	src/component.h
 )
 
 add_executable(examples # g++ examples/main.cpp -o examples
