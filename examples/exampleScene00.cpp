@@ -3,6 +3,7 @@
 #include "src/component.h"
 #include "src/image.h"
 #include "src/object.h"
+#include "src/sprite.h"
 
 ExampleScene00::ExampleScene00()
 {
@@ -11,7 +12,7 @@ ExampleScene00::ExampleScene00()
     testObj->transform->position = glm::vec3(400.0f, 300.0f, 0.0f);
     testObj->AddComponent(new Image());
 
-    Sprite* sprite = new Sprite("assets/RunButton.tga");
+    SlicedSprite* sprite = new SlicedSprite("assets/buttons-down.tga", 25, 25, 25, 25);
     Image* i = testObj->GetComponent<Image>();
     i->AddSprite(sprite);
     i = nullptr;

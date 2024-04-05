@@ -33,6 +33,8 @@ private:
 
     void RenderObject(Object* o, glm::mat4 PaMa);
     void RenderImage(Image* i, glm::mat4 PaMa);
+    void RenderSprite(Sprite* sprite, glm::mat4 PaMa);
+    void RenderSlicedSprite(SlicedSprite* i, glm::mat4 PaMa);
 
     void RenderNineSlices(SlicedSprite* sprite, glm::mat4 PaMa);
     void RenderText(Text* text, glm::mat4 PaMa);

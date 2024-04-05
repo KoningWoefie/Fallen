@@ -16,6 +16,8 @@ public:
     std::string FileName() { return m_filename; }
 
     glm::vec2 UV;
+
+    int Type() { return _type; }
 private:
     std::string m_filename;
 

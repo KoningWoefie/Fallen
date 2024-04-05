@@ -2,6 +2,7 @@
 
 Sprite::Sprite(const std::string& filePath)
 {
+    _type = 0;
     m_filename = filePath;
 }
 
@@ -43,7 +44,7 @@ void SlicedSprite::generateMeshData(int ileft, int iright, int itop, int ibottom
     topLeft.uvWidth = (float)ileft / (float)width;
     topLeft.uvHeight = (float)itop / (float)height;
     topLeft.uvOffsetX = 0.0f;
-    topLeft.uvOffsetY = 0.0f;
+    topLeft.uvOffsetY = (float)(height - itop) / (float)height;
     topLeft.pivot = glm::vec2(0.5f, 0.5f);
     topLeft.width = ileft;
     topLeft.height = itop;
@@ -53,7 +54,7 @@ void SlicedSprite::generateMeshData(int ileft, int iright, int itop, int ibottom
     top.uvWidth = (float)(width - iright - ileft) / (float)width;
     top.uvHeight = (float)itop / (float)height;
     top.uvOffsetX = (float)ileft / (float)width;
-    top.uvOffsetY = 0.0f;
+    top.uvOffsetY = (float)(height - itop) / (float)height;
     top.pivot = glm::vec2(0.5f, 0.5f);
     top.width = width - ileft - iright;
     top.height = itop;
@@ -63,7 +64,7 @@ void SlicedSprite::generateMeshData(int ileft, int iright, int itop, int ibottom
     topRight.uvWidth = (float)iright / (float)width;
     topRight.uvHeight = (float)itop / (float)height;
     topRight.uvOffsetX = (float)(width - iright) / (float)width;
-    topRight.uvOffsetY = 0.0f;
+    topRight.uvOffsetY = (float)(height - itop) / (float)height;
     topRight.pivot = glm::vec2(0.5f, 0.5f);
     topRight.width = iright;
     topRight.height = itop;
@@ -103,7 +104,7 @@ void SlicedSprite::generateMeshData(int ileft, int iright, int itop, int ibottom
     bottomLeft.uvWidth = (float)ileft / (float)width;
     bottomLeft.uvHeight = (float)ibottom / (float)height;
     bottomLeft.uvOffsetX = 0.0f;
-    bottomLeft.uvOffsetY = (float)(height - ibottom) / (float)height;
+    bottomLeft.uvOffsetY = 0.0f;
     bottomLeft.pivot = glm::vec2(0.5f, 0.5f);
     bottomLeft.width = ileft;
     bottomLeft.height = ibottom;
@@ -113,7 +114,7 @@ void SlicedSprite::generateMeshData(int ileft, int iright, int itop, int ibottom
     bottom.uvWidth = (float)(width - iright - ileft) / (float)width;
     bottom.uvHeight = (float)ibottom / (float)height;
     bottom.uvOffsetX = (float)ileft / (float)width;
-    bottom.uvOffsetY = (float)(height - ibottom) / (float)height;
+    bottom.uvOffsetY = 0.0f;
     bottom.pivot = glm::vec2(0.5f, 0.5f);
     bottom.width = width - ileft - iright;
     bottom.height = ibottom;
@@ -123,7 +124,7 @@ void SlicedSprite::generateMeshData(int ileft, int iright, int itop, int ibottom
     bottomRight.uvWidth = (float)iright / (float)width;
     bottomRight.uvHeight = (float)ibottom / (float)height;
     bottomRight.uvOffsetX = (float)(width - iright) / (float)width;
-    bottomRight.uvOffsetY = (float)(height - ibottom) / (float)height;
+    bottomRight.uvOffsetY = 0.0f;
     bottomRight.pivot = glm::vec2(0.5f, 0.5f);
     bottomRight.width = iright;
     bottomRight.height = ibottom;

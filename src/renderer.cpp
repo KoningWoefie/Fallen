@@ -118,6 +118,8 @@ void Renderer::RenderScene(Scene* scene)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     this->RenderObject(scene, im);
+    scaleX = 0;
+    scaleY = 0;
 
     if(_window != nullptr) glfwSwapBuffers(this->window());
 	glfwPollEvents();
@@ -125,6 +127,12 @@ void Renderer::RenderScene(Scene* scene)
 
 void Renderer::RenderObject(Object* o, glm::mat4 PaMa)
 {
+    scaleX += o->transform->scale.x;
+    scaleY += o->transform->scale.y;
+
+    float sX = scaleX;
+    float sY = scaleY;
+
     //Build our model matrix
     glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(o->transform->position.x, o->transform->position.y, 0));
     glm::mat4 rotationMatrix = glm::eulerAngleYXZ(0.0f, 0.0f, o->transform->rotation);
@@ -132,52 +140,54 @@ void Renderer::RenderObject(Object* o, glm::mat4 PaMa)
     glm::mat4 modelMatrix = translationMatrix * rotationMatrix * scalingMatrix;
 
     PaMa *= modelMatrix;
-    glm::mat4 MVP = _projectionMatrix * _viewMatrix * PaMa;
 
     for(Component* c : o->GetComponents())
     {
         if(!c->isRenderable()) continue;
-        if(typeid(*c) == typeid(Image)) RenderImage(dynamic_cast<Image*>(c), MVP);
+        if(typeid(*c) == typeid(Image)) RenderImage(dynamic_cast<Image*>(c), PaMa);
     }
     for(Object* o2 : o->GetChildren())
     {
         RenderObject(o2, PaMa);
     }
+    scaleX = sX;
+    scaleY = sY;
 }
 
-void Renderer::RenderImage(Image* i, glm::mat4 MVP)
+void Renderer::RenderImage(Image* i, glm::mat4 PaMa)
 {
     glActiveTexture(GL_TEXTURE0);
-    Texture* t = _resMan.GetTexture(i->GetSprite()->FileName());
-    Mesh* m = nullptr;
-    if(t)
+
+    // Set the color you want your texture to be blended with
+    GLuint colorID = glGetUniformLocation(_programID, "blendColor");
+	glUniform4f(colorID, i->color.r/255.0f, i->color.g/255.0f, i->color.b/255.0f, i->color.a/255.0f);
+
+    if(i->GetSprite())
     {
-        glBindTexture(GL_TEXTURE_2D, t->getTexture());
-
-        GLuint textureID = glGetUniformLocation(_programID, "textureSampler");
-        glUniform1i(textureID, 0);
-
-        m = _resMan.GetMesh(t->Width(), t->Height(), 0, glm::vec2(0.5f, 0.5f));
-
-        GLuint dColorID = glGetUniformLocation(_programID, "defaultColor");
-
-        glUniform4f(dColorID, 0.0f, 0.0f, 0.0f, 0.0f);
+        switch(i->GetSprite()->Type())
+        {
+            case 0:
+                RenderSprite(i->GetSprite(), PaMa);
+                break;
+            case 1:
+                RenderSlicedSprite(dynamic_cast<SlicedSprite*>(i->GetSprite()), PaMa);
+                break;
+            default:
+                break;
+        }
+        return;
     }
-    else
-    {
-        m = _resMan.GetMesh(i->width, i->height, 0, i->pivot);
 
-        GLuint dColorID = glGetUniformLocation(_programID, "defaultColor");
-	    glUniform4f(dColorID, 255.0f, 255.0f, 255.0f, 255.0f);
-    }
+    glm::mat4 MVP = _projectionMatrix * _viewMatrix * PaMa;
+    Mesh* m = _resMan.GetMesh(i->width, i->height, 0, i->pivot);
+
+    GLuint dColorID = glGetUniformLocation(_programID, "defaultColor");
+	glUniform4f(dColorID, 255.0f, 255.0f, 255.0f, 255.0f);
 
     // Set UVoffset in the shader (not relevant yet)
 	GLuint uvOffset = glGetUniformLocation(_programID, "UVoffset");
 	glUniform2f(uvOffset, 0, 0);
 
-    // Set the color you want your texture to be blended with
-    GLuint colorID = glGetUniformLocation(_programID, "blendColor");
-	glUniform4f(colorID, i->color.r/255.0f, i->color.g/255.0f, i->color.b/255.0f, i->color.a/255.0f);
 
     // Set the Model, View, Projection matrix in the shader
     GLuint matrixID = glGetUniformLocation(_programID, "MVP");
@@ -217,118 +227,203 @@ void Renderer::RenderImage(Image* i, glm::mat4 MVP)
 	glDisableVertexAttribArray(vertexUVID);
 }
 
-// void Renderer::RenderDynamic(Dynamic* d, glm::mat4 PaMa)
-// {
-//     this->chooseShader(_programID);
 
-// 	scaleX += d->scale[0];
-// 	scaleY += d->scale[1];
+void Renderer::RenderSprite(Sprite* s, glm::mat4 PaMa)
+{
+    glm::mat4 MVP = _projectionMatrix * _viewMatrix * PaMa;
 
-//     // Build MVP matrix
-// 	// Send our transformation to the currently bound shader, in the "MVP" uniform
-// 	glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(d->position[0], d->position[1], 0));
-// 	glm::mat4 rotationMatrix = glm::eulerAngleYXZ(0.0f, 0.0f, d->rotation);
-// 	glm::mat4 scalingMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(d->scale[0], d->scale[1], 1));
-// 	glm::mat4 modelMatrix = translationMatrix * rotationMatrix * scalingMatrix;
-// 	// glm::mat4 mdm = PaMa;
-// 	PaMa *= modelMatrix;
-// 	glm::mat4 MVP = _projectionMatrix * _viewMatrix * PaMa;
+    glActiveTexture(GL_TEXTURE0);
+    Texture* t = _resMan.GetTexture(s->FileName());
 
-// 	// Bind our texture in Texture Unit 0
-//     glActiveTexture(GL_TEXTURE0);
-// 	Texture* t = _resMan.GetTexture(d->FileName());
-// 	Mesh* m = nullptr;
+    glBindTexture(GL_TEXTURE_2D, t->getTexture());
 
-//     // If texture exists
-//     if(t)
-//     {
-//         // Bind texture for OpenGL
-// 	    glBindTexture(GL_TEXTURE_2D, t->getTexture());
+    GLuint textureID = glGetUniformLocation(_programID, "textureSampler");
+    glUniform1i(textureID, 0);
 
-// 	    // Set our "textureSampler" sampler to use Texture Unit 0
-// 	    GLuint textureID = glGetUniformLocation(_programID, "textureSampler");
-// 	    glUniform1i(textureID, 0);
+    Mesh* m = _resMan.GetMesh(t->Width(), t->Height(), 0, glm::vec2(0.5f, 0.5f));
 
-//         // Get mesh with texture width and height
-//         m = _resMan.GetMesh(t->Width(), t->Height(), d->Radius(), d->Pivot(), d->UVWidth(), d->UVHeight());
+    GLuint dColorID = glGetUniformLocation(_programID, "defaultColor");
 
-//         // Set default color
-//         GLuint dColorID = glGetUniformLocation(_programID, "defaultColor");
-// 	    glUniform4f(dColorID, 0.0f, 0.0f, 0.0f, 0.0f);
-//     }
-//     else
-//     {
-//         // Get mesh with the dynamic's width and height
-//         m = _resMan.GetMesh(d->Width(), d->Height(), d->Radius(), d->Pivot());
+    glUniform4f(dColorID, 0.0f, 0.0f, 0.0f, 0.0f);
 
-//         // Set default color
-//         GLuint dColorID = glGetUniformLocation(_programID, "defaultColor");
-// 	    glUniform4f(dColorID, 255.0f, 255.0f, 255.0f, 255.0f);
-//     }
+    // Set UVoffset in the shader not relevant here
+	GLuint uvOffset = glGetUniformLocation(_programID, "UVoffset");
+	glUniform2f(uvOffset, 0, 0);
 
-//     // Set UVoffset in the shader (not relevant yet)
-// 	GLuint uvOffset = glGetUniformLocation(_programID, "UVoffset");
-// 	glUniform2f(uvOffset, d->UVOffset().x, d->UVOffset().y);
+    // Set the Model, View, Projection matrix in the shader
+    GLuint matrixID = glGetUniformLocation(_programID, "MVP");
+	glUniformMatrix4fv(matrixID, 1, GL_FALSE, &MVP[0][0]);
 
-//     // Set the color you want your texture to be blended with
-//     GLuint colorID = glGetUniformLocation(_programID, "blendColor");
-// 	glUniform4f(colorID, d->color.r/255.0f, d->color.g/255.0f, d->color.b/255.0f, d->color.a/255.0f);
+	// 1st attribute buffer : vertices
+	GLuint vertexPositionID = glGetAttribLocation(_programID, "vertexPosition");
+	glEnableVertexAttribArray(vertexPositionID);
+	glBindBuffer(GL_ARRAY_BUFFER, m->vertexbuffer());
+	glVertexAttribPointer(
+		vertexPositionID, // The attribute we want to configure
+		3,          // size : x,y,z => 3
+		GL_FLOAT,   // type
+		GL_FALSE,   // normalized?
+		0,          // stride
+		(void*)0    // array buffer offset
+	);
 
-//     // Set the Model, View, Projection matrix in the shader
-//     GLuint matrixID = glGetUniformLocation(_programID, "MVP");
-// 	glUniformMatrix4fv(matrixID, 1, GL_FALSE, &MVP[0][0]);
+	// 2nd attribute buffer : UVs
+	GLuint vertexUVID = glGetAttribLocation(_programID, "vertexUV");
+	glEnableVertexAttribArray(vertexUVID);
+	glBindBuffer(GL_ARRAY_BUFFER, m->uvbuffer());
+	glVertexAttribPointer(
+		vertexUVID, // The attribute we want to configure
+		2,          // size : U,V => 2
+		GL_FLOAT,   // type
+		GL_FALSE,   // normalized?
+		0,          // stride
+		(void*)0    // array buffer offset
+	);
 
-// 	// 1st attribute buffer : vertices
-// 	GLuint vertexPositionID = glGetAttribLocation(_programID, "vertexPosition");
-// 	glEnableVertexAttribArray(vertexPositionID);
-// 	glBindBuffer(GL_ARRAY_BUFFER, m->vertexbuffer());
-// 	glVertexAttribPointer(
-// 		vertexPositionID, // The attribute we want to configure
-// 		3,          // size : x,y,z => 3
-// 		GL_FLOAT,   // type
-// 		GL_FALSE,   // normalized?
-// 		0,          // stride
-// 		(void*)0    // array buffer offset
-// 	);
+	// Draw the triangles
+	glDrawArrays(GL_TRIANGLES, 0, m->numverts());
 
-// 	// 2nd attribute buffer : UVs
-// 	GLuint vertexUVID = glGetAttribLocation(_programID, "vertexUV");
-// 	glEnableVertexAttribArray(vertexUVID);
-// 	glBindBuffer(GL_ARRAY_BUFFER, m->uvbuffer());
-// 	glVertexAttribPointer(
-// 		vertexUVID, // The attribute we want to configure
-// 		2,          // size : U,V => 2
-// 		GL_FLOAT,   // type
-// 		GL_FALSE,   // normalized?
-// 		0,          // stride
-// 		(void*)0    // array buffer offset
-// 	);
+	// cleanup
+	glDisableVertexAttribArray(vertexPositionID);
+	glDisableVertexAttribArray(vertexUVID);
+}
 
-// 	// Draw the triangles
-// 	glDrawArrays(GL_TRIANGLES, 0, m->numverts());
+void Renderer::RenderSlicedSprite(SlicedSprite* ss, glm::mat4 PaMa)
+{
+   	// Bind our texture in Texture Unit 0
+    glActiveTexture(GL_TEXTURE0);
+	Texture* t = _resMan.GetTexture(ss->FileName());
 
-// 	// cleanup
-// 	glDisableVertexAttribArray(vertexPositionID);
-// 	glDisableVertexAttribArray(vertexUVID);
+    ss->changeMeshData(t->Width(), t->Height());
+    // Bind texture for OpenGL
+	glBindTexture(GL_TEXTURE_2D, t->getTexture());
 
-//     if(d->text())
-//     {
-//         RenderText(d->text(), PaMa);
-//     }
+	// Set our "textureSampler" sampler to use Texture Unit 0
+	GLuint textureID = glGetUniformLocation(_programID, "textureSampler");
+	glUniform1i(textureID, 0);
+
+    // Set default color
+    GLuint dColorID = glGetUniformLocation(_programID, "defaultColor");
+	glUniform4f(dColorID, 0.0f, 0.0f, 0.0f, 0.0f);
 
 
-//     for (int i = 0; i < d->GetChildren().size(); i++)
-//     {
-// 		if(d->GetChildren()[i]->Type() == 1)
-// 		{
-// 			RenderNineSlices((SlicedSprite*)d->GetChildren()[i], PaMa);
-// 			continue;
-// 		}
-//         RenderDynamic(d->GetChildren()[i], PaMa);
-//     }
-// 	scaleX = 0;
-// 	scaleY = 0;
-// }
+	for (int i = 0; i < ss->GetMeshData().size(); i++)
+	{
+		float x = 0;
+		float y = 0;
+
+		// corrects the difference of scale so that the pixel size lines up with the texture size
+		float sX = (t->Width() * scaleX - ss->GetMeshData()[1].width - ss->GetMeshData()[2].width) / (ss->GetMeshData()[0].width * scaleX);
+		float sY = (t->Height() * scaleY - ss->GetMeshData()[3].height - ss->GetMeshData()[4].height) / (ss->GetMeshData()[0].height * scaleY);
+
+		glm::vec3 scale = glm::vec3(1.0f, 1.0f, 1.0f);
+		switch(i)
+		{
+			case 0:
+			    //center
+			    scale = glm::vec3(sX, sY, 1.0f);
+				break;
+			case 1:
+				//left
+				x = -((ss->GetMeshData()[0].width * sX / 2.0f) + (ss->GetMeshData()[i].width / 2.0f) / scaleX);
+				scale = glm::vec3(1/scaleX, sY, 1);
+				break;
+			case 2:
+				//right
+				x = ((ss->GetMeshData()[0].width * sX / 2.0f) + (ss->GetMeshData()[i].width / 2.0f)/scaleX);
+				scale = glm::vec3(1/scaleX, sY, 1);
+				break;
+			case 3:
+				//top
+				y = -(((ss->GetMeshData()[0].height * sY) / 2.0f) + ((ss->GetMeshData()[i].height / 2.0f) / scaleY));
+				scale = glm::vec3(sX, 1/scaleY, 1);
+				break;
+			case 4:
+				//bottom
+				y = ((ss->GetMeshData()[0].height * sY) / 2.0f) + ((ss->GetMeshData()[i].height / 2.0f) / scaleY);
+				scale = glm::vec3(sX, 1/scaleY, 1);
+				break;
+			case 5:
+				//top left
+				x = -((ss->GetMeshData()[0].width * sX / 2.0f) + (ss->GetMeshData()[i].width / 2.0f)/scaleX);
+				y = -(((ss->GetMeshData()[0].height * sY) / 2.0f) + ((ss->GetMeshData()[i].height / 2.0f) / scaleY));
+				scale = glm::vec3(1/scaleX, 1/scaleY, 1);
+				break;
+			case 6:
+				//top right
+				x = (ss->GetMeshData()[0].width * sX / 2.0f) + (ss->GetMeshData()[i].width / 2.0f)/scaleX;
+				y = -(((ss->GetMeshData()[0].height * sY) / 2.0f) + ((ss->GetMeshData()[i].height / 2.0f) / scaleY));
+				scale = glm::vec3(1/scaleX, 1/scaleY, 1);
+				break;
+			case 7:
+				//bottom left
+				x = -((ss->GetMeshData()[0].width * sX / 2.0f) + (ss->GetMeshData()[i].width / 2.0f)/scaleX);
+				y = (ss->GetMeshData()[0].height * sY / 2.0f) + (ss->GetMeshData()[i].height / 2.0f) / scaleY;
+				scale = glm::vec3(1/scaleX, 1/scaleY, 1);
+				break;
+			case 8:
+				//bottom right
+				x = (ss->GetMeshData()[0].width * sX / 2.0f) + (ss->GetMeshData()[i].width / 2.0f)/scaleX;
+				y = ((ss->GetMeshData()[0].height * sY) / 2.0f) + ((ss->GetMeshData()[i].height / 2.0f) / scaleY);
+				scale = glm::vec3(1/scaleX, 1/scaleY, 1);
+				break;
+			default:
+				break;
+		}
+		glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(x, y, 0));
+		glm::mat4 rotationMatrix = glm::eulerAngleYXZ(0.0f, 0.0f, 0.0f);
+		glm::mat4 scalingMatrix = glm::scale(glm::mat4(1.0f), scale);
+		glm::mat4 modelMatrix = translationMatrix * rotationMatrix * scalingMatrix;
+
+		glm::mat4 mdm = PaMa;
+		mdm *= modelMatrix;
+		glm::mat4 MVP = _projectionMatrix * _viewMatrix * mdm;
+
+		meshData md = ss->GetMeshData()[i];
+		Mesh* m = _resMan.GetMesh(md.width, md.height, md.radius, md.pivot, md.uvWidth, md.uvHeight, true);
+
+		// Set UVoffset in the shader (not relevant yet)
+		GLuint uvOffset = glGetUniformLocation(_programID, "UVoffset");
+		glUniform2f(uvOffset, md.uvOffsetX, md.uvOffsetY);
+
+       	// Set the Model, View, Projection matrix in the shader
+       	GLuint matrixID = glGetUniformLocation(_programID, "MVP");
+		glUniformMatrix4fv(matrixID, 1, GL_FALSE, &MVP[0][0]);
+
+		// 1st attribute buffer : vertices
+		GLuint vertexPositionID = glGetAttribLocation(_programID, "vertexPosition");
+		glEnableVertexAttribArray(vertexPositionID);
+		glBindBuffer(GL_ARRAY_BUFFER, m->vertexbuffer());
+		glVertexAttribPointer(
+			vertexPositionID, // The attribute we want to configure
+			3,          // size : x,y,z => 3
+			GL_FLOAT,   // type
+			GL_FALSE,   // normalized?
+			0,          // stride
+			(void*)0    // array buffer offset
+		);
+
+		// 2nd attribute buffer : UVs
+		GLuint vertexUVID = glGetAttribLocation(_programID, "vertexUV");
+		glEnableVertexAttribArray(vertexUVID);
+		glBindBuffer(GL_ARRAY_BUFFER, m->uvbuffer());
+		glVertexAttribPointer(
+			vertexUVID, // The attribute we want to configure
+			2,          // size : U,V => 2
+			GL_FLOAT,   // type
+			GL_FALSE,   // normalized?
+			0,          // stride
+			(void*)0    // array buffer offset
+		);
+
+		// Draw the triangles
+		glDrawArrays(GL_TRIANGLES, 0, m->numverts());
+
+		// cleanup
+		glDisableVertexAttribArray(vertexPositionID);
+		glDisableVertexAttribArray(vertexUVID);
+	}
+}
 
 // void Renderer::RenderNineSlices(SlicedSprite* sprite, glm::mat4 PaMa)
 // {
@@ -347,143 +442,143 @@ void Renderer::RenderImage(Image* i, glm::mat4 MVP)
 // 	// glm::mat4 mdm = PaMa;
 // 	PaMa *= modelMatrix;
 
-// 	// Bind our texture in Texture Unit 0
-//     glActiveTexture(GL_TEXTURE0);
-// 	Texture* t = _resMan.GetTexture(sprite->FileName());
-// 	// If texture exists
-//     if(t)
-//     {
-// 		sprite->changeMeshData(t->Width(), t->Height());
-//         // Bind texture for OpenGL
-// 	    glBindTexture(GL_TEXTURE_2D, t->getTexture());
+	// // Bind our texture in Texture Unit 0
+ //    glActiveTexture(GL_TEXTURE0);
+	// Texture* t = _resMan.GetTexture(sprite->FileName());
+	// // If texture exists
+ //    if(t)
+ //    {
+	// 	sprite->changeMeshData(t->Width(), t->Height());
+ //        // Bind texture for OpenGL
+	//     glBindTexture(GL_TEXTURE_2D, t->getTexture());
 
-// 	    // Set our "textureSampler" sampler to use Texture Unit 0
-// 	    GLuint textureID = glGetUniformLocation(_programID, "textureSampler");
-// 	    glUniform1i(textureID, 0);
+	//     // Set our "textureSampler" sampler to use Texture Unit 0
+	//     GLuint textureID = glGetUniformLocation(_programID, "textureSampler");
+	//     glUniform1i(textureID, 0);
 
-//         // Set default color
-//         GLuint dColorID = glGetUniformLocation(_programID, "defaultColor");
-// 	    glUniform4f(dColorID, 0.0f, 0.0f, 0.0f, 0.0f);
-//     }
-// 	for (int i = 0; i < sprite->GetMeshData().size(); i++)
-// 	{
-// 		float x = 0;
-// 		float y = 0;
+ //        // Set default color
+ //        GLuint dColorID = glGetUniformLocation(_programID, "defaultColor");
+	//     glUniform4f(dColorID, 0.0f, 0.0f, 0.0f, 0.0f);
+ //    }
+	// for (int i = 0; i < sprite->GetMeshData().size(); i++)
+	// {
+	// 	float x = 0;
+	// 	float y = 0;
 
-// 		// corrects the difference of scale so that the pixel size lines up with the texture size
-// 		float sX = (t->Width() * scaleX - sprite->GetMeshData()[1].width - sprite->GetMeshData()[2].width) / (sprite->GetMeshData()[0].width * scaleX);
-// 		float sY = (t->Height() * scaleY - sprite->GetMeshData()[3].height - sprite->GetMeshData()[4].height) / (sprite->GetMeshData()[0].height * scaleY);
+	// 	// corrects the difference of scale so that the pixel size lines up with the texture size
+	// 	float sX = (t->Width() * scaleX - sprite->GetMeshData()[1].width - sprite->GetMeshData()[2].width) / (sprite->GetMeshData()[0].width * scaleX);
+	// 	float sY = (t->Height() * scaleY - sprite->GetMeshData()[3].height - sprite->GetMeshData()[4].height) / (sprite->GetMeshData()[0].height * scaleY);
 
-// 		glm::vec3 scale = glm::vec3(1.0f, 1.0f, 1.0f);
-// 		switch(i)
-// 		{
-// 			case 0:
-// 			    //center
-// 			    scale = glm::vec3(sX, sY, 1.0f);
-// 				break;
-// 			case 1:
-// 				//left
-// 				x = -((sprite->GetMeshData()[0].width * sX / 2.0f) + (sprite->GetMeshData()[i].width / 2.0f) / scaleX);
-// 				scale = glm::vec3(1/scaleX, sY, 1);
-// 				break;
-// 			case 2:
-// 				//right
-// 				x = ((sprite->GetMeshData()[0].width * sX / 2.0f) + (sprite->GetMeshData()[i].width / 2.0f)/scaleX);
-// 				scale = glm::vec3(1/scaleX, sY, 1);
-// 				break;
-// 			case 3:
-// 				//top
-// 				y = -(((sprite->GetMeshData()[0].height * sY) / 2.0f) + ((sprite->GetMeshData()[i].height / 2.0f) / scaleY));
-// 				scale = glm::vec3(sX, 1/scaleY, 1);
-// 				break;
-// 			case 4:
-// 				//bottom
-// 				y = ((sprite->GetMeshData()[0].height * sY) / 2.0f) + ((sprite->GetMeshData()[i].height / 2.0f) / scaleY);
-// 				scale = glm::vec3(sX, 1/scaleY, 1);
-// 				break;
-// 			case 5:
-// 				//top left
-// 				x = -((sprite->GetMeshData()[0].width * sX / 2.0f) + (sprite->GetMeshData()[i].width / 2.0f)/scaleX);
-// 				y = -(((sprite->GetMeshData()[0].height * sY) / 2.0f) + ((sprite->GetMeshData()[i].height / 2.0f) / scaleY));
-// 				scale = glm::vec3(1/scaleX, 1/scaleY, 1);
-// 				break;
-// 			case 6:
-// 				//top right
-// 				x = (sprite->GetMeshData()[0].width * sX / 2.0f) + (sprite->GetMeshData()[i].width / 2.0f)/scaleX;
-// 				y = -(((sprite->GetMeshData()[0].height * sY) / 2.0f) + ((sprite->GetMeshData()[i].height / 2.0f) / scaleY));
-// 				scale = glm::vec3(1/scaleX, 1/scaleY, 1);
-// 				break;
-// 			case 7:
-// 				//bottom left
-// 				x = -((sprite->GetMeshData()[0].width * sX / 2.0f) + (sprite->GetMeshData()[i].width / 2.0f)/scaleX);
-// 				y = (sprite->GetMeshData()[0].height * sY / 2.0f) + (sprite->GetMeshData()[i].height / 2.0f) / scaleY;
-// 				scale = glm::vec3(1/scaleX, 1/scaleY, 1);
-// 				break;
-// 			case 8:
-// 				//bottom right
-// 				x = (sprite->GetMeshData()[0].width * sX / 2.0f) + (sprite->GetMeshData()[i].width / 2.0f)/scaleX;
-// 				y = ((sprite->GetMeshData()[0].height * sY) / 2.0f) + ((sprite->GetMeshData()[i].height / 2.0f) / scaleY);
-// 				scale = glm::vec3(1/scaleX, 1/scaleY, 1);
-// 				break;
-// 			default:
-// 				break;
-// 		}
-// 		glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(x, y, 0));
-// 		glm::mat4 rotationMatrix = glm::eulerAngleYXZ(0.0f, 0.0f, sprite->rotation);
-// 		glm::mat4 scalingMatrix = glm::scale(glm::mat4(1.0f), scale);
-// 		glm::mat4 modelMatrix = translationMatrix * rotationMatrix * scalingMatrix;
+	// 	glm::vec3 scale = glm::vec3(1.0f, 1.0f, 1.0f);
+	// 	switch(i)
+	// 	{
+	// 		case 0:
+	// 		    //center
+	// 		    scale = glm::vec3(sX, sY, 1.0f);
+	// 			break;
+	// 		case 1:
+	// 			//left
+	// 			x = -((sprite->GetMeshData()[0].width * sX / 2.0f) + (sprite->GetMeshData()[i].width / 2.0f) / scaleX);
+	// 			scale = glm::vec3(1/scaleX, sY, 1);
+	// 			break;
+	// 		case 2:
+	// 			//right
+	// 			x = ((sprite->GetMeshData()[0].width * sX / 2.0f) + (sprite->GetMeshData()[i].width / 2.0f)/scaleX);
+	// 			scale = glm::vec3(1/scaleX, sY, 1);
+	// 			break;
+	// 		case 3:
+	// 			//top
+	// 			y = -(((sprite->GetMeshData()[0].height * sY) / 2.0f) + ((sprite->GetMeshData()[i].height / 2.0f) / scaleY));
+	// 			scale = glm::vec3(sX, 1/scaleY, 1);
+	// 			break;
+	// 		case 4:
+	// 			//bottom
+	// 			y = ((sprite->GetMeshData()[0].height * sY) / 2.0f) + ((sprite->GetMeshData()[i].height / 2.0f) / scaleY);
+	// 			scale = glm::vec3(sX, 1/scaleY, 1);
+	// 			break;
+	// 		case 5:
+	// 			//top left
+	// 			x = -((sprite->GetMeshData()[0].width * sX / 2.0f) + (sprite->GetMeshData()[i].width / 2.0f)/scaleX);
+	// 			y = -(((sprite->GetMeshData()[0].height * sY) / 2.0f) + ((sprite->GetMeshData()[i].height / 2.0f) / scaleY));
+	// 			scale = glm::vec3(1/scaleX, 1/scaleY, 1);
+	// 			break;
+	// 		case 6:
+	// 			//top right
+	// 			x = (sprite->GetMeshData()[0].width * sX / 2.0f) + (sprite->GetMeshData()[i].width / 2.0f)/scaleX;
+	// 			y = -(((sprite->GetMeshData()[0].height * sY) / 2.0f) + ((sprite->GetMeshData()[i].height / 2.0f) / scaleY));
+	// 			scale = glm::vec3(1/scaleX, 1/scaleY, 1);
+	// 			break;
+	// 		case 7:
+	// 			//bottom left
+	// 			x = -((sprite->GetMeshData()[0].width * sX / 2.0f) + (sprite->GetMeshData()[i].width / 2.0f)/scaleX);
+	// 			y = (sprite->GetMeshData()[0].height * sY / 2.0f) + (sprite->GetMeshData()[i].height / 2.0f) / scaleY;
+	// 			scale = glm::vec3(1/scaleX, 1/scaleY, 1);
+	// 			break;
+	// 		case 8:
+	// 			//bottom right
+	// 			x = (sprite->GetMeshData()[0].width * sX / 2.0f) + (sprite->GetMeshData()[i].width / 2.0f)/scaleX;
+	// 			y = ((sprite->GetMeshData()[0].height * sY) / 2.0f) + ((sprite->GetMeshData()[i].height / 2.0f) / scaleY);
+	// 			scale = glm::vec3(1/scaleX, 1/scaleY, 1);
+	// 			break;
+	// 		default:
+	// 			break;
+	// 	}
+	// 	glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(x, y, 0));
+	// 	glm::mat4 rotationMatrix = glm::eulerAngleYXZ(0.0f, 0.0f, sprite->rotation);
+	// 	glm::mat4 scalingMatrix = glm::scale(glm::mat4(1.0f), scale);
+	// 	glm::mat4 modelMatrix = translationMatrix * rotationMatrix * scalingMatrix;
 
-// 		glm::mat4 mdm = PaMa;
-// 		mdm *= modelMatrix;
-// 		glm::mat4 MVP = _projectionMatrix * _viewMatrix * mdm;
+	// 	glm::mat4 mdm = PaMa;
+	// 	mdm *= modelMatrix;
+	// 	glm::mat4 MVP = _projectionMatrix * _viewMatrix * mdm;
 
-// 		meshData md = sprite->GetMeshData()[i];
-// 		Mesh* m = _resMan.GetMesh(md.width, md.height, md.radius, md.pivot, md.uvWidth, md.uvHeight, true);
+	// 	meshData md = sprite->GetMeshData()[i];
+	// 	Mesh* m = _resMan.GetMesh(md.width, md.height, md.radius, md.pivot, md.uvWidth, md.uvHeight, true);
 
-// 		// Set UVoffset in the shader (not relevant yet)
-// 		GLuint uvOffset = glGetUniformLocation(_programID, "UVoffset");
-// 		glUniform2f(uvOffset, md.uvOffsetX, md.uvOffsetY);
+	// 	// Set UVoffset in the shader (not relevant yet)
+	// 	GLuint uvOffset = glGetUniformLocation(_programID, "UVoffset");
+	// 	glUniform2f(uvOffset, md.uvOffsetX, md.uvOffsetY);
 
-//     	// Set the color you want your texture to be blended with
-//     	GLuint colorID = glGetUniformLocation(_programID, "blendColor");
-// 		glUniform4f(colorID, sprite->color.r/255.0f, sprite->color.g/255.0f, sprite->color.b/255.0f, sprite->color.a/255.0f);
+ //    	// Set the color you want your texture to be blended with
+ //    	GLuint colorID = glGetUniformLocation(_programID, "blendColor");
+	// 	glUniform4f(colorID, sprite->color.r/255.0f, sprite->color.g/255.0f, sprite->color.b/255.0f, sprite->color.a/255.0f);
 
-//     	// Set the Model, View, Projection matrix in the shader
-//     	GLuint matrixID = glGetUniformLocation(_programID, "MVP");
-// 		glUniformMatrix4fv(matrixID, 1, GL_FALSE, &MVP[0][0]);
+ //    	// Set the Model, View, Projection matrix in the shader
+ //    	GLuint matrixID = glGetUniformLocation(_programID, "MVP");
+	// 	glUniformMatrix4fv(matrixID, 1, GL_FALSE, &MVP[0][0]);
 
-// 		// 1st attribute buffer : vertices
-// 		GLuint vertexPositionID = glGetAttribLocation(_programID, "vertexPosition");
-// 		glEnableVertexAttribArray(vertexPositionID);
-// 		glBindBuffer(GL_ARRAY_BUFFER, m->vertexbuffer());
-// 		glVertexAttribPointer(
-// 			vertexPositionID, // The attribute we want to configure
-// 			3,          // size : x,y,z => 3
-// 			GL_FLOAT,   // type
-// 			GL_FALSE,   // normalized?
-// 			0,          // stride
-// 			(void*)0    // array buffer offset
-// 		);
+	// 	// 1st attribute buffer : vertices
+	// 	GLuint vertexPositionID = glGetAttribLocation(_programID, "vertexPosition");
+	// 	glEnableVertexAttribArray(vertexPositionID);
+	// 	glBindBuffer(GL_ARRAY_BUFFER, m->vertexbuffer());
+	// 	glVertexAttribPointer(
+	// 		vertexPositionID, // The attribute we want to configure
+	// 		3,          // size : x,y,z => 3
+	// 		GL_FLOAT,   // type
+	// 		GL_FALSE,   // normalized?
+	// 		0,          // stride
+	// 		(void*)0    // array buffer offset
+	// 	);
 
-// 		// 2nd attribute buffer : UVs
-// 		GLuint vertexUVID = glGetAttribLocation(_programID, "vertexUV");
-// 		glEnableVertexAttribArray(vertexUVID);
-// 		glBindBuffer(GL_ARRAY_BUFFER, m->uvbuffer());
-// 		glVertexAttribPointer(
-// 			vertexUVID, // The attribute we want to configure
-// 			2,          // size : U,V => 2
-// 			GL_FLOAT,   // type
-// 			GL_FALSE,   // normalized?
-// 			0,          // stride
-// 			(void*)0    // array buffer offset
-// 		);
+	// 	// 2nd attribute buffer : UVs
+	// 	GLuint vertexUVID = glGetAttribLocation(_programID, "vertexUV");
+	// 	glEnableVertexAttribArray(vertexUVID);
+	// 	glBindBuffer(GL_ARRAY_BUFFER, m->uvbuffer());
+	// 	glVertexAttribPointer(
+	// 		vertexUVID, // The attribute we want to configure
+	// 		2,          // size : U,V => 2
+	// 		GL_FLOAT,   // type
+	// 		GL_FALSE,   // normalized?
+	// 		0,          // stride
+	// 		(void*)0    // array buffer offset
+	// 	);
 
-// 		// Draw the triangles
-// 		glDrawArrays(GL_TRIANGLES, 0, m->numverts());
+	// 	// Draw the triangles
+	// 	glDrawArrays(GL_TRIANGLES, 0, m->numverts());
 
-// 		// cleanup
-// 		glDisableVertexAttribArray(vertexPositionID);
-// 		glDisableVertexAttribArray(vertexUVID);
+	// 	// cleanup
+	// 	glDisableVertexAttribArray(vertexPositionID);
+	// 	glDisableVertexAttribArray(vertexUVID);
 // 	}
 
 //     if(sprite->text())
