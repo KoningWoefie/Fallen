@@ -10,8 +10,8 @@ class Object
 {
 public:
     Object();
-    ~Object();
-    virtual void Update(float deltaTime);
+    virtual ~Object();
+    virtual void Update(float deltaTime) = 0;
 
     void AddChild(Object* child);
     void RemoveChild(Object* child);
@@ -24,7 +24,22 @@ public:
     void RemoveComponent(Component* component);
 
     template <typename T>
-    T* GetComponent();
+    T* GetComponent()
+    {
+        for(int i = 0; i < m_components.size(); i++)
+        {
+            if(typeid(T) == typeid(*m_components[i]))
+            {
+                return dynamic_cast<T*>(m_components[i]);
+            }
+        }
+
+        std::cout << "Component not found" << std::endl;
+        return nullptr;
+    }
+
+
+    std::vector<Component*> GetComponents() { return m_components; };
 
     Object* parent;
 

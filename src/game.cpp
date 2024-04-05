@@ -33,7 +33,7 @@ void Game::Run(Scene* scene)
 	_inMan->update(renderer.window());
 
 	// Update the scene
-	this->UpdateDynamic(scene, dt);
+	// this->UpdateDynamic(scene, dt);
 
 	// Render the scene
 	renderer.RenderScene(scene);

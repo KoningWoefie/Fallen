@@ -95,14 +95,14 @@ add_library(src # ar rcs fallenlib.a
 	src/texture.h
 	src/timer.cpp
 	src/timer.h
-	src/uisprite.cpp
-	src/uisprite.h
 	src/object.cpp
 	src/object.h
 	src/component.cpp
 	src/component.h
 	src/transform.cpp
 	src/transform.h
+	src/image.cpp
+	src/image.h
 )
 
 add_executable(examples # g++ examples/main.cpp -o examples
@@ -111,6 +111,8 @@ add_executable(examples # g++ examples/main.cpp -o examples
 	examples/exampleScene00.h
 	examples/SheetTest.cpp
 	examples/SheetTest.h
+	examples/testobj.cpp
+	examples/testobj.h
 )
 
 target_link_libraries(examples #g++ -lsrc
@@ -118,6 +120,7 @@ target_link_libraries(examples #g++ -lsrc
 	${FREETYPE_LIBRARIES}
 	${ALL_GRAPHICS_LIBS}
 )
+
 # Copy assets and shaders to the build directory
 # (In Visual Studio, copy these directories to either 'Release' or 'Build')
 file(
@@ -134,5 +137,5 @@ file(
 )
 file(
     COPY ${CMAKE_BINARY_DIR}/compile_commands.json
-    DESTINATION .
+    DESTINATION ../
 )

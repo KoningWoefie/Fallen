@@ -1,16 +1,16 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include <src/dynamic.h>
+#include <src/object.h>
 #include <src/camera.h>
 
-class Scene : public Dynamic
+class Scene : public Object
 {
 public:
     Scene();
     virtual ~Scene();
 
-    virtual void update(float deltaTime) = 0;
+    virtual void Update(float deltaTime) = 0;
 
     Camera* camera() { return _camera; }
 private:

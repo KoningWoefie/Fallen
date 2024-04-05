@@ -11,7 +11,7 @@ public:
     float rotation;
     glm::vec3 scale;
 private:
-    Transform(Object* obj);
+    Transform();
     virtual ~Transform();
 
     friend class Object;

@@ -1,18 +1,15 @@
+#include "src/transform.h"
 #include <src/object.h>
 
 Object::Object()
 {
-    transform = new Transform(this);
+    transform = new Transform();
     AddComponent(transform);
 }
 
 Object::~Object()
 {
 
-}
-
-void Object::Update(float deltaTime)
-{
 }
 
 void Object::AddChild(Object* child)
@@ -36,6 +33,7 @@ void Object::RemoveChild(Object* child)
 void Object::AddComponent(Component* component)
 {
     m_components.push_back(component);
+    component->object = this;
 }
 
 void Object::RemoveComponent(Component* component)
@@ -54,19 +52,4 @@ void Object::RemoveComponent(Component* component)
         }
     }
     std::cout << "Component not found" << std::endl;
-}
-
-template<class T>
-T* Object::GetComponent()
-{
-    for(int i = 0; i < m_components.size(); i++)
-    {
-        if(typeid(T*) == typeid(m_components[i]))
-        {
-            return dynamic_cast<T*>(m_components[i]);
-        }
-    }
-
-    std::cout << "Component not found" << std::endl;
-    return nullptr;
 }

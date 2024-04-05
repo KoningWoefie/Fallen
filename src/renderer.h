@@ -1,6 +1,7 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
+#include "src/sprite.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
@@ -12,7 +13,8 @@
 #include <src/text.h>
 #include <src/texture.h>
 #include <src/mesh.h>
-#include <src/uisprite.h>
+#include <src/object.h>
+#include <src/image.h>
 
 class Renderer
 {
@@ -28,7 +30,11 @@ public:
     void ChangeScreenMode();
 private:
     void RenderDynamic(Dynamic* d, glm::mat4 PaMa);
-    void RenderNineSlices(UISprite* sprite, glm::mat4 PaMa);
+
+    void RenderObject(Object* o, glm::mat4 PaMa);
+    void RenderImage(Image* i, glm::mat4 PaMa);
+
+    void RenderNineSlices(SlicedSprite* sprite, glm::mat4 PaMa);
     void RenderText(Text* text, glm::mat4 PaMa);
 
     int init();

@@ -1,45 +1,28 @@
 #include "exampleScene00.h"
+#include "examples/testobj.h"
+#include "src/component.h"
+#include "src/image.h"
 #include "src/object.h"
 
 ExampleScene00::ExampleScene00()
 {
-    // _texturePath = "assets/RunButton.tga";
-    _width = 200;
-    _height = 200;
+    testObj = new TestObj();
 
-    // _radius = 1;
+    testObj->transform->position = glm::vec3(400.0f, 300.0f, 0.0f);
+    testObj->AddComponent(new Image());
 
-    position = glm::vec3(200.0f, 300.0f, 0.0f);
+    Sprite* sprite = new Sprite("assets/RunButton.tga");
+    Image* i = testObj->GetComponent<Image>();
+    i->AddSprite(sprite);
+    i = nullptr;
 
-    color = glm::vec4(0,0,255,255);
-
-    st = new SheetTest("assets/Sprite_Sheet_G4.tga", 4, 4, 1.0f);
-
-    _pivot = glm::vec2(0.0f,0.0f);
-
-    this->AddChild(st);
-    st->position = glm::vec3(400.0f, 0.0f, 0.0f);
-
-    _text = new Text((char *)"fonts/ponde___.ttf", 32);
-    _text->Message("Heppo World!");
-    _text->pivot = glm::vec2(0.5f, 0.5f);
-
-    sprite = new UISprite("assets/buttons-down.tga", 25, 25, 25, 25);
-    this->AddChild(sprite);
-    sprite->scale = glm::vec3(3.0f, 3.0f, 3.0f);
-    sprite->position = glm::vec3(400.0f, 300.0f, 0.0f);
-
-    Object* obj = new Object();
+    AddChild(testObj);
 }
 
 ExampleScene00::~ExampleScene00()
 {
 }
 
-void ExampleScene00::update(float deltaTime)
+void ExampleScene00::Update(float deltaTime)
 {
-    if(Input()->getKey(KeyCode::Right))
-    {
-        position.x += 100.0f * deltaTime;
-    }
 }

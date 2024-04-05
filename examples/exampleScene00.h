@@ -2,8 +2,8 @@
 #define EXAMPLESCENE00_H
 
 #include <src/scene.h>
-#include <src/uisprite.h>
-#include "SheetTest.h"
+#include <src/sprite.h>
+#include "testobj.h"
 
 class ExampleScene00 : public Scene
 {
@@ -11,10 +11,9 @@ public:
     ExampleScene00();
     ~ExampleScene00();
 
-    virtual void update(float deltaTime);
+    virtual void Update(float deltaTime);
 private:
-    SheetTest* st;
-    UISprite* sprite;
+    TestObj* testObj;
 };
 
 
