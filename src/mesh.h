@@ -17,6 +17,7 @@ public:
 
     //make rectangle and or square mesh
     void generateMesh(glm::vec2 pivot, float uvWidth, float uvHeight, bool nineSlice = false);
+    void GenerateTextMesh(glm::vec2 pivot, float uvWidth, float uvHeight);
 
     //make circle mesh
     void generateCircleMesh(glm::vec2 pivot, float uvWidth, float uvHeight, int segments);

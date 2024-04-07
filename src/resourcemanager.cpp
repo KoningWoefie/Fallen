@@ -48,7 +48,7 @@ Texture* ResourceManager::GetTexture(std::string fileName, int width, int height
     return _textures[fileName];
 }
 
-Mesh* ResourceManager::GetMesh(int width, int height, int radius, glm::vec2 pivot, float uvWidth, float uvHeight, bool nineSlice)
+Mesh* ResourceManager::GetMesh(int width, int height, int radius, glm::vec2 pivot, float uvWidth, float uvHeight, bool text, bool nineSlice)
 {
     char temp[64];
     sprintf(temp, "%d_%d_%d_%.5f_%.5f", width, height, radius, pivot.x, pivot.y); //, uvWidth, uvHeight);
@@ -66,6 +66,13 @@ Mesh* ResourceManager::GetMesh(int width, int height, int radius, glm::vec2 pivo
     {
         Mesh* m = new Mesh(width, height);
         m->generateCircleMesh(pivot, uvWidth, uvHeight, 33);
+        _meshes[name] = m;
+        return _meshes[name];
+    }
+    if(text)
+    {
+        Mesh* m = new Mesh(width, height);
+        m->GenerateTextMesh(pivot, uvWidth, uvHeight);
         _meshes[name] = m;
         return _meshes[name];
     }

@@ -3,6 +3,7 @@
 
 #include <src/scene.h>
 #include <src/sprite.h>
+#include <src/text.h>
 #include "testobj.h"
 
 class ExampleScene00 : public Scene

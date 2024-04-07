@@ -1,9 +1,5 @@
 #include "exampleScene00.h"
-#include "examples/testobj.h"
-#include "src/component.h"
-#include "src/image.h"
-#include "src/object.h"
-#include "src/sprite.h"
+#include <src/image.h>
 
 ExampleScene00::ExampleScene00()
 {
@@ -16,6 +12,10 @@ ExampleScene00::ExampleScene00()
     Image* i = testObj->GetComponent<Image>();
     i->AddSprite(sprite);
     i = nullptr;
+
+    testObj->AddComponent(new Text());
+    Text* t = testObj->GetComponent<Text>();
+    t->text = "Heppo World!";
 
     AddChild(testObj);
 }

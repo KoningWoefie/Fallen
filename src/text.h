@@ -4,16 +4,14 @@
 #include <string>
 
 #include <glm/glm.hpp>
+#include <src/component.h>
 
 // Doesn't need to have a cpp file
-class Text
+class Text : public Component
 {
 public:
-    Text(char * fontPath, int size) { _font = fontPath; _size = size; };
+    Text(char * fontPath = (char *)"fonts/Roboto-Regular.ttf", int size = 64) : Component() { _font = fontPath; _size = size; Renderable = true; };
     ~Text() {};
-
-    std::string GetMessage() { return _message; };
-    void Message(std::string message) { _message = message; };
 
     char * GetFontName() { return _font; }
     int GetSize() { return _size; }
@@ -21,12 +19,12 @@ public:
     glm::vec2 pivot = glm::vec2(0.0f, 0.0f);
 
     glm::vec4 color = glm::vec4(255, 255, 255, 255);
+    std::string text;
 
 private:
     char * _font;
     int _size;
 
-    std::string _message;
 };
 
 #endif
