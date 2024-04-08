@@ -144,8 +144,8 @@ void Renderer::RenderObject(Object* o, glm::mat4 PaMa)
     for(Component* c : o->GetComponents())
     {
         if(!c->isRenderable()) continue;
-        if(typeid(*c) == typeid(Image)) RenderImage(dynamic_cast<Image*>(c), PaMa);
-        if(typeid(*c) == typeid(Text)) RenderText(dynamic_cast<Text*>(c), PaMa);
+        if(typeid(*c) == typeid(Image)) { RenderImage(dynamic_cast<Image*>(c), PaMa); }
+        if(typeid(*c) == typeid(Text)) { RenderText(dynamic_cast<Text*>(c), PaMa); }
     }
     for(Object* o2 : o->GetChildren())
     {
@@ -157,6 +157,8 @@ void Renderer::RenderObject(Object* o, glm::mat4 PaMa)
 
 void Renderer::RenderImage(Image* i, glm::mat4 PaMa)
 {
+    this->chooseShader(_programID);
+
     glActiveTexture(GL_TEXTURE0);
 
     // Set the color you want your texture to be blended with
