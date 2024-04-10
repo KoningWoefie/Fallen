@@ -131,25 +131,25 @@ enum class KeyCode
 
 class InputManager
 {
-public: 
+public:
 
     virtual ~InputManager();
 	static InputManager* input();
 
-	void update(GLFWwindow* w);
+	void Update(GLFWwindow* w);
 
-	bool getKey(KeyCode k);
+	bool GetKey(KeyCode k);
 
-	bool getKeyDown(KeyCode k);
+	bool GetKeyDown(KeyCode k);
 
-	bool getKeyUp(KeyCode k);
+	bool GetKeyUp(KeyCode k);
 
 private:
 	InputManager();
 	static InputManager* _instance;
 	GLFWwindow* _window;
 
-	void registerKey(int key, GLFWwindow* w);
+	void RegisterKey(int key, GLFWwindow* w);
 
 	std::map<int, bool> _keys;
 	std::map<int, bool> _keysDown;

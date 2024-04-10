@@ -4,7 +4,7 @@
 
 Game::Game()
 {
-	running = true;
+	_running = true;
 }
 
 Game::~Game()
@@ -19,18 +19,18 @@ void Game::Run(Scene* scene)
         Config::ChangedScreenMode = false;
     }
     int width, height;
-	glfwGetWindowSize(renderer.window(), &width, &height);
+	glfwGetWindowSize(renderer.GetWindow(), &width, &height);
 
 	Config::ScreenWidth = width;
 	Config::ScreenHeight = height;
 
 	//get deltaTime and update camera
 	float dt = this->UpdateDeltaTime();
-	scene->camera()->UpdateProjectionMatrix();
-	scene->camera()->computeViewMatrixFromInput(renderer.window(), dt);
+	scene->GetCamera()->UpdateProjectionMatrix();
+	scene->GetCamera()->computeViewMatrixFromInput(renderer.GetWindow(), dt);
 
     // Update the input manager so it registers keys
-	_inMan->update(renderer.window());
+	_inMan->Update(renderer.GetWindow());
 
 	// Update the scene
 	// this->UpdateDynamic(scene, dt);
@@ -39,13 +39,13 @@ void Game::Run(Scene* scene)
 	renderer.RenderScene(scene);
 
     // Check if the game should still run
-	if (glfwGetKey(renderer.window(), GLFW_KEY_ESCAPE) != GLFW_PRESS && glfwWindowShouldClose(renderer.window()) == 0)
+	if (glfwGetKey(renderer.GetWindow(), GLFW_KEY_ESCAPE) != GLFW_PRESS && glfwWindowShouldClose(renderer.GetWindow()) == 0)
 	{
-		running = true;
+		_running = true;
 	}
 	else
 	{
-		running = false;
+		_running = false;
 	}
 }
 

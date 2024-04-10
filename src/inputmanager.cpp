@@ -11,35 +11,35 @@ InputManager::~InputManager()
 {
 }
 
-void InputManager::update(GLFWwindow* w)
+void InputManager::Update(GLFWwindow* w)
 {
 	_window = w;
 
 	for (int i = 32; i < 96; i++)
 	{
-		registerKey(i, w);
+		RegisterKey(i, w);
 	}
 
 	for (unsigned int i = 256; i < GLFW_KEY_LAST; i++)
 	{
-		registerKey(i, w);
+		RegisterKey(i, w);
 	}
 }
 
-bool InputManager::getKey(KeyCode k)
+bool InputManager::GetKey(KeyCode k)
 {
 	return _keys[(int)k];
 }
-bool InputManager::getKeyDown(KeyCode k)
+bool InputManager::GetKeyDown(KeyCode k)
 {
 	return _keysDown[(int)k];
 }
-bool InputManager::getKeyUp(KeyCode k)
+bool InputManager::GetKeyUp(KeyCode k)
 {
 	return _keysUp[(int)k];
 }
 
-void InputManager::registerKey(int key, GLFWwindow* w)
+void InputManager::RegisterKey(int key, GLFWwindow* w)
 {
 	if (glfwGetKey(w, key) == GLFW_PRESS)
 	{

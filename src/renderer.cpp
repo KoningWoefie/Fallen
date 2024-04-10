@@ -78,8 +78,8 @@ int Renderer::init()
 	glEnable(GL_CULL_FACE);
 
 	// Create and compile our GLSL program from the shaders
-	_programID = this->loadShaders("shaders/sprite.vert", "shaders/sprite.frag");
-	_textShaderID = this->loadShaders("shaders/text.vert", "shaders/text.frag");
+	_programID = this->LoadShaders("shaders/sprite.vert", "shaders/sprite.frag");
+	_textShaderID = this->LoadShaders("shaders/text.vert", "shaders/text.frag");
 
 	// Use our shader
 	glUseProgram(_programID);
@@ -107,10 +107,10 @@ void Renderer::ChangeScreenMode()
 
 void Renderer::RenderScene(Scene* scene)
 {
-    _camera = scene->camera();
+    _camera = scene->GetCamera();
 
-    _viewMatrix = _camera->getViewMatrix();
-	_projectionMatrix = _camera->getProjectionMatrix();
+    _viewMatrix = _camera->GetViewMatrix();
+	_projectionMatrix = _camera->GetProjectionMatrix();
 
     glm::mat4 im = glm::mat4(1.0f);
 
@@ -118,20 +118,20 @@ void Renderer::RenderScene(Scene* scene)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     this->RenderObject(scene, im);
-    scaleX = 0;
-    scaleY = 0;
+    _scaleX = 0;
+    _scaleY = 0;
 
-    if(_window != nullptr) glfwSwapBuffers(this->window());
+    if(_window != nullptr) glfwSwapBuffers(this->GetWindow());
 	glfwPollEvents();
 }
 
 void Renderer::RenderObject(Object* o, glm::mat4 PaMa)
 {
-    scaleX += o->transform->scale.x;
-    scaleY += o->transform->scale.y;
+    _scaleX += o->transform->scale.x;
+    _scaleY += o->transform->scale.y;
 
-    float sX = scaleX;
-    float sY = scaleY;
+    float sX = _scaleX;
+    float sY = _scaleY;
 
     //Build our model matrix
     glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(o->transform->position.x, o->transform->position.y, 0));
@@ -151,13 +151,13 @@ void Renderer::RenderObject(Object* o, glm::mat4 PaMa)
     {
         RenderObject(o2, PaMa);
     }
-    scaleX = sX;
-    scaleY = sY;
+    _scaleX = sX;
+    _scaleY = sY;
 }
 
 void Renderer::RenderImage(Image* i, glm::mat4 PaMa)
 {
-    this->chooseShader(_programID);
+    this->ChooseShader(_programID);
 
     glActiveTexture(GL_TEXTURE0);
 
@@ -199,7 +199,7 @@ void Renderer::RenderImage(Image* i, glm::mat4 PaMa)
 	// 1st attribute buffer : vertices
 	GLuint vertexPositionID = glGetAttribLocation(_programID, "vertexPosition");
 	glEnableVertexAttribArray(vertexPositionID);
-	glBindBuffer(GL_ARRAY_BUFFER, m->vertexbuffer());
+	glBindBuffer(GL_ARRAY_BUFFER, m->GetVertexBuffer());
 	glVertexAttribPointer(
 		vertexPositionID, // The attribute we want to configure
 		3,          // size : x,y,z => 3
@@ -212,7 +212,7 @@ void Renderer::RenderImage(Image* i, glm::mat4 PaMa)
 	// 2nd attribute buffer : UVs
 	GLuint vertexUVID = glGetAttribLocation(_programID, "vertexUV");
 	glEnableVertexAttribArray(vertexUVID);
-	glBindBuffer(GL_ARRAY_BUFFER, m->uvbuffer());
+	glBindBuffer(GL_ARRAY_BUFFER, m->GetUVBuffer());
 	glVertexAttribPointer(
 		vertexUVID, // The attribute we want to configure
 		2,          // size : U,V => 2
@@ -223,7 +223,7 @@ void Renderer::RenderImage(Image* i, glm::mat4 PaMa)
 	);
 
 	// Draw the triangles
-	glDrawArrays(GL_TRIANGLES, 0, m->numverts());
+	glDrawArrays(GL_TRIANGLES, 0, m->GetNumverts());
 
 	// cleanup
 	glDisableVertexAttribArray(vertexPositionID);
@@ -238,7 +238,7 @@ void Renderer::RenderSprite(Sprite* s, glm::mat4 PaMa)
     glActiveTexture(GL_TEXTURE0);
     Texture* t = _resMan.GetTexture(s->FileName());
 
-    glBindTexture(GL_TEXTURE_2D, t->getTexture());
+    glBindTexture(GL_TEXTURE_2D, t->GetTexture());
 
     GLuint textureID = glGetUniformLocation(_programID, "textureSampler");
     glUniform1i(textureID, 0);
@@ -260,7 +260,7 @@ void Renderer::RenderSprite(Sprite* s, glm::mat4 PaMa)
 	// 1st attribute buffer : vertices
 	GLuint vertexPositionID = glGetAttribLocation(_programID, "vertexPosition");
 	glEnableVertexAttribArray(vertexPositionID);
-	glBindBuffer(GL_ARRAY_BUFFER, m->vertexbuffer());
+	glBindBuffer(GL_ARRAY_BUFFER, m->GetVertexBuffer());
 	glVertexAttribPointer(
 		vertexPositionID, // The attribute we want to configure
 		3,          // size : x,y,z => 3
@@ -273,7 +273,7 @@ void Renderer::RenderSprite(Sprite* s, glm::mat4 PaMa)
 	// 2nd attribute buffer : UVs
 	GLuint vertexUVID = glGetAttribLocation(_programID, "vertexUV");
 	glEnableVertexAttribArray(vertexUVID);
-	glBindBuffer(GL_ARRAY_BUFFER, m->uvbuffer());
+	glBindBuffer(GL_ARRAY_BUFFER, m->GetUVBuffer());
 	glVertexAttribPointer(
 		vertexUVID, // The attribute we want to configure
 		2,          // size : U,V => 2
@@ -284,7 +284,7 @@ void Renderer::RenderSprite(Sprite* s, glm::mat4 PaMa)
 	);
 
 	// Draw the triangles
-	glDrawArrays(GL_TRIANGLES, 0, m->numverts());
+	glDrawArrays(GL_TRIANGLES, 0, m->GetNumverts());
 
 	// cleanup
 	glDisableVertexAttribArray(vertexPositionID);
@@ -297,9 +297,9 @@ void Renderer::RenderSlicedSprite(SlicedSprite* ss, glm::mat4 PaMa)
     glActiveTexture(GL_TEXTURE0);
 	Texture* t = _resMan.GetTexture(ss->FileName());
 
-    ss->changeMeshData(t->Width(), t->Height());
+    ss->ChangeMeshData(t->Width(), t->Height());
     // Bind texture for OpenGL
-	glBindTexture(GL_TEXTURE_2D, t->getTexture());
+	glBindTexture(GL_TEXTURE_2D, t->GetTexture());
 
 	// Set our "textureSampler" sampler to use Texture Unit 0
 	GLuint textureID = glGetUniformLocation(_programID, "textureSampler");
@@ -316,8 +316,8 @@ void Renderer::RenderSlicedSprite(SlicedSprite* ss, glm::mat4 PaMa)
 		float y = 0;
 
 		// corrects the difference of scale so that the pixel size lines up with the texture size
-		float sX = (t->Width() * scaleX - ss->GetMeshData()[1].width - ss->GetMeshData()[2].width) / (ss->GetMeshData()[0].width * scaleX);
-		float sY = (t->Height() * scaleY - ss->GetMeshData()[3].height - ss->GetMeshData()[4].height) / (ss->GetMeshData()[0].height * scaleY);
+		float sX = (t->Width() * _scaleX - ss->GetMeshData()[1].width - ss->GetMeshData()[2].width) / (ss->GetMeshData()[0].width * _scaleX);
+		float sY = (t->Height() * _scaleY - ss->GetMeshData()[3].height - ss->GetMeshData()[4].height) / (ss->GetMeshData()[0].height * _scaleY);
 
 		glm::vec3 scale = glm::vec3(1.0f, 1.0f, 1.0f);
 		switch(i)
@@ -328,47 +328,47 @@ void Renderer::RenderSlicedSprite(SlicedSprite* ss, glm::mat4 PaMa)
 				break;
 			case 1:
 				//left
-				x = -((ss->GetMeshData()[0].width * sX / 2.0f) + (ss->GetMeshData()[i].width / 2.0f) / scaleX);
-				scale = glm::vec3(1/scaleX, sY, 1);
+				x = -((ss->GetMeshData()[0].width * sX / 2.0f) + (ss->GetMeshData()[i].width / 2.0f) / _scaleX);
+				scale = glm::vec3(1/_scaleX, sY, 1);
 				break;
 			case 2:
 				//right
-				x = ((ss->GetMeshData()[0].width * sX / 2.0f) + (ss->GetMeshData()[i].width / 2.0f)/scaleX);
-				scale = glm::vec3(1/scaleX, sY, 1);
+				x = ((ss->GetMeshData()[0].width * sX / 2.0f) + (ss->GetMeshData()[i].width / 2.0f)/_scaleX);
+				scale = glm::vec3(1/_scaleX, sY, 1);
 				break;
 			case 3:
 				//top
-				y = -(((ss->GetMeshData()[0].height * sY) / 2.0f) + ((ss->GetMeshData()[i].height / 2.0f) / scaleY));
-				scale = glm::vec3(sX, 1/scaleY, 1);
+				y = -(((ss->GetMeshData()[0].height * sY) / 2.0f) + ((ss->GetMeshData()[i].height / 2.0f) / _scaleY));
+				scale = glm::vec3(sX, 1/_scaleY, 1);
 				break;
 			case 4:
 				//bottom
-				y = ((ss->GetMeshData()[0].height * sY) / 2.0f) + ((ss->GetMeshData()[i].height / 2.0f) / scaleY);
-				scale = glm::vec3(sX, 1/scaleY, 1);
+				y = ((ss->GetMeshData()[0].height * sY) / 2.0f) + ((ss->GetMeshData()[i].height / 2.0f) / _scaleY);
+				scale = glm::vec3(sX, 1/_scaleY, 1);
 				break;
 			case 5:
 				//top left
-				x = -((ss->GetMeshData()[0].width * sX / 2.0f) + (ss->GetMeshData()[i].width / 2.0f)/scaleX);
-				y = -(((ss->GetMeshData()[0].height * sY) / 2.0f) + ((ss->GetMeshData()[i].height / 2.0f) / scaleY));
-				scale = glm::vec3(1/scaleX, 1/scaleY, 1);
+				x = -((ss->GetMeshData()[0].width * sX / 2.0f) + (ss->GetMeshData()[i].width / 2.0f)/_scaleX);
+				y = -(((ss->GetMeshData()[0].height * sY) / 2.0f) + ((ss->GetMeshData()[i].height / 2.0f) / _scaleY));
+				scale = glm::vec3(1/_scaleX, 1/_scaleY, 1);
 				break;
 			case 6:
 				//top right
-				x = (ss->GetMeshData()[0].width * sX / 2.0f) + (ss->GetMeshData()[i].width / 2.0f)/scaleX;
-				y = -(((ss->GetMeshData()[0].height * sY) / 2.0f) + ((ss->GetMeshData()[i].height / 2.0f) / scaleY));
-				scale = glm::vec3(1/scaleX, 1/scaleY, 1);
+				x = (ss->GetMeshData()[0].width * sX / 2.0f) + (ss->GetMeshData()[i].width / 2.0f)/_scaleX;
+				y = -(((ss->GetMeshData()[0].height * sY) / 2.0f) + ((ss->GetMeshData()[i].height / 2.0f) / _scaleY));
+				scale = glm::vec3(1/_scaleX, 1/_scaleY, 1);
 				break;
 			case 7:
 				//bottom left
-				x = -((ss->GetMeshData()[0].width * sX / 2.0f) + (ss->GetMeshData()[i].width / 2.0f)/scaleX);
-				y = (ss->GetMeshData()[0].height * sY / 2.0f) + (ss->GetMeshData()[i].height / 2.0f) / scaleY;
-				scale = glm::vec3(1/scaleX, 1/scaleY, 1);
+				x = -((ss->GetMeshData()[0].width * sX / 2.0f) + (ss->GetMeshData()[i].width / 2.0f)/_scaleX);
+				y = (ss->GetMeshData()[0].height * sY / 2.0f) + (ss->GetMeshData()[i].height / 2.0f) / _scaleY;
+				scale = glm::vec3(1/_scaleX, 1/_scaleY, 1);
 				break;
 			case 8:
 				//bottom right
-				x = (ss->GetMeshData()[0].width * sX / 2.0f) + (ss->GetMeshData()[i].width / 2.0f)/scaleX;
-				y = ((ss->GetMeshData()[0].height * sY) / 2.0f) + ((ss->GetMeshData()[i].height / 2.0f) / scaleY);
-				scale = glm::vec3(1/scaleX, 1/scaleY, 1);
+				x = (ss->GetMeshData()[0].width * sX / 2.0f) + (ss->GetMeshData()[i].width / 2.0f)/_scaleX;
+				y = ((ss->GetMeshData()[0].height * sY) / 2.0f) + ((ss->GetMeshData()[i].height / 2.0f) / _scaleY);
+				scale = glm::vec3(1/_scaleX, 1/_scaleY, 1);
 				break;
 			default:
 				break;
@@ -396,7 +396,7 @@ void Renderer::RenderSlicedSprite(SlicedSprite* ss, glm::mat4 PaMa)
 		// 1st attribute buffer : vertices
 		GLuint vertexPositionID = glGetAttribLocation(_programID, "vertexPosition");
 		glEnableVertexAttribArray(vertexPositionID);
-		glBindBuffer(GL_ARRAY_BUFFER, m->vertexbuffer());
+		glBindBuffer(GL_ARRAY_BUFFER, m->GetVertexBuffer());
 		glVertexAttribPointer(
 			vertexPositionID, // The attribute we want to configure
 			3,          // size : x,y,z => 3
@@ -409,7 +409,7 @@ void Renderer::RenderSlicedSprite(SlicedSprite* ss, glm::mat4 PaMa)
 		// 2nd attribute buffer : UVs
 		GLuint vertexUVID = glGetAttribLocation(_programID, "vertexUV");
 		glEnableVertexAttribArray(vertexUVID);
-		glBindBuffer(GL_ARRAY_BUFFER, m->uvbuffer());
+		glBindBuffer(GL_ARRAY_BUFFER, m->GetUVBuffer());
 		glVertexAttribPointer(
 			vertexUVID, // The attribute we want to configure
 			2,          // size : U,V => 2
@@ -420,7 +420,7 @@ void Renderer::RenderSlicedSprite(SlicedSprite* ss, glm::mat4 PaMa)
 		);
 
 		// Draw the triangles
-		glDrawArrays(GL_TRIANGLES, 0, m->numverts());
+		glDrawArrays(GL_TRIANGLES, 0, m->GetNumverts());
 
 		// cleanup
 		glDisableVertexAttribArray(vertexPositionID);
@@ -430,14 +430,14 @@ void Renderer::RenderSlicedSprite(SlicedSprite* ss, glm::mat4 PaMa)
 
 void Renderer::RenderText(Text* text, glm::mat4 PaMa)
 {
-    this->chooseShader(_textShaderID);
+    this->ChooseShader(_textShaderID);
     float bigHeight = 0;
     float x = 0;
     float y = 0;
     for (int i = 0; i < text->text.size(); i++)
     {
         char g = text->text[i];
-        glyph* gl = _fontMan.getFont(text->GetFontName(), text->GetSize())[g];
+        glyph* gl = _fontMan.GetFont(text->GetFontName(), text->GetSize())[g];
         if((gl->size.y - gl->bearing.y) > bigHeight)
         {
             bigHeight = gl->size.y;
@@ -447,7 +447,7 @@ void Renderer::RenderText(Text* text, glm::mat4 PaMa)
     {
         glm::mat4 TempPaMa = PaMa;
         char g = text->text[i];
-        glyph* gl = _fontMan.getFont(text->GetFontName(), text->GetSize())[g];
+        glyph* gl = _fontMan.GetFont(text->GetFontName(), text->GetSize())[g];
         float posX = 0 + gl->size.x * text->pivot.x;
         if(x)
         {
@@ -501,7 +501,7 @@ void Renderer::RenderText(Text* text, glm::mat4 PaMa)
         // 1st attribute buffer : vertices
         GLuint vertexPositionID = glGetAttribLocation(_textShaderID, "vertexPosition");
         glEnableVertexAttribArray(vertexPositionID);
-        glBindBuffer(GL_ARRAY_BUFFER, mesh->vertexbuffer());
+        glBindBuffer(GL_ARRAY_BUFFER, mesh->GetVertexBuffer());
 
         glVertexAttribPointer(
             vertexPositionID, // The attribute we want to configure
@@ -515,7 +515,7 @@ void Renderer::RenderText(Text* text, glm::mat4 PaMa)
         // 2nd attribute buffer : UVs
         GLuint vertexUVID = glGetAttribLocation(_textShaderID, "vertexUV");
         glEnableVertexAttribArray(vertexUVID);
-        glBindBuffer(GL_ARRAY_BUFFER, mesh->uvbuffer());
+        glBindBuffer(GL_ARRAY_BUFFER, mesh->GetUVBuffer());
         glVertexAttribPointer(
             vertexUVID, // The attribute we want to configure
             2,          // size : U,V => 2
@@ -526,7 +526,7 @@ void Renderer::RenderText(Text* text, glm::mat4 PaMa)
         );
 
         // Draw the triangles
-        glDrawArrays(GL_TRIANGLES, 0, mesh->numverts());
+        glDrawArrays(GL_TRIANGLES, 0, mesh->GetNumverts());
 
         // cleanup
         glDisableVertexAttribArray(vertexPositionID);
@@ -536,7 +536,7 @@ void Renderer::RenderText(Text* text, glm::mat4 PaMa)
     }
 }
 
-GLuint Renderer::loadShaders(const std::string& vertex_file_path, const std::string& fragment_file_path)
+GLuint Renderer::LoadShaders(const std::string& vertex_file_path, const std::string& fragment_file_path)
 {
 	// Create the shaders
 	GLuint vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
@@ -625,7 +625,7 @@ GLuint Renderer::loadShaders(const std::string& vertex_file_path, const std::str
 	return programID;
 }
 
-GLuint Renderer::chooseShader(GLuint shaderID)
+GLuint Renderer::ChooseShader(GLuint shaderID)
 {
     if(_activeID == shaderID)
     {

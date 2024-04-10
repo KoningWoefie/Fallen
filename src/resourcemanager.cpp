@@ -44,7 +44,7 @@ Texture* ResourceManager::GetTexture(std::string fileName, int width, int height
         return _textures[fileName];
     }
     _textures[fileName] = new Texture();
-    _textures[fileName]->loadTGA(fileName);
+    _textures[fileName]->LoadTGA(fileName);
     return _textures[fileName];
 }
 
@@ -65,7 +65,7 @@ Mesh* ResourceManager::GetMesh(int width, int height, int radius, glm::vec2 pivo
     if(radius)
     {
         Mesh* m = new Mesh(width, height);
-        m->generateCircleMesh(pivot, uvWidth, uvHeight, 33);
+        m->GenerateCircleMesh(pivot, uvWidth, uvHeight, 33);
         _meshes[name] = m;
         return _meshes[name];
     }
@@ -77,7 +77,7 @@ Mesh* ResourceManager::GetMesh(int width, int height, int radius, glm::vec2 pivo
         return _meshes[name];
     }
     Mesh* m = new Mesh(width, height);
-    m->generateMesh(pivot, uvWidth, uvHeight, nineSlice);
+    m->GenerateMesh(pivot, uvWidth, uvHeight, nineSlice);
     _meshes[name] = m;
 
     return _meshes[name];

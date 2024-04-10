@@ -14,9 +14,9 @@ public:
 	virtual ~Camera();
 
 	void computeViewMatrixFromInput(GLFWwindow* window, float deltaTime);
-	glm::mat4 getViewMatrix() { return _viewMatrix; };
-	glm::mat4 getProjectionMatrix() { return _projectionMatrix; };
-	glm::vec3 getCursor() { return _cursor; };
+	glm::mat4 GetViewMatrix() { return _viewMatrix; };
+	glm::mat4 GetProjectionMatrix() { return _projectionMatrix; };
+	glm::vec3 GetCursor() { return _cursor; };
 
 	void UpdateProjectionMatrix();
 

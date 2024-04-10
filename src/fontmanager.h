@@ -27,10 +27,10 @@ public:
     ~FontManager();
 
     // Get the font
-    std::map<char, glyph*> getFont(const char * fontPath, int size);
+    std::map<char, glyph*> GetFont(const char * fontPath, int size);
 
     // Make the font
-    void addFont(const char * fontPath, int size);
+    void AddFont(const char * fontPath, int size);
 
 private :
     std::map<std::pair<const char *, int>, std::map<char, glyph*>> _fonts;

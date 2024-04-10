@@ -12,7 +12,7 @@ public:
 
     virtual void Update(float deltaTime) = 0;
 
-    Camera* camera() { return _camera; }
+    Camera* GetCamera() { return _camera; }
 private:
     Camera* _camera;
 };

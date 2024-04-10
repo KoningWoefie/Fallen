@@ -14,7 +14,7 @@ SlicedSprite::SlicedSprite(const std::string& filePath, int ileft, int iright, i
 {
     _type = 1;
     changed = false;
-    generateMeshData(ileft, iright, itop, ibottom, width, height);
+    GenerateMeshData(ileft, iright, itop, ibottom, width, height);
 }
 
 SlicedSprite::~SlicedSprite()
@@ -22,7 +22,7 @@ SlicedSprite::~SlicedSprite()
     _meshData.clear();
 }
 
-void SlicedSprite::generateMeshData(int ileft, int iright, int itop, int ibottom, int width, int height)
+void SlicedSprite::GenerateMeshData(int ileft, int iright, int itop, int ibottom, int width, int height)
 {
     _left = ileft;
     _right = iright;
@@ -142,10 +142,10 @@ void SlicedSprite::generateMeshData(int ileft, int iright, int itop, int ibottom
     _meshData.push_back(bottomRight);
 }
 
-void SlicedSprite::changeMeshData(int width, int height)
+void SlicedSprite::ChangeMeshData(int width, int height)
 {
     if(changed) return;
     _meshData.clear();
-    generateMeshData(_left, _right, _top, _bottom, width, height);
+    GenerateMeshData(_left, _right, _top, _bottom, width, height);
     changed = true;
 }

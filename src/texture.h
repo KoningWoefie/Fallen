@@ -14,9 +14,9 @@ public:
     Texture(int width = 0, int height = 0);
     virtual ~Texture();
 
-    GLuint loadTGA(const std::string& path);
+    GLuint LoadTGA(const std::string& path);
 
-    GLuint getTexture() { return _texture; }
+    GLuint GetTexture() { return _texture; }
 
     int Width() { return _width; }
     int Height() { return _height; }

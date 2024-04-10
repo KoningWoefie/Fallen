@@ -15,7 +15,7 @@ Texture::~Texture()
 }
 
 //load tga and set the texture as said .tga file
-GLuint Texture::loadTGA(const std::string& path)
+GLuint Texture::LoadTGA(const std::string& path)
 {
     std::cout << "Loading TGA: " << path << std::endl;
 

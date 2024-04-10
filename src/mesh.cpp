@@ -14,7 +14,7 @@ Mesh::~Mesh()
     glDeleteBuffers(1, &_uvbuffer);
 }
 
-void Mesh::generateMesh(glm::vec2 pivot, float uvWidth, float uvHeight, bool nineSlice)
+void Mesh::GenerateMesh(glm::vec2 pivot, float uvWidth, float uvHeight, bool nineSlice)
 {
     std::vector<glm::vec3> vertices;
 
@@ -48,7 +48,7 @@ void Mesh::generateMesh(glm::vec2 pivot, float uvWidth, float uvHeight, bool nin
 
 
 
-    generateBuffers(vertices, _uvs);
+    GenerateBuffers(vertices, _uvs);
 }
 
 void Mesh::GenerateTextMesh(glm::vec2 pivot, float uvWidth, float uvHeight)
@@ -81,10 +81,10 @@ void Mesh::GenerateTextMesh(glm::vec2 pivot, float uvWidth, float uvHeight)
 
 
 
-    generateBuffers(vertices, _uvs);
+    GenerateBuffers(vertices, _uvs);
 }
 
-void Mesh::generateCircleMesh(glm::vec2 pivot, float uvWidth, float uvHeight, int segments)
+void Mesh::GenerateCircleMesh(glm::vec2 pivot, float uvWidth, float uvHeight, int segments)
 {
     _radius = _width / 2;
     unsigned int step = segments;
@@ -126,10 +126,10 @@ void Mesh::generateCircleMesh(glm::vec2 pivot, float uvWidth, float uvHeight, in
 		// ####################################################
 	}
 
-	this->generateBuffers(vertices, uvs);
+	this->GenerateBuffers(vertices, uvs);
 }
 
-void Mesh::generateBuffers(std::vector<glm::vec3> vertices, std::vector<glm::vec2> uvs)
+void Mesh::GenerateBuffers(std::vector<glm::vec3> vertices, std::vector<glm::vec2> uvs)
 {
     _numverts = vertices.size();
 

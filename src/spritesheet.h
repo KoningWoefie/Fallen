@@ -14,14 +14,14 @@ public:
     virtual ~SpriteSheet();
 
     // Update function
-    virtual void update(float deltaTime) = 0;
+    virtual void Update(float deltaTime) = 0;
 
     // Set the frame of the spritesheet you want to use
     int Frame(int f);
 
 protected:
     Timer* t;
-    
+
     std::vector<std::vector<int>> _animations;
     float _animationDelay;
 
@@ -41,7 +41,7 @@ struct AnimatedSprite : SpriteSheet
 
     }
 
-    int playAnimation(int index)
+    int PlayAnimation(int index)
     {
         if(!t->IsStarted())
         {
@@ -73,7 +73,7 @@ struct AnimatedSprite : SpriteSheet
         return 0;
     }
 
-    void setAnimation(std::vector<int> animation) { _animations.push_back(animation); }
+    void SetAnimation(std::vector<int> animation) { _animations.push_back(animation); }
 };
 
 

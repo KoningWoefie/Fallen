@@ -8,17 +8,17 @@ FontManager::~FontManager()
 {
 }
 
-std::map<char, glyph*> FontManager::getFont(const char * fontPath, int size)
+std::map<char, glyph*> FontManager::GetFont(const char * fontPath, int size)
 {
     if(_fonts[std::make_pair(fontPath, size)][0] != nullptr)
     {
         return _fonts[std::make_pair(fontPath, size)];
     }
-    addFont(fontPath, size);
+    AddFont(fontPath, size);
     return _fonts[std::make_pair(fontPath, size)];
 }
 
-void FontManager::addFont(const char * fontPath, int size)
+void FontManager::AddFont(const char * fontPath, int size)
 {
     FT_Library ft;
 

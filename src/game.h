@@ -24,7 +24,7 @@ public:
 
 	void Run(Scene* scene);
 
-	bool IsRunning() { return running; }
+	bool IsRunning() { return _running; }
 
 private:
 	Renderer renderer;
@@ -34,7 +34,7 @@ private:
 	void UpdateDynamic(Dynamic* d, float deltaTime);
 
 	InputManager* _inMan = InputManager::input();
-	bool running;
+	bool _running;
 
 	GLFWmonitor* _monitor;
 };

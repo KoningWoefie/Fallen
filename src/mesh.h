@@ -16,21 +16,21 @@ public:
     virtual ~Mesh();
 
     //make rectangle and or square mesh
-    void generateMesh(glm::vec2 pivot, float uvWidth, float uvHeight, bool nineSlice = false);
+    void GenerateMesh(glm::vec2 pivot, float uvWidth, float uvHeight, bool nineSlice = false);
     void GenerateTextMesh(glm::vec2 pivot, float uvWidth, float uvHeight);
 
     //make circle mesh
-    void generateCircleMesh(glm::vec2 pivot, float uvWidth, float uvHeight, int segments);
+    void GenerateCircleMesh(glm::vec2 pivot, float uvWidth, float uvHeight, int segments);
 
     //generate the buffers for openGL
-    void generateBuffers(std::vector<glm::vec3> vertices, std::vector<glm::vec2> uvs);
+    void GenerateBuffers(std::vector<glm::vec3> vertices, std::vector<glm::vec2> uvs);
 
-    GLuint vertexbuffer() { return _vertexbuffer; };
-    GLuint uvbuffer() { return _uvbuffer; };
+    GLuint GetVertexBuffer() { return _vertexbuffer; };
+    GLuint GetUVBuffer() { return _uvbuffer; };
 
     glm::vec2 UV() { return _uv; };
 
-    int numverts() { return _numverts; };
+    int GetNumverts() { return _numverts; };
 private:
     int _width;
     int _height;

@@ -24,20 +24,21 @@ public:
 
     void RenderScene(Scene* scene);
 
-    GLFWwindow* window() { return _window; }
-    void setWindow(GLFWwindow* window) { _window = window; }
+    GLFWwindow* GetWindow() { return _window; }
+    void SetWindow(GLFWwindow* window) { _window = window; }
 
     void ChangeScreenMode();
 private:
     void RenderDynamic(Dynamic* d, glm::mat4 PaMa);
 
     void RenderObject(Object* o, glm::mat4 PaMa);
+
     void RenderImage(Image* i, glm::mat4 PaMa);
+    void RenderText(Text* text, glm::mat4 PaMa);
+
     void RenderSprite(Sprite* sprite, glm::mat4 PaMa);
     void RenderSlicedSprite(SlicedSprite* i, glm::mat4 PaMa);
 
-    void RenderNineSlices(SlicedSprite* sprite, glm::mat4 PaMa);
-    void RenderText(Text* text, glm::mat4 PaMa);
 
     int init();
 
@@ -45,12 +46,12 @@ private:
     ResourceManager _resMan;
     FontManager _fontMan;
 
-	GLuint loadShaders(
+	GLuint LoadShaders(
 		const std::string& vertex_file_path,
 		const std::string& fragment_file_path
 	);
 
-    GLuint chooseShader(GLuint shaderID);
+    GLuint ChooseShader(GLuint shaderID);
 
 	GLuint _programID;
     GLuint _textShaderID;
@@ -62,8 +63,8 @@ private:
 	glm::mat4 _viewMatrix;
 	glm::mat4 _projectionMatrix;
 
-    float scaleX = 0;
-    float scaleY = 0;
+    float _scaleX = 0;
+    float _scaleY = 0;
 };
 
 #endif

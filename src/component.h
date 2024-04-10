@@ -12,7 +12,7 @@ public:
     Component();
     virtual ~Component();
 
-    Object* getObject() { return object; };
+    Object* GetObject() { return object; };
 
     bool isRenderable() { return Renderable; };
 private:
