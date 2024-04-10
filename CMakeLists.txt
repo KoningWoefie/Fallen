@@ -68,6 +68,8 @@ set(ALL_GRAPHICS_LIBS
 add_library(src # ar rcs fallenlib.a
 	src/camera.cpp
 	src/camera.h
+	src/canvas.cpp
+	src/canvas.h
 	src/config.h
 	src/config.cpp
 	src/fontmanager.cpp
@@ -101,6 +103,8 @@ add_library(src # ar rcs fallenlib.a
 	src/transform.h
 	src/image.cpp
 	src/image.h
+	src/uielement.cpp
+	src/uielement.h
 )
 
 add_executable(examples # g++ examples/main.cpp -o examples
