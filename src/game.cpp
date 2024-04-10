@@ -49,14 +49,14 @@ void Game::Run(Scene* scene)
 	}
 }
 
-void Game::UpdateDynamic(Dynamic* d, float deltaTime)
+void Game::UpdateObject(Object* o, float deltaTime)
 {
-	d->update(deltaTime);
+	o->Update(deltaTime);
 
     // Update all the children of this dynamic as well
-	for (Dynamic* cd : d->GetChildren())
+	for (Object* co : o->GetChildren())
 	{
-		UpdateDynamic(cd, deltaTime);
+		UpdateObject(co, deltaTime);
 	}
 }
 

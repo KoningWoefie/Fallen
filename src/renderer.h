@@ -6,7 +6,6 @@
 #include <GLFW/glfw3.h>
 
 #include <src/config.h>
-#include <src/dynamic.h>
 #include <src/fontmanager.h>
 #include <src/scene.h>
 #include <src/resourcemanager.h>
@@ -29,8 +28,6 @@ public:
 
     void ChangeScreenMode();
 private:
-    void RenderDynamic(Dynamic* d, glm::mat4 PaMa);
-
     void RenderObject(Object* o, glm::mat4 PaMa);
 
     void RenderImage(Image* i, glm::mat4 PaMa);

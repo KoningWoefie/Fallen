@@ -12,7 +12,7 @@
 #include <src/renderer.h>
 #include <src/camera.h>
 #include <src/inputmanager.h>
-#include <src/sprite.h>
+#include <src/object.h>
 
 //Copyright 2023 Sander Hoving (Fuck you Gideon)
 
@@ -31,12 +31,10 @@ private:
 
     float UpdateDeltaTime();
 
-	void UpdateDynamic(Dynamic* d, float deltaTime);
+	void UpdateObject(Object* d, float deltaTime);
 
 	InputManager* _inMan = InputManager::input();
 	bool _running;
-
-	GLFWmonitor* _monitor;
 };
 
 #endif // game_H

@@ -144,8 +144,9 @@ void Renderer::RenderObject(Object* o, glm::mat4 PaMa)
     for(Component* c : o->GetComponents())
     {
         if(!c->isRenderable()) continue;
-        if(typeid(*c) == typeid(Image)) { RenderImage(dynamic_cast<Image*>(c), PaMa); }
-        if(typeid(*c) == typeid(Text)) { RenderText(dynamic_cast<Text*>(c), PaMa); }
+        auto type = *c;
+        if(typeid(type) == typeid(Image)) { RenderImage(dynamic_cast<Image*>(c), PaMa); }
+        if(typeid(type) == typeid(Text)) { RenderText(dynamic_cast<Text*>(c), PaMa); }
     }
     for(Object* o2 : o->GetChildren())
     {

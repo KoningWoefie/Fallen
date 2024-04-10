@@ -70,8 +70,6 @@ add_library(src # ar rcs fallenlib.a
 	src/camera.h
 	src/config.h
 	src/config.cpp
-	src/dynamic.cpp
-	src/dynamic.h
 	src/fontmanager.cpp
 	src/fontmanager.h
 	src/game.cpp
