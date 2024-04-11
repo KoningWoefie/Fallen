@@ -237,6 +237,9 @@ void Renderer::RenderUIObject(Object* o, Canvas* canvas, glm::mat4 PaMa)
 
     PaMa *= modelMatrix;
 
+    _scaleX *= csX;
+    _scaleY *= csY;
+
     for(Component* c : o->GetComponents())
     {
         if(!c->isRenderable()) continue;
