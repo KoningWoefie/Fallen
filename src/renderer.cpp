@@ -153,7 +153,14 @@ void Renderer::RenderObject(Object* o, glm::mat4 PaMa)
     {
         if(o->GetComponent<Canvas>())
         {
-            RenderUIObject(o2, o->GetComponent<Canvas>(), PaMa);
+            Canvas* c = o->GetComponent<Canvas>();
+            if(c->GetScaleWithScreenSize())
+            {
+                c->SetCanvasSize(Config::ScreenWidth, Config::ScreenHeight);
+                o->transform->position = glm::vec3(Config::ScreenWidth/2, Config::ScreenHeight/2, 0.0f);
+            }
+            RenderUIObject(o2, c, PaMa);
+            c = nullptr;
             continue;
         }
         RenderObject(o2, PaMa);
