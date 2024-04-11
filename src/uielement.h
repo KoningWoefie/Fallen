@@ -10,10 +10,10 @@ enum class UIAlignment
     Right,
     Top,
     Bottom,
-    LeftBottom,
-    RightBottom,
-    LeftTop,
-    RightTop,
+    BottomLeft,
+    BottomRight,
+    TopLeft,
+    TopRight,
 };
 
 class UIElement : public Component
@@ -23,6 +23,7 @@ public:
     virtual ~UIElement();
 
     void SetAlignment(UIAlignment alignment) { _alignment = (int)alignment; };
+    UIAlignment GetAlignment() { return (UIAlignment)_alignment; };
 
 private:
     int _alignment;

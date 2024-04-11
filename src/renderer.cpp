@@ -1,6 +1,7 @@
 #include <src/camera.h>
 #include "GLFW/glfw3.h"
 #include "src/sprite.h"
+#include "src/uielement.h"
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
@@ -164,8 +165,57 @@ void Renderer::RenderUIObject(Object* o, Canvas* canvas, glm::mat4 PaMa)
     float sX = _scaleX;
     float sY = _scaleY;
 
+    float x = 0;
+    float y = 0;
+
+    if(o->GetComponent<UIElement>() == nullptr)
+    {
+        std::cout << "UIElement component not found on object that is a child of canvas" << std::endl;
+        return;
+    }
+
+    switch (o->GetComponent<UIElement>()->GetAlignment())
+    {
+        case UIAlignment::TopLeft:
+            x = 0;
+            y = 0;
+            break;
+        case UIAlignment::Top:
+            x = (float)(canvas->GetCanvasWidth()) / 2;
+            y = 0;
+            break;
+        case UIAlignment::TopRight:
+            x = canvas->GetCanvasWidth();
+            y = 0;
+            break;
+        case UIAlignment::Left:
+            x = 0;
+            y = (float)(canvas->GetCanvasHeight()) / 2;
+            break;
+        case UIAlignment::Center:
+            x = (float)(canvas->GetCanvasWidth()) / 2;
+            y = (float)(canvas->GetCanvasHeight()) / 2;
+            break;
+        case UIAlignment::Right:
+            x = canvas->GetCanvasWidth();
+            y = (float)(canvas->GetCanvasHeight()) / 2;
+            break;
+        case UIAlignment::BottomLeft:
+            x = 0;
+            y = canvas->GetCanvasHeight();
+            break;
+        case UIAlignment::Bottom:
+            x = (float)(canvas->GetCanvasWidth()) / 2;
+            y = canvas->GetCanvasHeight();
+            break;
+        case UIAlignment::BottomRight:
+            x = canvas->GetCanvasWidth();
+            y = canvas->GetCanvasHeight();
+            break;
+    }
+
     //Build our model matrix
-    glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(o->transform->position.x, o->transform->position.y, 0));
+    glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(o->transform->position.x + x, o->transform->position.y + y, 0));
     glm::mat4 rotationMatrix = glm::eulerAngleYXZ(0.0f, 0.0f, o->transform->rotation);
     glm::mat4 scalingMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(o->transform->scale.x, o->transform->scale.y, 1));
     glm::mat4 modelMatrix = translationMatrix * rotationMatrix * scalingMatrix;

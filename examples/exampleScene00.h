@@ -4,6 +4,7 @@
 #include <src/scene.h>
 #include <src/sprite.h>
 #include <src/text.h>
+#include <src/canvas.h>
 #include "testobj.h"
 
 class ExampleScene00 : public Scene
@@ -15,6 +16,7 @@ public:
     virtual void Update(float deltaTime);
 private:
     TestObj* testObj;
+    TestObj* canvas;
 };
 
 

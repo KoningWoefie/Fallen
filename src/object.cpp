@@ -1,4 +1,6 @@
+#include "src/canvas.h"
 #include "src/transform.h"
+#include "src/uielement.h"
 #include <src/object.h>
 
 Object::Object()
@@ -14,6 +16,10 @@ Object::~Object()
 
 void Object::AddChild(Object* child)
 {
+    if(this->GetComponent<Canvas>() || this->GetComponent<UIElement>())
+    {
+        if(!child->GetComponent<Canvas>() && !child->GetComponent<UIElement>()) child->AddComponent(new UIElement());
+    }
     m_children.push_back(child);
 }
 
