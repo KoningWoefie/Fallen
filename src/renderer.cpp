@@ -151,6 +151,11 @@ void Renderer::RenderObject(Object* o, glm::mat4 PaMa)
     }
     for(Object* o2 : o->GetChildren())
     {
+        if(o->GetComponent<Canvas>())
+        {
+            RenderUIObject(o2, o->GetComponent<Canvas>(), PaMa);
+            continue;
+        }
         RenderObject(o2, PaMa);
     }
     _scaleX = sX;
@@ -176,41 +181,41 @@ void Renderer::RenderUIObject(Object* o, Canvas* canvas, glm::mat4 PaMa)
 
     switch (o->GetComponent<UIElement>()->GetAlignment())
     {
-        case UIAlignment::TopLeft:
+        case UIAlignment::Center:
             x = 0;
             y = 0;
+            break;
+        case UIAlignment::TopLeft:
+            x = -((float)(canvas->GetCanvasWidth()) / 2);
+            y = -((float)(canvas->GetCanvasHeight()) / 2);
             break;
         case UIAlignment::Top:
-            x = (float)(canvas->GetCanvasWidth()) / 2;
-            y = 0;
+            x = 0;
+            y = -((float)(canvas->GetCanvasHeight()) / 2);
             break;
         case UIAlignment::TopRight:
-            x = canvas->GetCanvasWidth();
-            y = 0;
+            x = (float)canvas->GetCanvasWidth() / 2;
+            y = -((float)(canvas->GetCanvasHeight()) / 2);
             break;
         case UIAlignment::Left:
-            x = 0;
-            y = (float)(canvas->GetCanvasHeight()) / 2;
-            break;
-        case UIAlignment::Center:
-            x = (float)(canvas->GetCanvasWidth()) / 2;
-            y = (float)(canvas->GetCanvasHeight()) / 2;
+            x = -((float)(canvas->GetCanvasWidth()) / 2);
+            y = 0;
             break;
         case UIAlignment::Right:
-            x = canvas->GetCanvasWidth();
-            y = (float)(canvas->GetCanvasHeight()) / 2;
+            x = ((float)(canvas->GetCanvasWidth()) / 2);
+            y = 0;
             break;
         case UIAlignment::BottomLeft:
-            x = 0;
-            y = canvas->GetCanvasHeight();
+            x = -((float)(canvas->GetCanvasWidth()) / 2);
+            y = (float)(canvas->GetCanvasHeight()) / 2;
             break;
         case UIAlignment::Bottom:
-            x = (float)(canvas->GetCanvasWidth()) / 2;
-            y = canvas->GetCanvasHeight();
+            x = 0;
+            y = (float)(canvas->GetCanvasHeight()) / 2;
             break;
         case UIAlignment::BottomRight:
-            x = canvas->GetCanvasWidth();
-            y = canvas->GetCanvasHeight();
+            x = (float)canvas->GetCanvasWidth() / 2;
+            y = (float)(canvas->GetCanvasHeight()) / 2;
             break;
     }
 
@@ -225,7 +230,7 @@ void Renderer::RenderUIObject(Object* o, Canvas* canvas, glm::mat4 PaMa)
     for(Component* c : o->GetComponents())
     {
         if(!c->isRenderable()) continue;
-        auto type = *c;
+        auto& type = *c;
         if(typeid(type) == typeid(Image)) { RenderImage(dynamic_cast<Image*>(c), PaMa); }
         if(typeid(type) == typeid(Text)) { RenderText(dynamic_cast<Text*>(c), PaMa); }
     }

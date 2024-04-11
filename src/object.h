@@ -34,8 +34,6 @@ public:
                 return dynamic_cast<T*>(m_components[i]);
             }
         }
-
-        std::cout << "Component not found" << std::endl;
         return nullptr;
     }
 

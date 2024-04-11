@@ -1,5 +1,6 @@
 #include "exampleScene00.h"
 #include "examples/testobj.h"
+#include "src/uielement.h"
 #include <src/image.h>
 
 ExampleScene00::ExampleScene00()
