@@ -137,7 +137,3 @@ file(
 	COPY src/fonts
 	DESTINATION ${CMAKE_BINARY_DIR}
 )
-file(
-    COPY ${CMAKE_BINARY_DIR}/compile_commands.json
-    DESTINATION ../
-)

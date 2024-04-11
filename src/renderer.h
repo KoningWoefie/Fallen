@@ -1,7 +1,7 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
-#include "src/sprite.h"
+#include <src/sprite.h>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
@@ -14,6 +14,7 @@
 #include <src/mesh.h>
 #include <src/object.h>
 #include <src/image.h>
+#include <src/canvas.h>
 
 class Renderer
 {
@@ -29,13 +30,13 @@ public:
     void ChangeScreenMode();
 private:
     void RenderObject(Object* o, glm::mat4 PaMa);
+    void RenderUIObject(Object* o, Canvas* canvas, glm::mat4 PaMa);
 
     void RenderImage(Image* i, glm::mat4 PaMa);
     void RenderText(Text* text, glm::mat4 PaMa);
 
     void RenderSprite(Sprite* sprite, glm::mat4 PaMa);
     void RenderSlicedSprite(SlicedSprite* i, glm::mat4 PaMa);
-
 
     int init();
 

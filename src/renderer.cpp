@@ -144,13 +144,44 @@ void Renderer::RenderObject(Object* o, glm::mat4 PaMa)
     for(Component* c : o->GetComponents())
     {
         if(!c->isRenderable()) continue;
-        auto type = *c;
+        auto& type = *c;
         if(typeid(type) == typeid(Image)) { RenderImage(dynamic_cast<Image*>(c), PaMa); }
         if(typeid(type) == typeid(Text)) { RenderText(dynamic_cast<Text*>(c), PaMa); }
     }
     for(Object* o2 : o->GetChildren())
     {
         RenderObject(o2, PaMa);
+    }
+    _scaleX = sX;
+    _scaleY = sY;
+}
+
+void Renderer::RenderUIObject(Object* o, Canvas* canvas, glm::mat4 PaMa)
+{
+    _scaleX += o->transform->scale.x;
+    _scaleY += o->transform->scale.y;
+
+    float sX = _scaleX;
+    float sY = _scaleY;
+
+    //Build our model matrix
+    glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(o->transform->position.x, o->transform->position.y, 0));
+    glm::mat4 rotationMatrix = glm::eulerAngleYXZ(0.0f, 0.0f, o->transform->rotation);
+    glm::mat4 scalingMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(o->transform->scale.x, o->transform->scale.y, 1));
+    glm::mat4 modelMatrix = translationMatrix * rotationMatrix * scalingMatrix;
+
+    PaMa *= modelMatrix;
+
+    for(Component* c : o->GetComponents())
+    {
+        if(!c->isRenderable()) continue;
+        auto type = *c;
+        if(typeid(type) == typeid(Image)) { RenderImage(dynamic_cast<Image*>(c), PaMa); }
+        if(typeid(type) == typeid(Text)) { RenderText(dynamic_cast<Text*>(c), PaMa); }
+    }
+    for(Object* o2 : o->GetChildren())
+    {
+        RenderUIObject(o2, canvas, PaMa);
     }
     _scaleX = sX;
     _scaleY = sY;

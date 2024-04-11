@@ -28,7 +28,7 @@ public:
     {
         for(int i = 0; i < m_components.size(); i++)
         {
-            auto type = *m_components[i];
+            auto& type = *m_components[i];
             if(typeid(T) == typeid(type))
             {
                 return dynamic_cast<T*>(m_components[i]);
