@@ -151,9 +151,9 @@ void Renderer::RenderObject(Object* o, glm::mat4 PaMa)
     }
     for(Object* o2 : o->GetChildren())
     {
-        if(o->GetComponent<Canvas>())
+        Canvas* c = o->GetComponent<Canvas>();
+        if(c)
         {
-            Canvas* c = o->GetComponent<Canvas>();
             if(c->GetScaleWithScreenSize())
             {
                 c->SetCanvasSize(Config::ScreenWidth, Config::ScreenHeight);
