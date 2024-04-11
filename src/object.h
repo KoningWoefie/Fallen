@@ -1,6 +1,7 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
+#include "src/inputmanager.h"
 #include <iostream>
 #include <vector>
 
@@ -43,10 +44,15 @@ public:
     Object* parent;
 
     Transform* transform;
+
+protected:
+    InputManager* Input() { return _input; }
 private:
     std::vector<Object*> m_children;
 
     std::vector<Component*> m_components;
+
+    InputManager* _input = InputManager::input();
 };
 
 #endif
