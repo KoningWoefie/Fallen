@@ -119,8 +119,8 @@ void Renderer::RenderScene(Scene* scene)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     this->RenderObject(scene, im);
-    _scaleX = 0;
-    _scaleY = 0;
+    _scaleX = 1.0f;
+    _scaleY = 1.0f;
 
     if(_window != nullptr) glfwSwapBuffers(this->GetWindow());
 	glfwPollEvents();
@@ -128,8 +128,8 @@ void Renderer::RenderScene(Scene* scene)
 
 void Renderer::RenderObject(Object* o, glm::mat4 PaMa)
 {
-    _scaleX += o->transform->scale.x;
-    _scaleY += o->transform->scale.y;
+    _scaleX *= o->transform->scale.x;
+    _scaleY *= o->transform->scale.y;
 
     float sX = _scaleX;
     float sY = _scaleY;
@@ -159,8 +159,8 @@ void Renderer::RenderObject(Object* o, glm::mat4 PaMa)
 
 void Renderer::RenderUIObject(Object* o, Canvas* canvas, glm::mat4 PaMa)
 {
-    _scaleX += o->transform->scale.x;
-    _scaleY += o->transform->scale.y;
+    _scaleX *= o->transform->scale.x;
+    _scaleY *= o->transform->scale.y;
 
     float sX = _scaleX;
     float sY = _scaleY;
