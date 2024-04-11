@@ -6,7 +6,7 @@
 ExampleScene00::ExampleScene00()
 {
     canvas = new TestObj();
-    Canvas* c = new Canvas();
+    Canvas* c = new Canvas(glm::vec2(1280, 720));
     canvas->AddComponent(c);
     canvas->transform->position = glm::vec3(c->GetCanvasWidth()/2, c->GetCanvasHeight()/2, 0.0f);
     testObj = new TestObj();

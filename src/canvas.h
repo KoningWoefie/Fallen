@@ -7,7 +7,12 @@
 class Canvas : public Component
 {
 public:
-    Canvas(int width = Config::ScreenWidth, int height = Config::ScreenHeight, bool scaleWithScreenSize = true);
+    // Constructor that does not scale with screen size
+    Canvas(int width, int height);
+
+    // Constructor that scales with screen size according to the reference resolution
+    Canvas(glm::vec2 referenceResolution);
+
     virtual ~Canvas();
 
     glm::vec2 GetCanvasSize() { return glm::vec2(_width, _height); };
@@ -23,9 +28,13 @@ public:
     void SetScaleWithScreenSize(bool scale) { _scaleWithScreenSize = scale; };
     bool GetScaleWithScreenSize() { return _scaleWithScreenSize; };
 
+    glm::vec2 GetReferenceResolution() { return _referenceResolution; };
+
 private:
     int _width;
     int _height;
+
+    glm::vec2 _referenceResolution;
 
     bool _scaleWithScreenSize;
 };
