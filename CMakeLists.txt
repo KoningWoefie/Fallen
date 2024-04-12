@@ -66,6 +66,8 @@ set(ALL_GRAPHICS_LIBS
 
 # src (fallenlib.a)
 add_library(src # ar rcs fallenlib.a
+    src/button.cpp
+    src/button.h
 	src/camera.cpp
 	src/camera.h
 	src/canvas.cpp
