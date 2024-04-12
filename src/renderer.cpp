@@ -228,17 +228,18 @@ void Renderer::RenderUIObject(Object* o, Canvas* canvas, glm::mat4 PaMa)
 
     float csX = (float)Config::ScreenWidth / (float)canvas->GetReferenceResolution().x;
     float csY = (float)Config::ScreenHeight / (float)canvas->GetReferenceResolution().y;
+    float cs = (csX + csY) / 2;
 
     //Build our model matrix
     glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(o->transform->position.x + x, o->transform->position.y + y, 0));
     glm::mat4 rotationMatrix = glm::eulerAngleYXZ(0.0f, 0.0f, o->transform->rotation);
-    glm::mat4 scalingMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(o->transform->scale.x * csX, o->transform->scale.y * csY, 1));
+    glm::mat4 scalingMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(o->transform->scale.x * cs, o->transform->scale.y * cs, 1));
     glm::mat4 modelMatrix = translationMatrix * rotationMatrix * scalingMatrix;
 
     PaMa *= modelMatrix;
 
-    _scaleX *= csX;
-    _scaleY *= csY;
+    _scaleX *= cs;
+    _scaleY *= cs;
 
     for(Component* c : o->GetComponents())
     {
