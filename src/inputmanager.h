@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include <GL/glew.h>
+#include <glm/glm.hpp>
 #include <GLFW/glfw3.h>
 
 enum class KeyCode
@@ -144,6 +145,8 @@ public:
 
 	bool GetKeyUp(KeyCode k);
 
+	glm::vec2 GetMousePosition() { return _mousePosition; };
+
 private:
 	InputManager();
 	static InputManager* _instance;
@@ -154,6 +157,8 @@ private:
 	std::map<int, bool> _keys;
 	std::map<int, bool> _keysDown;
 	std::map<int, bool> _keysUp;
+
+	glm::vec2 _mousePosition;
 };
 
 #endif

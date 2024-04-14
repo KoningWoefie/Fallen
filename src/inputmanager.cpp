@@ -15,6 +15,13 @@ void InputManager::Update(GLFWwindow* w)
 {
 	_window = w;
 
+	double x = 0.0;
+	double y = 0.0;
+
+	glfwGetCursorPos(w, &x, &y);
+
+	_mousePosition = glm::vec2(x, y);
+
 	for (int i = 32; i < 96; i++)
 	{
 		RegisterKey(i, w);
