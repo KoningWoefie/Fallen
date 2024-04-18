@@ -5,6 +5,7 @@
 #include <src/sprite.h>
 #include <src/text.h>
 #include <src/canvas.h>
+#include <src/button.h>
 #include "testobj.h"
 
 class ExampleScene00 : public Scene
@@ -17,6 +18,11 @@ public:
 private:
     TestObj* testObj;
     TestObj* canvas;
+
+    void OnButtonClicked();
+    void OnButtonHovered();
+    void OnButtonReleased();
+
 };
 
 

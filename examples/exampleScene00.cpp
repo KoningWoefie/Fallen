@@ -13,6 +13,12 @@ ExampleScene00::ExampleScene00()
 
     testObj->transform->position = glm::vec3(0.0f, 0.0f, 0.0f);
     testObj->AddComponent(new Image());
+    testObj->AddComponent(new Button(190, 190));
+
+    Button* b = testObj->GetComponent<Button>();
+    b->SetOnHover(std::bind(&ExampleScene00::OnButtonHovered, this));
+    b->SetOnPress(std::bind(&ExampleScene00::OnButtonClicked, this));
+    b->SetOnRelease(std::bind(&ExampleScene00::OnButtonReleased, this));
 
     SlicedSprite* sprite = new SlicedSprite("assets/buttons-down.tga", 25, 25, 25, 25);
     Image* i = testObj->GetComponent<Image>();
@@ -33,4 +39,19 @@ ExampleScene00::~ExampleScene00()
 
 void ExampleScene00::Update(float deltaTime)
 {
+}
+
+void ExampleScene00::OnButtonClicked()
+{
+    std::cout << "Button Clicked!" << std::endl;
+}
+
+void ExampleScene00::OnButtonHovered()
+{
+    std::cout << "Button Hovered!" << std::endl;
+}
+
+void ExampleScene00::OnButtonReleased()
+{
+    std::cout << "Button Released!" << std::endl;
 }

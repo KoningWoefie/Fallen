@@ -1,4 +1,5 @@
 #include <src/button.h>
+#include <src/object.h>
 
 Button::Button()
 {
@@ -16,4 +17,37 @@ Button::Button(int width, int height)
 Button::~Button()
 {
     //dtor
+}
+
+void Button::UpdateState()
+{
+    float x = _inputManager->GetMousePosition()[0];
+    float y = _inputManager->GetMousePosition()[1];
+
+    if(_isHovered && !_isPressed)
+    {
+        _isPressed = _inputManager->GetMouseButtonDown(0);
+        if(_isPressed) _onPress();
+    }
+    if(_isPressed && _inputManager->GetMouseButtonUp(0))
+    {
+        _isPressed = false;
+        _onRelease();
+    }
+
+    if(_x == x && _y == y) return;
+    _x = x;
+    _y = y;
+
+    if(_x >= _worldPosition.x - ((float)_width * _worldScale.x)/2 && _x <= _worldPosition.x + ((float)_width * _worldScale.x)/2 && _y <= _worldPosition.y + ((float)_height*_worldScale.y)/2 && _y >= _worldPosition.y - ((float)_height*_worldScale.y)/2)
+    {
+        if(!_isHovered) _onHover();
+        _isHovered = true;
+    }
+    else
+    {
+        _isHovered = false;
+        _isPressed = false;
+    }
+
 }

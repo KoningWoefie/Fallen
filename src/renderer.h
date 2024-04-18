@@ -15,6 +15,7 @@
 #include <src/object.h>
 #include <src/image.h>
 #include <src/canvas.h>
+#include <src/button.h>
 
 class Renderer
 {
@@ -63,6 +64,8 @@ private:
 
     float _scaleX = 0;
     float _scaleY = 0;
+
+    glm::vec2 _worldPos;
 };
 
 #endif

@@ -1,4 +1,5 @@
 #include <src/inputmanager.h>
+#include "GLFW/glfw3.h"
 
 //Copyright 2023 Sander Hoving (Fuck you Gideon)
 
@@ -30,6 +31,11 @@ void InputManager::Update(GLFWwindow* w)
 	for (unsigned int i = 256; i < GLFW_KEY_LAST; i++)
 	{
 		RegisterKey(i, w);
+	}
+
+	for (int i = 0; i < 8; i++)
+	{
+	   RegisterMouseButton(i, w);
 	}
 }
 
@@ -79,6 +85,49 @@ void InputManager::RegisterKey(int key, GLFWwindow* w)
 		}
 	}
 }
+
+bool InputManager::GetMouseButton(int b)
+{
+    return _mouseButtons[b];
+}
+bool InputManager::GetMouseButtonDown(int b)
+{
+    return _mouseButtonsDown[b];
+}
+bool InputManager::GetMouseButtonUp(int b)
+{
+    return _mouseButtonsUp[b];
+}
+
+void InputManager::RegisterMouseButton(int button, GLFWwindow* w)
+{
+   	if (glfwGetMouseButton(w, button) == GLFW_PRESS)
+	{
+		if (_mouseButtons[button] == false)
+		{
+			_mouseButtons[button] = true;
+			_mouseButtonsDown[button] = true;
+		} else
+		{
+			_mouseButtonsDown[button] = false;
+		}
+	}
+
+	if (glfwGetMouseButton(w, button) == GLFW_RELEASE)
+	{
+		if (_mouseButtons[button] == true)
+		{
+			_mouseButtons[button] = false;
+			_mouseButtonsUp[button] = true;
+	   	}
+		else
+	   	{
+			_mouseButtonsUp[button] = false;
+	   	}
+	}
+}
+
+
 
 InputManager* InputManager::input()
 {

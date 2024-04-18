@@ -145,6 +145,10 @@ public:
 
 	bool GetKeyUp(KeyCode k);
 
+	bool GetMouseButton(int button);
+	bool GetMouseButtonDown(int button);
+	bool GetMouseButtonUp(int button);
+
 	glm::vec2 GetMousePosition() { return _mousePosition; };
 
 private:
@@ -153,10 +157,15 @@ private:
 	GLFWwindow* _window;
 
 	void RegisterKey(int key, GLFWwindow* w);
+	void RegisterMouseButton(int button, GLFWwindow* w);
 
 	std::map<int, bool> _keys;
 	std::map<int, bool> _keysDown;
 	std::map<int, bool> _keysUp;
+
+	std::map<int, bool> _mouseButtons;
+	std::map<int, bool> _mouseButtonsDown;
+	std::map<int, bool> _mouseButtonsUp;
 
 	glm::vec2 _mousePosition;
 };

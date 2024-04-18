@@ -131,6 +131,9 @@ void Renderer::RenderObject(Object* o, glm::mat4 PaMa)
     _scaleX *= o->transform->scale.x;
     _scaleY *= o->transform->scale.y;
 
+    _worldPos += glm::vec2(o->transform->position.x, o->transform->position.y);
+    glm::vec2 thisWorldPos = _worldPos;
+
     float sX = _scaleX;
     float sY = _scaleY;
 
@@ -148,6 +151,13 @@ void Renderer::RenderObject(Object* o, glm::mat4 PaMa)
         auto& type = *c;
         if(typeid(type) == typeid(Image)) { RenderImage(dynamic_cast<Image*>(c), PaMa); }
         if(typeid(type) == typeid(Text)) { RenderText(dynamic_cast<Text*>(c), PaMa); }
+        if(typeid(type) == typeid(Button))
+        {
+            Button* b = dynamic_cast<Button*>(c);
+            b->SetWorldPosition(_worldPos);
+            b->SetWorldScale(glm::vec2(_scaleX, _scaleY));
+            b->UpdateState();
+        }
     }
     for(Object* o2 : o->GetChildren())
     {
@@ -167,12 +177,14 @@ void Renderer::RenderObject(Object* o, glm::mat4 PaMa)
     }
     _scaleX = sX;
     _scaleY = sY;
+    _worldPos = thisWorldPos;
 }
 
 void Renderer::RenderUIObject(Object* o, Canvas* canvas, glm::mat4 PaMa)
 {
     _scaleX *= o->transform->scale.x;
     _scaleY *= o->transform->scale.y;
+
 
     float sX = _scaleX;
     float sY = _scaleY;
@@ -226,6 +238,9 @@ void Renderer::RenderUIObject(Object* o, Canvas* canvas, glm::mat4 PaMa)
             break;
     }
 
+    _worldPos += glm::vec2(o->transform->position.x + x, o->transform->position.y + y);
+    glm::vec2 thisWorldPos = _worldPos;
+
     float csX = (float)Config::ScreenWidth / (float)canvas->GetReferenceResolution().x;
     float csY = (float)Config::ScreenHeight / (float)canvas->GetReferenceResolution().y;
     float cs = (csX + csY) / 2;
@@ -243,8 +258,14 @@ void Renderer::RenderUIObject(Object* o, Canvas* canvas, glm::mat4 PaMa)
 
     for(Component* c : o->GetComponents())
     {
-        if(!c->isRenderable()) continue;
         auto& type = *c;
+        if(typeid(type) == typeid(Button))
+        {
+            Button* b = dynamic_cast<Button*>(c);
+            b->SetWorldPosition(_worldPos);
+            b->SetWorldScale(glm::vec2(_scaleX, _scaleY));
+            b->UpdateState();
+        }
         if(typeid(type) == typeid(Image)) { RenderImage(dynamic_cast<Image*>(c), PaMa); }
         if(typeid(type) == typeid(Text)) { RenderText(dynamic_cast<Text*>(c), PaMa); }
     }
@@ -254,6 +275,8 @@ void Renderer::RenderUIObject(Object* o, Canvas* canvas, glm::mat4 PaMa)
     }
     _scaleX = sX;
     _scaleY = sY;
+
+    _worldPos = thisWorldPos;
 }
 
 void Renderer::RenderImage(Image* i, glm::mat4 PaMa)
