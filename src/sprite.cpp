@@ -149,3 +149,64 @@ void SlicedSprite::ChangeMeshData(int width, int height)
     GenerateMeshData(_left, _right, _top, _bottom, width, height);
     changed = true;
 }
+
+SpriteSheet::SpriteSheet(const std::string& filePath) : Sprite(filePath)
+{
+    _type = 2;
+    _currentFrame = 0;
+
+    _spriteAmountHorizontal = 1;
+    _spriteAmountVertical = 1;
+
+    _width = 0;
+    _height = 0;
+
+    _uvWidth = 1.0f;
+    _uvHeight = 1.0f;
+}
+
+SpriteSheet::SpriteSheet(const std::string& filePath, int spriteAmountHorizontal, int spriteAmountVertical) : Sprite(filePath)
+{
+    _type = 2;
+    _currentFrame = 0;
+
+    _spriteAmountHorizontal = spriteAmountHorizontal;
+    _spriteAmountVertical = spriteAmountVertical;
+    _width = 0;
+    _height = 0;
+
+    _uvWidth = 1.0f / spriteAmountHorizontal;
+    _uvHeight = 1.0f / spriteAmountVertical;
+}
+
+SpriteSheet::SpriteSheet(const std::string& filePath, int spriteAmountHorizontal, int spriteAmountVertical, int width, int height) : Sprite(filePath)
+{
+    _type = 2;
+    _currentFrame = 0;
+
+    _spriteAmountHorizontal = spriteAmountHorizontal;
+    _spriteAmountVertical = spriteAmountVertical;
+
+    _width = width;
+    _height = height;
+
+    _uvWidth = 1.0f / spriteAmountHorizontal;
+    _uvHeight = 1.0f / spriteAmountVertical;
+}
+
+SpriteSheet::~SpriteSheet()
+{
+}
+
+void SpriteSheet::SetCurrentFrame(int f)
+{
+    if(f > _spriteAmountHorizontal * _spriteAmountVertical || f < 0) return;
+
+    int xPos = f % _spriteAmountHorizontal;
+    int yPos = f / _spriteAmountHorizontal;
+
+    _uvOffset.x = xPos * _uvWidth;
+    _uvOffset.y = yPos * _uvHeight;
+
+    _currentFrame = f;
+}

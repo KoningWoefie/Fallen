@@ -299,6 +299,9 @@ void Renderer::RenderImage(Image* i, glm::mat4 PaMa)
             case 1:
                 RenderSlicedSprite(dynamic_cast<SlicedSprite*>(i->GetSprite()), PaMa);
                 break;
+            case 2:
+                RenderSpriteSheet(dynamic_cast<SpriteSheet*>(i->GetSprite()), PaMa);
+                break;
             default:
                 break;
         }
@@ -550,6 +553,66 @@ void Renderer::RenderSlicedSprite(SlicedSprite* ss, glm::mat4 PaMa)
 		glDisableVertexAttribArray(vertexPositionID);
 		glDisableVertexAttribArray(vertexUVID);
 	}
+}
+
+void Renderer::RenderSpriteSheet(SpriteSheet* ss, glm::mat4 PaMa)
+{
+    glm::mat4 MVP = _projectionMatrix * _viewMatrix * PaMa;
+
+    glActiveTexture(GL_TEXTURE0);
+    Texture* t = _resMan.GetTexture(ss->FileName());
+
+    glBindTexture(GL_TEXTURE_2D, t->GetTexture());
+
+    GLuint textureID = glGetUniformLocation(_programID, "textureSampler");
+    glUniform1i(textureID, 0);
+
+    Mesh* m = _resMan.GetMesh(t->Width(), t->Height(), 0, glm::vec2(0.5f, 0.5f), ss->GetUVWidth(), ss->GetUVHeight());
+
+    GLuint dColorID = glGetUniformLocation(_programID, "defaultColor");
+
+    glUniform4f(dColorID, 0.0f, 0.0f, 0.0f, 0.0f);
+
+    // Set UVoffset in the shader not relevant here
+	GLuint uvOffset = glGetUniformLocation(_programID, "UVoffset");
+	glUniform2f(uvOffset, ss->GetUVOffset().x, ss->GetUVOffset().y);
+
+    // Set the Model, View, Projection matrix in the shader
+    GLuint matrixID = glGetUniformLocation(_programID, "MVP");
+	glUniformMatrix4fv(matrixID, 1, GL_FALSE, &MVP[0][0]);
+
+	// 1st attribute buffer : vertices
+	GLuint vertexPositionID = glGetAttribLocation(_programID, "vertexPosition");
+	glEnableVertexAttribArray(vertexPositionID);
+	glBindBuffer(GL_ARRAY_BUFFER, m->GetVertexBuffer());
+	glVertexAttribPointer(
+		vertexPositionID, // The attribute we want to configure
+		3,          // size : x,y,z => 3
+		GL_FLOAT,   // type
+		GL_FALSE,   // normalized?
+		0,          // stride
+		(void*)0    // array buffer offset
+	);
+
+	// 2nd attribute buffer : UVs
+	GLuint vertexUVID = glGetAttribLocation(_programID, "vertexUV");
+	glEnableVertexAttribArray(vertexUVID);
+	glBindBuffer(GL_ARRAY_BUFFER, m->GetUVBuffer());
+	glVertexAttribPointer(
+		vertexUVID, // The attribute we want to configure
+		2,          // size : U,V => 2
+		GL_FLOAT,   // type
+		GL_FALSE,   // normalized?
+		0,          // stride
+		(void*)0    // array buffer offset
+	);
+
+	// Draw the triangles
+	glDrawArrays(GL_TRIANGLES, 0, m->GetNumverts());
+
+	// cleanup
+	glDisableVertexAttribArray(vertexPositionID);
+	glDisableVertexAttribArray(vertexUVID);
 }
 
 void Renderer::RenderText(Text* text, glm::mat4 PaMa)

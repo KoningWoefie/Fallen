@@ -20,7 +20,7 @@ ExampleScene00::ExampleScene00()
     b->SetOnPress(std::bind(&ExampleScene00::OnButtonClicked, this));
     b->SetOnRelease(std::bind(&ExampleScene00::OnButtonReleased, this));
 
-    SlicedSprite* sprite = new SlicedSprite("assets/buttons-down.tga", 25, 25, 25, 25);
+    SpriteSheet* sprite = new SpriteSheet("assets/Sprite_Sheet_G4.tga", 4, 4);
     Image* i = testObj->GetComponent<Image>();
     i->AddSprite(sprite);
     i = nullptr;

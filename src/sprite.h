@@ -2,6 +2,7 @@
 #define SPRITE_H
 
 #include <src/component.h>
+#include <vector>
 
 class Sprite
 {
@@ -68,5 +69,40 @@ private:
     void GenerateMeshData(int ileft, int iright, int itop, int ibottom, int width, int height);
 };
 
+class SpriteSheet : public Sprite
+{
+public:
+    SpriteSheet(const std::string& filePath);
+    SpriteSheet(const std::string& filePath, int spriteAmountHorizontal, int spriteAmountVertical);
+    SpriteSheet(const std::string& filePath, int spriteAmountHorizontal, int spriteAmountVertical, int width, int height);
+
+    virtual ~SpriteSheet();
+
+    int GetCurrentFrame() { return _currentFrame; }
+    void SetCurrentFrame(int f);
+
+    void SetWidth(int width) { _width = width; }
+    void SetHeight(int height) { _height = height; }
+
+    int GetSpriteWidth() { return _width; }
+    int GetSpriteHeight() { return _height; }
+
+    glm::vec2 GetUVOffset() { return _uvOffset; }
+
+    float GetUVWidth() { return _uvWidth; }
+    float GetUVHeight() { return _uvHeight; }
+
+private:
+    int _spriteAmountHorizontal;
+    int _spriteAmountVertical;
+    int _currentFrame;
+    int _width;
+    int _height;
+
+    float _uvWidth;
+    float _uvHeight;
+
+    glm::vec2 _uvOffset;
+};
 
 #endif

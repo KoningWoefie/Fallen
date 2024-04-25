@@ -38,6 +38,7 @@ private:
 
     void RenderSprite(Sprite* sprite, glm::mat4 PaMa);
     void RenderSlicedSprite(SlicedSprite* i, glm::mat4 PaMa);
+    void RenderSpriteSheet(SpriteSheet* ss, glm::mat4 PaMa);
 
     int init();
 

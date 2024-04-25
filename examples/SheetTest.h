@@ -1,9 +1,9 @@
 #ifndef SHEETTEST_H
 #define SHEETTEST_H
 
-#include <src/spritesheet.h>
+#include <src/sprite.h>
 
-class SheetTest : public AnimatedSprite
+class SheetTest : public SpriteSheet
 {
 public:
     SheetTest(const std::string& filePath, int spriteAmountX, int spriteAmountY, float animationDelay);
