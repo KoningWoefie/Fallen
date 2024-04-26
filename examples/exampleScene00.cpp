@@ -39,6 +39,11 @@ ExampleScene00::~ExampleScene00()
 
 void ExampleScene00::Update(float deltaTime)
 {
+    if(Input()->GetKey(KeyCode::D))
+    {
+        testObj->transform->position.x += 10.0f * deltaTime;
+        dynamic_cast<SpriteSheet*>(testObj->GetComponent<Image>()->GetSprite())->SetCurrentFrame(2);
+    }
 }
 
 void ExampleScene00::OnButtonClicked()

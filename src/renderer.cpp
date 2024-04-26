@@ -1,5 +1,6 @@
 #include <src/camera.h>
 #include "GLFW/glfw3.h"
+#include "src/inputmanager.h"
 #include "src/sprite.h"
 #include "src/uielement.h"
 #include <iostream>
@@ -123,7 +124,7 @@ void Renderer::RenderScene(Scene* scene)
     _scaleY = 1.0f;
 
     if(_window != nullptr) glfwSwapBuffers(this->GetWindow());
-	glfwPollEvents();
+	glfwWaitEventsTimeout(0.07);
 }
 
 void Renderer::RenderObject(Object* o, glm::mat4 PaMa)

@@ -58,6 +58,7 @@ void InputManager::RegisterKey(int key, GLFWwindow* w)
 	{
 		if (_keys[key] == false)
 		{
+		    std::cout << "key registered" << "\n";
 			_keys[key] = true;
 			_keysDown[key] = true;
 		}
