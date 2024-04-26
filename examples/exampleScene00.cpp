@@ -20,9 +20,10 @@ ExampleScene00::ExampleScene00()
     b->SetOnPress(std::bind(&ExampleScene00::OnButtonClicked, this));
     b->SetOnRelease(std::bind(&ExampleScene00::OnButtonReleased, this));
 
-    SpriteSheet* sprite = new SpriteSheet("assets/Sprite_Sheet_G4.tga", 4, 4);
+    AnimatedSprite* sprite = new AnimatedSprite("assets/Sprite_Sheet_G4.tga", 4, 4, 0.5f);
     Image* i = testObj->GetComponent<Image>();
     i->AddSprite(sprite);
+    sprite->AddAnimation({1,2,3,4});
     i = nullptr;
 
     testObj->AddComponent(new Text());

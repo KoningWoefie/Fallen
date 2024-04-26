@@ -1,4 +1,5 @@
 #include <src/sprite.h>
+#include <sys/_types/_null.h>
 
 Sprite::Sprite(const std::string& filePath)
 {
@@ -150,21 +151,6 @@ void SlicedSprite::ChangeMeshData(int width, int height)
     changed = true;
 }
 
-SpriteSheet::SpriteSheet(const std::string& filePath) : Sprite(filePath)
-{
-    _type = 2;
-    _currentFrame = 0;
-
-    _spriteAmountHorizontal = 1;
-    _spriteAmountVertical = 1;
-
-    _width = 0;
-    _height = 0;
-
-    _uvWidth = 1.0f;
-    _uvHeight = 1.0f;
-}
-
 SpriteSheet::SpriteSheet(const std::string& filePath, int spriteAmountHorizontal, int spriteAmountVertical) : Sprite(filePath)
 {
     _type = 2;
@@ -209,4 +195,116 @@ void SpriteSheet::SetCurrentFrame(int f)
     _uvOffset.y = yPos * _uvHeight;
 
     _currentFrame = f;
+}
+
+AnimatedSprite::AnimatedSprite(const std::string& filePath, int spriteAmountHorizontal, int spriteAmountVertical, float timePerFrame) : SpriteSheet(filePath, spriteAmountHorizontal, spriteAmountVertical)
+{
+    _type = 3;
+    _timePerFrame = timePerFrame;
+    _timer = new Timer();
+}
+
+AnimatedSprite::AnimatedSprite(const std::string& filePath, int spriteAmountHorizontal, int spriteAmountVertical, float timePerFrame, int width, int height) : SpriteSheet(filePath, spriteAmountHorizontal, spriteAmountVertical, width, height)
+{
+    _type = 3;
+    _timePerFrame = timePerFrame;
+    _timer = new Timer();
+}
+
+AnimatedSprite::~AnimatedSprite()
+{
+    _animations.clear();
+    delete _timer;
+    _timer = nullptr;
+}
+
+void AnimatedSprite::AddAnimation(std::vector<int> animation)
+{
+    if(!GetAnimation(animation).empty()) return;
+    _animations.push_back(animation);
+}
+
+void AnimatedSprite::RemoveAnimation(int animationIndex)
+{
+    if(animationIndex < 0 || animationIndex >= _animations.size()) return;
+    _animations.erase(_animations.begin() + animationIndex);
+}
+
+void AnimatedSprite::RemoveAnimation(std::vector<int> animation)
+{
+    for(int i = 0; i < _animations.size(); i++)
+    {
+        for(int j = 0; j < _animations[i].size(); j++)
+        {
+            if(_animations[i][j] != animation[j]) break;
+            if(j == _animations[i].size() - 1)
+            {
+                _animations.erase(_animations.begin() + i);
+                return;
+            }
+        }
+    }
+}
+
+void AnimatedSprite::RemoveAllAnimations()
+{
+    _animations.clear();
+}
+
+std::vector<int> AnimatedSprite::GetAnimation(int animationIndex)
+{
+    if(animationIndex < 0 || animationIndex >= _animations.size()) return std::vector<int>();
+    return _animations[animationIndex];
+}
+
+std::vector<int> AnimatedSprite::GetAnimation(std::vector<int> animation)
+{
+    for(int i = 0; i < _animations.size(); i++)
+    {
+        for(int j = 0; j < _animations[i].size(); j++)
+        {
+            if(_animations[i][j] != animation[j]) break;
+            if(j == _animations[i].size() - 1) return _animations[i];
+        }
+    }
+    return std::vector<int>();
+}
+
+void AnimatedSprite::SetAnimation(int animationIndex)
+{
+    _currentAnimation = animationIndex;
+    _currentFrame = 0;
+    _timer->StopTimer();
+    _timer->StartTimer();
+}
+
+void AnimatedSprite::SetAnimation(std::vector<int> animation)
+{
+    for(int i = 0; i < _animations.size(); i++)
+    {
+        for(int j = 0; j < _animations[i].size(); j++)
+        {
+            if(_animations[i][j] != animation[j]) break;
+            if(j == _animations[i].size() - 1)
+            {
+                _currentAnimation = i;
+                _currentFrame = 0;
+                return;
+            }
+        }
+    }
+}
+
+void AnimatedSprite::Update()
+{
+    if(_animations.empty()) return;
+    if(!_timer->IsStarted()) _timer->StartTimer();
+    if(_timer->Seconds() >= _timePerFrame)
+    {
+        _timer->StopTimer();
+        _timer->StartTimer();
+        _currentFrame++;
+        if(_currentFrame >= _animations[_currentAnimation].size()) _currentFrame = 0;
+        SetCurrentFrame(_currentFrame);
+    }
 }
