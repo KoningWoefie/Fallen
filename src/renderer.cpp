@@ -291,6 +291,7 @@ void Renderer::RenderImage(Image* i, glm::mat4 PaMa)
 
     if(i->GetSprite())
     {
+        AnimatedSprite* as = nullptr;
         switch(i->GetSprite()->Type())
         {
             case 0:
@@ -301,6 +302,12 @@ void Renderer::RenderImage(Image* i, glm::mat4 PaMa)
                 break;
             case 2:
                 RenderSpriteSheet(dynamic_cast<SpriteSheet*>(i->GetSprite()), PaMa);
+                break;
+            case 3:
+                as = dynamic_cast<AnimatedSprite*>(i->GetSprite());
+                as->Update();
+                RenderSpriteSheet(as, PaMa);
+                as = nullptr;
                 break;
             default:
                 break;

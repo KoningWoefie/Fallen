@@ -2,7 +2,9 @@
 #define SPRITE_H
 
 #include <src/component.h>
+#include <src/timer.h>
 #include <vector>
+#include <map>
 
 class Sprite
 {
@@ -72,7 +74,6 @@ private:
 class SpriteSheet : public Sprite
 {
 public:
-    SpriteSheet(const std::string& filePath);
     SpriteSheet(const std::string& filePath, int spriteAmountHorizontal, int spriteAmountVertical);
     SpriteSheet(const std::string& filePath, int spriteAmountHorizontal, int spriteAmountVertical, int width, int height);
 
@@ -95,7 +96,6 @@ public:
 private:
     int _spriteAmountHorizontal;
     int _spriteAmountVertical;
-    int _currentFrame;
     int _width;
     int _height;
 
@@ -103,6 +103,44 @@ private:
     float _uvHeight;
 
     glm::vec2 _uvOffset;
+protected:
+    int _currentFrame;
+};
+
+class AnimatedSprite : public SpriteSheet
+{
+public:
+    AnimatedSprite(const std::string& filePath, int spriteAmountHorizontal, int spriteAmountVertical, float timePerFrame);
+    AnimatedSprite(const std::string& filePath, int spriteAmountHorizontal, int spriteAmountVertical, float timePerFrame, int width, int height);
+
+    virtual ~AnimatedSprite();
+
+    void AddAnimation(std::vector<int> animation);
+
+    void RemoveAnimation(int animationIndex);
+    void RemoveAnimation(std::vector<int> animation);
+
+    std::vector<int> GetAnimation(int animationIndex);
+    std::vector<int> GetAnimation(std::vector<int> animation);
+
+    void SetAnimation(int animationIndex);
+    void SetAnimation(std::vector<int> animation);
+
+    void RemoveAllAnimations();
+
+    std::vector<int> GetCurrentAnimation() { return _animations[_currentAnimation]; }
+
+    void SetTimePerFrame(float time) { _timePerFrame = time; }
+    float GetTimePerFrame() { return _timePerFrame; }
+
+
+    void Update();
+private:
+    float _timePerFrame;
+    std::vector<std::vector<int>> _animations;
+    int _currentAnimation;
+    Timer* _timer;
+
 };
 
 #endif
