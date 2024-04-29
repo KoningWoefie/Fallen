@@ -163,6 +163,8 @@ SpriteSheet::SpriteSheet(const std::string& filePath) : Sprite(filePath)
 
     _uvWidth = 1.0f;
     _uvHeight = 1.0f;
+
+	_uvOffset = glm::vec2(0.0f, 0.0f);
 }
 
 SpriteSheet::SpriteSheet(const std::string& filePath, int spriteAmountHorizontal, int spriteAmountVertical) : Sprite(filePath)
@@ -177,6 +179,8 @@ SpriteSheet::SpriteSheet(const std::string& filePath, int spriteAmountHorizontal
 
     _uvWidth = 1.0f / spriteAmountHorizontal;
     _uvHeight = 1.0f / spriteAmountVertical;
+
+	_uvOffset = glm::vec2(0.0f, 0.0f);
 }
 
 SpriteSheet::SpriteSheet(const std::string& filePath, int spriteAmountHorizontal, int spriteAmountVertical, int width, int height) : Sprite(filePath)
@@ -192,6 +196,8 @@ SpriteSheet::SpriteSheet(const std::string& filePath, int spriteAmountHorizontal
 
     _uvWidth = 1.0f / spriteAmountHorizontal;
     _uvHeight = 1.0f / spriteAmountVertical;
+
+	_uvOffset = glm::vec2(0.0f, 0.0f);
 }
 
 SpriteSheet::~SpriteSheet()

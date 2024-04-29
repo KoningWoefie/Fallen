@@ -1,0 +1,2 @@
+C:\GitHub\Fallen\external\freetype-2.13.2\objs\x64\Debug\freetype.dll
+C:\GitHub\Fallen\external\freetype\objs\x64\Debug\freetype.dll

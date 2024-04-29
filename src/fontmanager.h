@@ -11,6 +11,8 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
+#define GL_CLAMP_TO_EDGE 0x812F 
+
 struct glyph
 {
     GLuint texture;

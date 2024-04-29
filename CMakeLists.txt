@@ -16,6 +16,9 @@ endif()
 set(OpenGL_GL_PREFERENCE GLVND)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 find_package(OpenGL REQUIRED)
+set(FREETYPE_INCLUDE_DIR_ft2build ${CMAKE_CURRENT_LIST_DIR}/external/freetype/include CACHE PATH "")
+set(FREETYPE_INCLUDE_DIR_freetype2 ${CMAKE_CURRENT_LIST_DIR}/external/freetype/include CACHE PATH "")
+set(FREETYPE_LIBRARY freetype CACHE PATH "")
 find_package(Freetype REQUIRED)
 
 if(UNIX)
@@ -32,7 +35,7 @@ if(WIN32)
 	# Create a group for Visual Studio
 	SOURCE_GROUP(src REGULAR_EXPRESSION ".*/src/.*" )
 	# suppress pedantic warnings
-	#add_definitions( "/W1 /D_CRT_SECURE_NO_WARNINGS /wd4514 /nologo" )
+	add_definitions( "/W1 /D_CRT_SECURE_NO_WARNINGS /wd4514 /nologo" )
 endif(WIN32)
 
 add_definitions( # g++ -Dxxx
@@ -47,15 +50,21 @@ add_definitions( # g++ -Dxxx
 add_subdirectory (external)
 
 include_directories( # g++ -Ipath/to/headerfiles
-	external/glfw-3.3/include/
-	external/glm-0.9.9.2/
-	external/glew-1.9.0/include/
-	external/freetype-2.13.2/include/
-	.
+	${CMAKE_SOURCE_DIR}/external/glfw-3.3/include/
+	${CMAKE_SOURCE_DIR}/external/glm-0.9.9.2/
+	${CMAKE_SOURCE_DIR}/external/glew-1.9.0/include/
+	${CMAKE_SOURCE_DIR}/external/freetype/include/
+	${CMAKE_SOURCE_DIR}/external
+	${CMAKE_SOURCE_DIR}/src
+	${CMAKE_SOURCE_DIR}/.
 )
 
 link_directories( # g++ -Lpath/to/library
-
+	${CMAKE_SOURCE_DIR}/external/glfw-3.3/src
+	${CMAKE_SOURCE_DIR}/external/glew-1.9.0
+	${CMAKE_SOURCE_DIR}/external/freetype/
+	${CMAKE_SOURCE_DIR}/external
+	${CMAKE_SOURCE_DIR}/src
 )
 
 set(ALL_GRAPHICS_LIBS
@@ -119,7 +128,7 @@ add_executable(examples # g++ examples/main.cpp -o examples
 
 target_link_libraries(examples #g++ -lsrc
 	src
-	${FREETYPE_LIBRARIES}
+	${CMAKE_SOURCE_DIR}/external/freetype/objs/freetype.lib
 	${ALL_GRAPHICS_LIBS}
 )
 
