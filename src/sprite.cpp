@@ -1,5 +1,4 @@
 #include <src/sprite.h>
-#include <sys/_types/_null.h>
 
 Sprite::Sprite(const std::string& filePath)
 {
@@ -163,6 +162,8 @@ SpriteSheet::SpriteSheet(const std::string& filePath, int spriteAmountHorizontal
 
     _uvWidth = 1.0f / spriteAmountHorizontal;
     _uvHeight = 1.0f / spriteAmountVertical;
+
+	_uvOffset = glm::vec2(0.0f, 0.0f);
 }
 
 SpriteSheet::SpriteSheet(const std::string& filePath, int spriteAmountHorizontal, int spriteAmountVertical, int width, int height) : Sprite(filePath)
@@ -178,6 +179,8 @@ SpriteSheet::SpriteSheet(const std::string& filePath, int spriteAmountHorizontal
 
     _uvWidth = 1.0f / spriteAmountHorizontal;
     _uvHeight = 1.0f / spriteAmountVertical;
+
+	_uvOffset = glm::vec2(0.0f, 0.0f);
 }
 
 SpriteSheet::~SpriteSheet()
@@ -201,6 +204,7 @@ AnimatedSprite::AnimatedSprite(const std::string& filePath, int spriteAmountHori
 {
     _type = 3;
     _timePerFrame = timePerFrame;
+	_currentAnimation = 0;
     _timer = new Timer();
 }
 
@@ -208,6 +212,7 @@ AnimatedSprite::AnimatedSprite(const std::string& filePath, int spriteAmountHori
 {
     _type = 3;
     _timePerFrame = timePerFrame;
+	_currentAnimation = 0;
     _timer = new Timer();
 }
 
