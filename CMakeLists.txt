@@ -145,8 +145,21 @@ add_executable(examples # g++ examples/main.cpp -o examples
 	examples/testobj.h
 )
 
+add_executable(gamepicker # g++ examples/main.cpp -o examples
+	gamepicker/main.cpp
+	gamepicker/gamepickerScene.cpp
+	gamepicker/gamepickerScene.h
+	gamepicker/defaultObject.cpp
+	gamepicker/defaultObject.h
+)
+
 if(WIN32)
     target_link_libraries(examples #g++ -lsrc
+    	src
+    	external/freetype-2.13.2/freetype
+    	${ALL_GRAPHICS_LIBS}
+    )
+	target_link_libraries(gamepicker #g++ -lsrc
     	src
     	external/freetype-2.13.2/freetype
     	${ALL_GRAPHICS_LIBS}
@@ -163,11 +176,20 @@ if(UNIX)
 	   ${FREETYPE_LIBRARIES}
 	   ${ALL_GRAPHICS_LIBS}
     )
+	target_link_libraries(gamepicker #g++ -lsrc
+	   src
+	   ${FREETYPE_LIBRARIES}
+	   ${ALL_GRAPHICS_LIBS}
+    )
 endif(UNIX)
 # Copy assets and shaders to the build directory
 # (In Visual Studio, copy these directories to either 'Release' or 'Build')
 file(
 	COPY examples/assets
+	DESTINATION ${CMAKE_BINARY_DIR}
+)
+file(
+	COPY gamepicker/assets
 	DESTINATION ${CMAKE_BINARY_DIR}
 )
 file(
