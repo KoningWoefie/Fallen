@@ -5,6 +5,12 @@ Mesh::Mesh(int width, int height)
     _width = width;
     _height = height;
 
+	_numverts = 0;
+	_vertexbuffer = 0;
+	_uvbuffer = 0;
+
+	_uv = glm::vec2(1.0f, 1.0f);
+
     _radius = 0;
 }
 
