@@ -3,6 +3,8 @@
 
 Component::Component()
 {
+	Renderable = false;
+	object = nullptr;
     //ctor
 }
 

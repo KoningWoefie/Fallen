@@ -6,6 +6,7 @@
 InputManager::InputManager()
 {
 	_window = nullptr;
+	_mousePosition = glm::vec2(0, 0);
 	std::cout << "creating inputmanager" << std::endl;
 }
 InputManager::~InputManager()

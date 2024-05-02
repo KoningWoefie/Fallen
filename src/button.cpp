@@ -5,12 +5,30 @@ Button::Button()
 {
     _width = 0;
     _height = 0;
+
+	_x = 0;
+	_y = 0;
+
+	_isHovered = false;
+	_isPressed = false;
+	_worldPosition = glm::vec2(0, 0);
+	_worldScale = glm::vec2(1, 1);
+
     std::cout << "Creating Button from default constructor" << "\n";
 }
 Button::Button(int width, int height)
 {
     _width = width;
     _height = height;
+
+	_x = 0;
+	_y = 0;
+
+	_isHovered = false;
+	_isPressed = false;
+	_worldPosition = glm::vec2(0, 0);
+	_worldScale = glm::vec2(1, 1);
+
     std::cout << "Creating Button from overloaded constructor" << "\n";
 }
 
