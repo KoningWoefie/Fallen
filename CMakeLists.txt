@@ -23,7 +23,7 @@ find_package(OpenGL REQUIRED)
 if(WIN32)
     set(FREETYPE_INCLUDE_DIR_ft2build ${SOURCE_DIR}/external/freetype-2.13.2/include CACHE PATH "")
     set(FREETYPE_INCLUDE_DIR_freetype2 ${SOURCE_DIR}/external/freetype-2.13.2/include CACHE PATH "")
-    set(FREETYPE_LIBRARY freetype CACHE PATH "")
+    set(FREETYPE_LIBRARY freetype-2.13.2 CACHE PATH "")
 endif(WIN32)
 find_package(Freetype REQUIRED)
 
@@ -66,13 +66,13 @@ if(WIN32)
     	.
     )
 
-link_directories( # g++ -Lpath/to/library
-	external/glfw-3.3/src
-	external/glew-1.9.0
-	external/freetype-2.13.2
-	external
-	src
-)
+	link_directories( # g++ -Lpath/to/library
+		external/glfw-3.3/src
+		external/glew-1.9.0
+		external/freetype-2.13.2
+		external
+		src
+	)
 endif(WIN32)
 
 if(UNIX)
@@ -148,9 +148,13 @@ add_executable(examples # g++ examples/main.cpp -o examples
 if(WIN32)
     target_link_libraries(examples #g++ -lsrc
     	src
-    	external/freetype/objs/freetype.lib
+    	external/freetype-2.13.2/freetype
     	${ALL_GRAPHICS_LIBS}
     )
+	file(
+		COPY external/freetype-2.13.2
+		DESTINATION ${CMAKE_BINARY_DIR}/external
+	)
 endif(WIN32)
 
 if(UNIX)
@@ -176,7 +180,7 @@ file(
 )
 if(WIN32)
 file(
-	COPY external/freetype/freetype.dll
+	COPY external/freetype-2.13.2/freetype.dll
 	DESTINATION ${CMAKE_BINARY_DIR}
 )
 endif(WIN32)
