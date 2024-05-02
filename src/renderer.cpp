@@ -168,6 +168,7 @@ void Renderer::RenderObject(Object* o, glm::mat4 PaMa)
             {
                 c->SetCanvasSize(Config::ScreenWidth, Config::ScreenHeight);
                 o->transform->position = glm::vec3(Config::ScreenWidth/2, Config::ScreenHeight/2, 0.0f);
+				_worldPos = glm::vec2(o->transform->position.x, o->transform->position.y);
             }
             RenderUIObject(o2, c, PaMa);
             c = nullptr;
