@@ -20,7 +20,9 @@ private:
     void OnButtonHovered();
     void OnButtonReleased();
 
+	DefaultObject* _canvas;
 
+	DefaultObject* _button;
 };
 
 
