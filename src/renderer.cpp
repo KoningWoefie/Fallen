@@ -101,6 +101,8 @@ void Renderer::ChangeScreenMode()
             const GLFWvidmode* mode = glfwGetVideoMode(monitor);
 
             glfwSetWindowMonitor(_window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+			Config::ScreenWidth = mode->width;
+			Config::ScreenHeight = mode->height;
 
             break;
     }
