@@ -30,6 +30,11 @@ public:
     void SetWorldScale(glm::vec2 worldScale) { _worldScale = worldScale; }
     glm::vec2 GetWorldScale() { return _worldScale; }
 
+	void Press();
+	void Release();
+	void Select();
+	void Deselect();
+
 private:
     int _width;
     int _height;
