@@ -69,3 +69,27 @@ void Button::UpdateState()
     }
 
 }
+
+void Button::Press()
+{
+	_isPressed = true;
+	_onPress();
+}
+
+void Button::Release()
+{
+	_isPressed = false;
+	_onRelease();
+}
+
+void Button::Select()
+{
+	_isHovered = true;
+	_onHover();
+}
+
+void Button::Deselect()
+{
+	_isHovered = false;
+}
+
