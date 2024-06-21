@@ -27,12 +27,7 @@ void Camera::computeViewMatrixFromInput(GLFWwindow* window, float deltaTime)
 	glfwGetCursorPos(window, &xpos, &ypos);
 	_cursor = glm::vec3( xpos, ypos, 0 );
 
-	// Right and Up vector
-	glm::vec3 right = glm::vec3(1, 0, 0);
-	glm::vec3 up = glm::vec3(0, -1, 0);
-
 	static glm::vec3 position = glm::vec3( 0, 0, 10 ); // Initial position : on +Z
-	float speed = 300.0f; // units / second
 
 	// View matrix
 	_viewMatrix = glm::lookAt(
