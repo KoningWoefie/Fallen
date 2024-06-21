@@ -5,54 +5,58 @@
 #include <src/Core/component.h>
 #include <src/Core/inputmanager.h>
 
-class Button : public Component
+namespace FallenUI
 {
-public:
-    Button();
-    Button(int width, int height);
-    virtual ~Button();
 
-    int GetWidth() { return _width; }
-    int GetHeight() { return _height; }
-    glm::vec2 GetSize() { return glm::vec2(_width, _height); }
+    class Button : public Component
+    {
+    public:
+        Button();
+        Button(int width, int height);
+        virtual ~Button();
 
-    void SetSize(int width, int height) { _width = width; _height = height; }
+        int GetWidth() { return _width; }
+        int GetHeight() { return _height; }
+        glm::vec2 GetSize() { return glm::vec2(_width, _height); }
 
-    void SetOnPress(std::function<void()> opf) { _onPress = opf; }
-    void SetOnRelease(std::function<void()> orf) { _onRelease = orf; }
-    void SetOnHover(std::function<void()> ohf) { _onHover = ohf; };
+        void SetSize(int width, int height) { _width = width; _height = height; }
 
-    void UpdateState();
+        void SetOnPress(std::function<void()> opf) { _onPress = opf; }
+        void SetOnRelease(std::function<void()> orf) { _onRelease = orf; }
+        void SetOnHover(std::function<void()> ohf) { _onHover = ohf; };
 
-    void SetWorldPosition(glm::vec2 worldPos) { _worldPosition = worldPos; }
-    glm::vec2 GetWorldPosition() { return _worldPosition; }
+        void UpdateState();
 
-    void SetWorldScale(glm::vec2 worldScale) { _worldScale = worldScale; }
-    glm::vec2 GetWorldScale() { return _worldScale; }
+        void SetWorldPosition(glm::vec2 worldPos) { _worldPosition = worldPos; }
+        glm::vec2 GetWorldPosition() { return _worldPosition; }
 
-	void Press();
-	void Release();
-	void Select();
-	void Deselect();
+        void SetWorldScale(glm::vec2 worldScale) { _worldScale = worldScale; }
+        glm::vec2 GetWorldScale() { return _worldScale; }
 
-private:
-    int _width;
-    int _height;
+    	void Press();
+    	void Release();
+    	void Select();
+    	void Deselect();
 
-    float _x;
-    float _y;
+    private:
+        int _width;
+        int _height;
 
-    glm::vec2 _worldPosition;
-    glm::vec2 _worldScale;
+        float _x;
+        float _y;
 
-    bool _isHovered;
-    bool _isPressed;
+        glm::vec2 _worldPosition;
+        glm::vec2 _worldScale;
 
-    std::function<void()> _onPress;
-    std::function<void()> _onRelease;
-    std::function<void()> _onHover;
+        bool _isHovered;
+        bool _isPressed;
 
-    InputManager* _inputManager = InputManager::input();
-};
+        std::function<void()> _onPress;
+        std::function<void()> _onRelease;
+        std::function<void()> _onHover;
+
+        InputManager* _inputManager = InputManager::input();
+    };
+}
 
 #endif
