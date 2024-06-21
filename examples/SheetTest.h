@@ -1,7 +1,7 @@
 #ifndef SHEETTEST_H
 #define SHEETTEST_H
 
-#include <src/sprite.h>
+#include <src/Core/sprite.h>
 
 class SheetTest : public SpriteSheet
 {

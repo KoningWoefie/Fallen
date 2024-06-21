@@ -1,11 +1,11 @@
 #ifndef EXAMPLESCENE00_H
 #define EXAMPLESCENE00_H
 
-#include <src/scene.h>
-#include <src/sprite.h>
-#include <src/text.h>
-#include <src/canvas.h>
-#include <src/button.h>
+#include <src/Core/scene.h>
+#include <src/Core/sprite.h>
+#include <src/Core/text.h>
+#include <src/UI/canvas.h>
+#include <src/UI/button.h>
 #include "testobj.h"
 
 class ExampleScene00 : public Scene

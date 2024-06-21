@@ -1,8 +1,8 @@
 #ifndef TESTOBJ_H
 #define TESTOBJ_H
 
-#include <src/object.h>
-#include <src/image.h>
+#include <src/Core/object.h>
+#include <src/UI/image.h>
 
 class TestObj : public Object
 {

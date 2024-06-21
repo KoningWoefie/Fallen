@@ -1,5 +1,5 @@
 #include "testobj.h"
-#include "src/object.h"
+#include "src/Core/object.h"
 
 TestObj::TestObj() : Object()
 {

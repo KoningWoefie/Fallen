@@ -1,7 +1,7 @@
 #include "exampleScene00.h"
 #include "examples/testobj.h"
-#include "src/uielement.h"
-#include <src/image.h>
+#include "src/UI/uielement.h"
+#include <src/UI/image.h>
 
 ExampleScene00::ExampleScene00()
 {

@@ -1,4 +1,4 @@
-#include <src/game.h>
+#include <src/Core/game.h>
 #include "exampleScene00.h"
 
 int main(void)
@@ -9,9 +9,9 @@ int main(void)
     do
     {
         game.Run(scene00);
-    } 
+    }
     while (game.IsRunning());
-    
+
     delete scene00;
 
     return 0;
