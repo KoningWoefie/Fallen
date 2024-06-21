@@ -1,10 +1,13 @@
 #include <src/UI/uielement.h>
 
-UIElement::UIElement(UIAlignment alignment)
+namespace FallenUI
 {
-    _alignment = (int)alignment;
-}
+    UIElement::UIElement(UIAlignment alignment)
+    {
+        _alignment = (int)alignment;
+    }
 
-UIElement::~UIElement()
-{
+    UIElement::~UIElement()
+    {
+    }
 }

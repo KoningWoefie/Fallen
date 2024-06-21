@@ -6,22 +6,22 @@
 ExampleScene00::ExampleScene00()
 {
     canvas = new TestObj();
-    Canvas* c = new Canvas(glm::vec2(1280, 720));
+    FallenUI::Canvas* c = new FallenUI::Canvas(glm::vec2(1280, 720));
     canvas->AddComponent(c);
     canvas->transform->position = glm::vec3(c->GetCanvasWidth()/2, c->GetCanvasHeight()/2, 0.0f);
     testObj = new TestObj();
 
     testObj->transform->position = glm::vec3(0.0f, 0.0f, 0.0f);
-    testObj->AddComponent(new Image());
-    testObj->AddComponent(new Button(190, 190));
+    testObj->AddComponent(new FallenUI::Image());
+    testObj->AddComponent(new FallenUI::Button(190, 190));
 
-    Button* b = testObj->GetComponent<Button>();
+    FallenUI::Button* b = testObj->GetComponent<FallenUI::Button>();
     b->SetOnHover(std::bind(&ExampleScene00::OnButtonHovered, this));
     b->SetOnPress(std::bind(&ExampleScene00::OnButtonClicked, this));
     b->SetOnRelease(std::bind(&ExampleScene00::OnButtonReleased, this));
 
     AnimatedSprite* sprite = new AnimatedSprite("assets/Sprite_Sheet_G4.tga", 4, 4, 0.5f);
-    Image* i = testObj->GetComponent<Image>();
+    FallenUI::Image* i = testObj->GetComponent<FallenUI::Image>();
     i->AddSprite(sprite);
     sprite->AddAnimation({1,2,3,4});
     i = nullptr;
@@ -43,7 +43,7 @@ void ExampleScene00::Update(float deltaTime)
     if(Input()->GetKey(KeyCode::D))
     {
         testObj->transform->position.x += 10.0f * deltaTime;
-        dynamic_cast<SpriteSheet*>(testObj->GetComponent<Image>()->GetSprite())->SetCurrentFrame(2);
+        dynamic_cast<SpriteSheet*>(testObj->GetComponent<FallenUI::Image>()->GetSprite())->SetCurrentFrame(2);
     }
 }
 

@@ -3,30 +3,33 @@
 
 #include <src/Core/component.h>
 
-enum class UIAlignment
+namespace FallenUI
 {
-    Center,
-    Left,
-    Right,
-    Top,
-    Bottom,
-    BottomLeft,
-    BottomRight,
-    TopLeft,
-    TopRight,
-};
+    enum class UIAlignment
+    {
+        Center,
+        Left,
+        Right,
+        Top,
+        Bottom,
+        BottomLeft,
+        BottomRight,
+        TopLeft,
+        TopRight,
+    };
 
-class UIElement : public Component
-{
-public:
-    UIElement(UIAlignment alignment = UIAlignment::Center);
-    virtual ~UIElement();
+    class UIElement : public Component
+    {
+    public:
+        UIElement(UIAlignment alignment = UIAlignment::Center);
+        virtual ~UIElement();
 
-    void SetAlignment(UIAlignment alignment) { _alignment = (int)alignment; };
-    UIAlignment GetAlignment() { return (UIAlignment)_alignment; };
+        void SetAlignment(UIAlignment alignment) { _alignment = (int)alignment; };
+        UIAlignment GetAlignment() { return (UIAlignment)_alignment; };
 
-private:
-    int _alignment;
+    private:
+        int _alignment;
 
-};
+    };
+}
 #endif

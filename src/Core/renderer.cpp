@@ -151,11 +151,11 @@ void Renderer::RenderObject(Object* o, glm::mat4 PaMa)
     {
         if(!c->isRenderable()) continue;
         auto& type = *c;
-        if(typeid(type) == typeid(Image)) { RenderImage(dynamic_cast<Image*>(c), PaMa); }
+        if(typeid(type) == typeid(FallenUI::Image)) { RenderImage(dynamic_cast<FallenUI::Image*>(c), PaMa); }
         if(typeid(type) == typeid(Text)) { RenderText(dynamic_cast<Text*>(c), PaMa); }
-        if(typeid(type) == typeid(Button))
+        if(typeid(type) == typeid(FallenUI::Button))
         {
-            Button* b = dynamic_cast<Button*>(c);
+            FallenUI::Button* b = dynamic_cast<FallenUI::Button*>(c);
             b->SetWorldPosition(_worldPos);
             b->SetWorldScale(glm::vec2(_scaleX, _scaleY));
             b->UpdateState();
@@ -163,7 +163,7 @@ void Renderer::RenderObject(Object* o, glm::mat4 PaMa)
     }
     for(Object* o2 : o->GetChildren())
     {
-        Canvas* c = o->GetComponent<Canvas>();
+        FallenUI::Canvas* c = o->GetComponent<FallenUI::Canvas>();
         if(c)
         {
             if(c->GetScaleWithScreenSize())
@@ -183,7 +183,7 @@ void Renderer::RenderObject(Object* o, glm::mat4 PaMa)
     _worldPos = thisWorldPos;
 }
 
-void Renderer::RenderUIObject(Object* o, Canvas* canvas, glm::mat4 PaMa)
+void Renderer::RenderUIObject(Object* o, FallenUI::Canvas* canvas, glm::mat4 PaMa)
 {
     _scaleX *= o->transform->scale.x;
     _scaleY *= o->transform->scale.y;
@@ -195,47 +195,47 @@ void Renderer::RenderUIObject(Object* o, Canvas* canvas, glm::mat4 PaMa)
     float x = 0;
     float y = 0;
 
-    if(o->GetComponent<UIElement>() == nullptr)
+    if(o->GetComponent<FallenUI::UIElement>() == nullptr)
     {
         std::cout << "UIElement component not found on object that is a child of canvas" << std::endl;
         return;
     }
 
-    switch (o->GetComponent<UIElement>()->GetAlignment())
+    switch (o->GetComponent<FallenUI::UIElement>()->GetAlignment())
     {
-        case UIAlignment::Center:
+        case FallenUI::UIAlignment::Center:
             x = 0;
             y = 0;
             break;
-        case UIAlignment::TopLeft:
+        case FallenUI::UIAlignment::TopLeft:
             x = -((float)(canvas->GetCanvasWidth()) / 2);
             y = -((float)(canvas->GetCanvasHeight()) / 2);
             break;
-        case UIAlignment::Top:
+        case FallenUI::UIAlignment::Top:
             x = 0;
             y = -((float)(canvas->GetCanvasHeight()) / 2);
             break;
-        case UIAlignment::TopRight:
+        case FallenUI::UIAlignment::TopRight:
             x = (float)canvas->GetCanvasWidth() / 2;
             y = -((float)(canvas->GetCanvasHeight()) / 2);
             break;
-        case UIAlignment::Left:
+        case FallenUI::UIAlignment::Left:
             x = -((float)(canvas->GetCanvasWidth()) / 2);
             y = 0;
             break;
-        case UIAlignment::Right:
+        case FallenUI::UIAlignment::Right:
             x = ((float)(canvas->GetCanvasWidth()) / 2);
             y = 0;
             break;
-        case UIAlignment::BottomLeft:
+        case FallenUI::UIAlignment::BottomLeft:
             x = -((float)(canvas->GetCanvasWidth()) / 2);
             y = (float)(canvas->GetCanvasHeight()) / 2;
             break;
-        case UIAlignment::Bottom:
+        case FallenUI::UIAlignment::Bottom:
             x = 0;
             y = (float)(canvas->GetCanvasHeight()) / 2;
             break;
-        case UIAlignment::BottomRight:
+        case FallenUI::UIAlignment::BottomRight:
             x = (float)canvas->GetCanvasWidth() / 2;
             y = (float)(canvas->GetCanvasHeight()) / 2;
             break;
@@ -262,14 +262,14 @@ void Renderer::RenderUIObject(Object* o, Canvas* canvas, glm::mat4 PaMa)
     for(Component* c : o->GetComponents())
     {
         auto& type = *c;
-        if(typeid(type) == typeid(Button))
+        if(typeid(type) == typeid(FallenUI::Button))
         {
-            Button* b = dynamic_cast<Button*>(c);
+            FallenUI::Button* b = dynamic_cast<FallenUI::Button*>(c);
             b->SetWorldPosition(_worldPos);
             b->SetWorldScale(glm::vec2(_scaleX, _scaleY));
             b->UpdateState();
         }
-        if(typeid(type) == typeid(Image)) { RenderImage(dynamic_cast<Image*>(c), PaMa); }
+        if(typeid(type) == typeid(FallenUI::Image)) { RenderImage(dynamic_cast<FallenUI::Image*>(c), PaMa); }
         if(typeid(type) == typeid(Text)) { RenderText(dynamic_cast<Text*>(c), PaMa); }
     }
     for(Object* o2 : o->GetChildren())
@@ -282,7 +282,7 @@ void Renderer::RenderUIObject(Object* o, Canvas* canvas, glm::mat4 PaMa)
     _worldPos = thisWorldPos;
 }
 
-void Renderer::RenderImage(Image* i, glm::mat4 PaMa)
+void Renderer::RenderImage(FallenUI::Image* i, glm::mat4 PaMa)
 {
     this->ChooseShader(_programID);
 
