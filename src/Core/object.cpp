@@ -33,7 +33,7 @@ void Object::RemoveChild(Object* child)
             return;
         }
     }
-    std::cout << "Child not found" << std::endl;
+    std::cout << "Child not found" << "\n";
 }
 
 void Object::AddComponent(Component* component)
@@ -46,7 +46,7 @@ void Object::RemoveComponent(Component* component)
 {
     if(component == transform)
     {
-        std::cout << "Cannot remove transform component" << std::endl;
+        std::cout << "Cannot remove transform component" << "\n";
         return;
     }
     for(int i = 0; i < m_components.size(); i++)
@@ -57,5 +57,5 @@ void Object::RemoveComponent(Component* component)
             return;
         }
     }
-    std::cout << "Component not found" << std::endl;
+    std::cout << "Component not found" << "\n";
 }

@@ -34,13 +34,13 @@ void FontManager::AddFont(const char * fontPath, int size)
     FT_Face fontFace;
 	if (FT_New_Face(ft, fontPath, 0, &fontFace))
     {
-		std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
+		std::cout << "ERROR::FREETYPE: Failed to load font" << "\n";
 		return;
 	}
 
 	else
     {
-        std::cout << "FREETYPE: loaded freetype font" << std::endl;
+        std::cout << "FREETYPE: loaded freetype font" << "\n";
     }
 
     // Set the font size
@@ -54,7 +54,7 @@ void FontManager::AddFont(const char * fontPath, int size)
 	for (GLubyte c = 0; c < 128; c++){ // Load first 128 characters of ASCII set
 		// Load character glyph
 		if (FT_Load_Char(fontFace, c, FT_LOAD_RENDER)){
-			std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;
+			std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << "\n";
 			continue;
 		}
 

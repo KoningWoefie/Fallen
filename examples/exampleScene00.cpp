@@ -48,15 +48,15 @@ void ExampleScene00::Update(float deltaTime)
 
 void ExampleScene00::OnButtonClicked()
 {
-    std::cout << "Button Clicked!" << std::endl;
+    std::cout << "Button Clicked!" << "\n";
 }
 
 void ExampleScene00::OnButtonHovered()
 {
-    std::cout << "Button Hovered!" << std::endl;
+    std::cout << "Button Hovered!" << "\n";
 }
 
 void ExampleScene00::OnButtonReleased()
 {
-    std::cout << "Button Released!" << std::endl;
+    std::cout << "Button Released!" << "\n";
 }

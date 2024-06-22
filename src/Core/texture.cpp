@@ -17,7 +17,7 @@ Texture::~Texture()
 //load tga and set the texture as said .tga file
 GLuint Texture::LoadTGA(const std::string& path)
 {
-    std::cout << "Loading TGA: " << path << std::endl;
+    std::cout << "Loading TGA: " << path << "\n";
 
 	// Open the file on disk
 	FILE *file;
@@ -25,7 +25,7 @@ GLuint Texture::LoadTGA(const std::string& path)
 	file = fopen(path.c_str(), "rb");
 
 	if (!file) {
-		std::cout << "error: unable to open file" << std::endl;
+		std::cout << "error: unable to open file" << "\n";
 		return 0;
 	}
 
@@ -39,7 +39,7 @@ GLuint Texture::LoadTGA(const std::string& path)
 	//image type needs to be 2 (color) or 3 (grayscale)
 	if (type[1] != 0 || (type[2] != 2 && type[2] != 3))
 	{
-		std::cout << "error: image type neither color or grayscale" << std::endl;
+		std::cout << "error: image type neither color or grayscale" << "\n";
 		fclose(file);
 		return 0;
 	}
@@ -50,20 +50,20 @@ GLuint Texture::LoadTGA(const std::string& path)
 	unsigned char bitdepth = info[4] / 8;
 
 	if (bitdepth != 1 && bitdepth != 3 && bitdepth != 4) {
-		std::cout << "bitdepth not 1, 3 or 4" << std::endl;
+		std::cout << "bitdepth not 1, 3 or 4" << "\n";
 		fclose(file);
 		return 0;
 	}
 
 	// Check if the image's width and height is a power of 2. No biggie, we can handle it.
 	if ((_width & (_width - 1)) != 0) {
-		std::cout << "warning: " << path << "’s width is not a power of 2" << std::endl;
+		std::cout << "warning: " << path << "’s width is not a power of 2" << "\n";
 	}
 	if ((_height & (_height - 1)) != 0) {
-		std::cout << "warning: " << path << "’s height is not a power of 2" << std::endl;
+		std::cout << "warning: " << path << "’s height is not a power of 2" << "\n";
 	}
 	if (_width != _height) {
-		std::cout << "warning: " << path << " is not square" << std::endl;
+		std::cout << "warning: " << path << " is not square" << "\n";
 	}
 
 	// Calculate pixelbuffer size in bytes
@@ -137,7 +137,7 @@ GLuint Texture::LoadTGA(const std::string& path)
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, _width, _height, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, data);
 			break;
 		default:
-			std::cout << "error: bitdepth not 4, 3, or 1" << std::endl;
+			std::cout << "error: bitdepth not 4, 3, or 1" << "\n";
 			break;
 	}
 

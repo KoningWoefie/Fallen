@@ -2,12 +2,12 @@
 
 ResourceManager::ResourceManager()
 {
-    std::cout << "Creating ResourceManager" << std::endl;
+    std::cout << "Creating ResourceManager" << "\n";
 }
 
 ResourceManager::~ResourceManager()
 {
-    std::cout << "Destroying ResourceManager" << std::endl;
+    std::cout << "Destroying ResourceManager" << "\n";
 
     //delete all the textures in the map
     std::map<std::string, Texture*>::iterator text_it;
@@ -30,7 +30,7 @@ ResourceManager::~ResourceManager()
 	}
 	_meshes.clear();
 
-    std::cout << "ResourceManager destroyed" << std::endl;
+    std::cout << "ResourceManager destroyed" << "\n";
 }
 
 Texture* ResourceManager::GetTexture(std::string fileName, int width, int height)

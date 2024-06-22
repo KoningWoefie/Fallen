@@ -206,7 +206,7 @@ void Renderer::RenderUIObject(Object* o, FallenUI::Canvas* canvas, glm::mat4 PaM
 
     if(o->GetComponent<FallenUI::UIElement>() == nullptr)
     {
-        std::cout << "UIElement component not found on object that is a child of canvas" << std::endl;
+        std::cout << "UIElement component not found on object that is a child of canvas" << "\n";
         return;
     }
 
