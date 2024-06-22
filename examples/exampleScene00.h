@@ -6,7 +6,7 @@
 #include <src/Core/text.h>
 #include <src/UI/canvas.h>
 #include <src/Presets/button.h>
-#include "testobj.h"
+#include <src/Presets/canvas.h>
 
 class ExampleScene00 : public Scene
 {
@@ -17,7 +17,7 @@ public:
     virtual void Update(float deltaTime);
 private:
     Presets::Button* button;
-    TestObj* canvas;
+    Presets::Canvas* canvas;
 
     void OnButtonClicked();
     void OnButtonHovered();

@@ -1,15 +1,14 @@
 #include "exampleScene00.h"
 #include "examples/testobj.h"
 #include "src/Presets/button.h"
+#include "src/Presets/canvas.h"
 #include "src/UI/uielement.h"
 #include <src/UI/image.h>
 
 ExampleScene00::ExampleScene00()
 {
-    canvas = new TestObj();
-    FallenUI::Canvas* c = new FallenUI::Canvas(glm::vec2(1280, 720));
-    canvas->AddComponent(c);
-    canvas->transform->position = glm::vec3(c->GetCanvasWidth()/2, c->GetCanvasHeight()/2, 0.0f);
+    canvas = new Presets::Canvas(glm::vec2(1280, 720));
+
     button = new Presets::Button("assets/RunButton.tga");
 
     button->transform->position = glm::vec3(0.0f, 0.0f, 0.0f);

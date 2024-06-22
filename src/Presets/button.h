@@ -18,7 +18,7 @@ namespace Presets
         Button(std::string imagePath, int width, int height);
         Button(std::string imagePath, std::string text);
         Button(std::string imagePath);
-        ~Button();
+        virtual ~Button();
 
         virtual void Update(float deltaTime);
     private:

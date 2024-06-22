@@ -135,6 +135,8 @@ add_library(src # ar rcs fallenlib.a
 	src/UI/uielement.h
 	src/Presets/button.cpp
 	src/Presets/button.h
+	src/Presets/canvas.cpp
+	src/Presets/canvas.h
 )
 
 add_executable(examples # g++ examples/main.cpp -o examples
