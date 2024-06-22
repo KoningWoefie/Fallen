@@ -10,7 +10,7 @@ ExampleScene00::ExampleScene00()
     FallenUI::Canvas* c = new FallenUI::Canvas(glm::vec2(1280, 720));
     canvas->AddComponent(c);
     canvas->transform->position = glm::vec3(c->GetCanvasWidth()/2, c->GetCanvasHeight()/2, 0.0f);
-    button = new Presets::Button("assets/RunButton.tga", 256, 128);
+    button = new Presets::Button("assets/RunButton.tga");
 
     button->transform->position = glm::vec3(0.0f, 0.0f, 0.0f);
 

@@ -1,7 +1,10 @@
 #include <src/Core/camera.h>
 #include "GLFW/glfw3.h"
 #include "src/Core/inputmanager.h"
+#include "src/Core/resourcemanager.h"
 #include "src/Core/sprite.h"
+#include "src/Core/texture.h"
+#include "src/UI/image.h"
 #include "src/UI/uielement.h"
 #include <iostream>
 #include <cstdio>
@@ -149,13 +152,19 @@ void Renderer::RenderObject(Object* o, glm::mat4 PaMa)
 
     for(Component* c : o->GetComponents())
     {
-        if(!c->isRenderable()) continue;
         auto& type = *c;
         if(typeid(type) == typeid(FallenUI::Image)) { RenderImage(dynamic_cast<FallenUI::Image*>(c), PaMa); }
         if(typeid(type) == typeid(Text)) { RenderText(dynamic_cast<Text*>(c), PaMa); }
         if(typeid(type) == typeid(FallenUI::Button))
         {
             FallenUI::Button* b = dynamic_cast<FallenUI::Button*>(c);
+            if(b->GetHeight() <= 0 || b->GetWidth() <= 0)
+            {
+                Texture* t = _resMan.GetTexture(o->GetComponent<FallenUI::Image>()->GetSprite()->FileName());
+                b->SetSize(t->Width(), t->Height());
+                t = nullptr;
+            }
+
             b->SetWorldPosition(_worldPos);
             b->SetWorldScale(glm::vec2(_scaleX, _scaleY));
             b->UpdateState();
@@ -265,6 +274,13 @@ void Renderer::RenderUIObject(Object* o, FallenUI::Canvas* canvas, glm::mat4 PaM
         if(typeid(type) == typeid(FallenUI::Button))
         {
             FallenUI::Button* b = dynamic_cast<FallenUI::Button*>(c);
+            if(b->GetHeight() <= 0 || b->GetWidth() <= 0)
+            {
+                Texture* t = _resMan.GetTexture(o->GetComponent<FallenUI::Image>()->GetSprite()->FileName());
+                b->SetSize(t->Width(), t->Height());
+                t = nullptr;
+            }
+
             b->SetWorldPosition(_worldPos);
             b->SetWorldScale(glm::vec2(_scaleX, _scaleY));
             b->UpdateState();
