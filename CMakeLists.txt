@@ -1,5 +1,5 @@
 # CMake entry point
-cmake_minimum_required (VERSION 3.1)
+cmake_minimum_required (VERSION 3.5)
 project (Fallen)
 
 if( CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR )
@@ -61,6 +61,7 @@ if(WIN32)
     	external/glm-0.9.9.2/
     	external/glew-1.9.0/include/
     	external/freetype-2.13.2/include/
+        external/SQLapi/include/
     	external
     	src
     	.
@@ -70,6 +71,7 @@ if(WIN32)
 		external/glfw-3.3/src
 		external/glew-1.9.0
 		external/freetype-2.13.2
+		external/SQLapi/lib
 		external
 		src
 	)
@@ -81,6 +83,7 @@ if(UNIX)
 	   external/glm-0.9.9.2/
 	   external/glew-1.9.0/include/
 	   external/freetype-2.13.2/include/
+	   external/SQLapi/include/
 	   .
     )
 
@@ -165,8 +168,13 @@ if(UNIX)
     target_link_libraries(examples #g++ -lsrc
 	   src
 	   ${FREETYPE_LIBRARIES}
+	   ${CMAKE_BINARY_DIR}/external/SQLapi/lib/libsqlapiu.a
 	   ${ALL_GRAPHICS_LIBS}
     )
+    file(
+		COPY external/SQLapi
+		DESTINATION ${CMAKE_BINARY_DIR}/external
+	)
 endif(UNIX)
 # Copy assets and shaders to the build directory
 # (In Visual Studio, copy these directories to either 'Release' or 'Build')

@@ -7,6 +7,7 @@
 #include <src/UI/canvas.h>
 #include <src/Presets/button.h>
 #include <src/Presets/canvas.h>
+#include <SQLAPI.h>
 
 class ExampleScene00 : public Scene
 {
@@ -22,6 +23,8 @@ private:
     void OnButtonClicked();
     void OnButtonHovered();
     void OnButtonReleased();
+
+    void GetDatabaseValue();
 
 };
 

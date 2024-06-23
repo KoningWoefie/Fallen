@@ -1,9 +1,11 @@
 #include "exampleScene00.h"
+#include "SQLAPI.h"
 #include "examples/testobj.h"
 #include "src/Presets/button.h"
 #include "src/Presets/canvas.h"
 #include "src/UI/uielement.h"
 #include <src/UI/image.h>
+#include <sys/_select.h>
 
 ExampleScene00::ExampleScene00()
 {
@@ -30,10 +32,38 @@ ExampleScene00::ExampleScene00()
 
     AddChild(canvas);
     canvas->AddChild(button);
+
+    GetDatabaseValue();
 }
 
 ExampleScene00::~ExampleScene00()
 {
+}
+
+void ExampleScene00::GetDatabaseValue()
+{
+    std::string username = "root";
+    std::string password = "root";
+    std::string host = "localhost";
+
+    SAConnection con;
+
+    try
+    {
+        con.Connect("test", _TSA(username.c_str()), _TSA(password.c_str()), _TSA(SA_MySQL_Client));
+
+        // SACommand cmd(&con, _TSA("SELECT * FROM test_table"));
+;
+        // cmd.Execute();
+        // SAString str = cmd[0].asString();
+
+        std::cout << "We are connected!" << "\n";
+        con.Disconnect();
+    }
+    catch(SAException &x)
+    {
+        std::cout << "Error: " << x.ErrText().GetMultiByteChars() << "\n";
+    }
 }
 
 void ExampleScene00::Update(float deltaTime)
