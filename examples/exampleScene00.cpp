@@ -33,6 +33,8 @@ ExampleScene00::ExampleScene00()
     AddChild(canvas);
     canvas->AddChild(button);
 
+    button->GetComponent<FallenUI::UIElement>()->SetAlignment(FallenUI::UIAlignment::Center);
+
     GetDatabaseValue();
 }
 
