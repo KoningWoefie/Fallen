@@ -140,6 +140,8 @@ add_library(src # ar rcs fallenlib.a
 	src/Presets/button.h
 	src/Presets/canvas.cpp
 	src/Presets/canvas.h
+	src/Networking/sql.cpp
+	src/Networking/sql.h
 )
 
 add_executable(examples # g++ examples/main.cpp -o examples

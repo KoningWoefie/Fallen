@@ -35,6 +35,7 @@ ExampleScene00::ExampleScene00()
 
     button->GetComponent<FallenUI::UIElement>()->SetAlignment(FallenUI::UIAlignment::Center);
 
+    sql = new SQL("test", "root", "root", "Rooms");
     GetDatabaseValue();
 }
 
@@ -44,28 +45,13 @@ ExampleScene00::~ExampleScene00()
 
 void ExampleScene00::GetDatabaseValue()
 {
-    std::string username = "root";
-    std::string password = "root";
-    std::string host = "localhost";
-
-    SAConnection con;
-
-    try
-    {
-        con.Connect("test", _TSA(username.c_str()), _TSA(password.c_str()), _TSA(SA_MySQL_Client));
-
-        // SACommand cmd(&con, _TSA("SELECT * FROM test_table"));
-;
-        // cmd.Execute();
-        // SAString str = cmd[0].asString();
-
-        std::cout << "We are connected!" << "\n";
-        con.Disconnect();
-    }
-    catch(SAException &x)
-    {
-        std::cout << "Error: " << x.ErrText().GetMultiByteChars() << "\n";
-    }
+    std::vector<std::string> fields = {"Room_ID", "Room_Name", "Room_Password", "Room_Member_Count", "Room_Current_Member", "Room_Last_Card", "Room_Creation_Time", "Room_Expiry_Time", "Room_Last_Edited_Time"};
+    std::vector<std::string> values = {"", "Inserted", "1234", "0", "0", "0", "", "2024-09-22 00:00:00.000", ""};
+    std::vector<SQLType> types = {SQLType::DEFAULT, SQLType::STRING, SQLType::STRING, SQLType::INT, SQLType::INT, SQLType::INT, SQLType::DEFAULT, SQLType::DATETIME, SQLType::DEFAULT};
+    // sql->CreateRow(fields, values, types);
+    // int i = sql->SelectData<int>("Room_Member_Count", "`Room_Expiry_Time` = '2024-09-22 00:00:00.000'");
+    // SADateTime dt = sql->SelectData<SADateTime>("Room_Expiry_Time");
+    sql->DeleteRow("`Room_ID` = '13'");
 }
 
 void ExampleScene00::Update(float deltaTime)
