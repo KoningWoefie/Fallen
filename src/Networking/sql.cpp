@@ -94,6 +94,7 @@ void SQL::DeleteRow(std::string whereCommand)
     catch (SAException &x)
     {
         std::cout << x.ErrText().GetMultiByteChars() << "\n";
+        Disconnect();
     }
 }
 
@@ -118,13 +119,16 @@ int SQL::SelectData<int>(std::string fieldName, std::string whereCommand)
         cmd.Execute();
         while (cmd.FetchNext())
         {
+            Disconnect();
             return cmd.Field(fieldName.c_str()).asInt32();
         }
+        Disconnect();
         return -1;
     }
     catch (SAException &x)
     {
         std::cout << x.ErrText().GetMultiByteChars() << "\n";
+        Disconnect();
         return -1;
     }
 }
@@ -140,8 +144,10 @@ std::string SQL::SelectData<std::string>(std::string fieldName, std::string wher
         cmd.Execute();
         while (cmd.FetchNext())
         {
+            Disconnect();
             return cmd.Field(fieldName.c_str()).asString().GetMultiByteChars();
         }
+        Disconnect();
         return "not able to find data";
     }
     catch (SAException &x)
@@ -162,13 +168,16 @@ long SQL::SelectData<long>(std::string fieldName, std::string whereCommand)
         cmd.Execute();
         while (cmd.FetchNext())
         {
+            Disconnect();
             return cmd.Field(fieldName.c_str()).asLong();
         }
+        Disconnect();
         return -1;
     }
     catch (SAException &x)
     {
         std::cout << x.ErrText().GetMultiByteChars() << "\n";
+        Disconnect();
         return -1;
     }
 }
@@ -184,13 +193,16 @@ bool SQL::SelectData<bool>(std::string fieldName, std::string whereCommand)
         cmd.Execute();
         while (cmd.FetchNext())
         {
+            Disconnect();
             return cmd.Field(fieldName.c_str()).asBool();
         }
+        Disconnect();
         return false;
     }
     catch (SAException &x)
     {
         std::cout << x.ErrText().GetMultiByteChars() << "\n";
+        Disconnect();
         return false;
     }
 }
@@ -206,13 +218,16 @@ double SQL::SelectData<double>(std::string fieldName, std::string whereCommand)
         cmd.Execute();
         while (cmd.FetchNext())
         {
+            Disconnect();
             return cmd.Field(fieldName.c_str()).asDouble();
         }
+        Disconnect();
         return -1;
     }
     catch (SAException &x)
     {
         std::cout << x.ErrText().GetMultiByteChars() << "\n";
+        Disconnect();
         return -1;
     }
 }
@@ -228,13 +243,16 @@ SADateTime SQL::SelectData<SADateTime>(std::string fieldName, std::string whereC
         cmd.Execute();
         while (cmd.FetchNext())
         {
+            Disconnect();
             return cmd.Field(fieldName.c_str()).asDateTime();
         }
+        Disconnect();
         return SADateTime();
     }
     catch (SAException &x)
     {
         std::cout << x.ErrText().GetMultiByteChars() << "\n";
+        Disconnect();
         return SADateTime();
     }
 }
@@ -252,5 +270,6 @@ void SQL::UpdateData(std::string fieldAndValue, std::string whereCommand)
     catch (SAException &x)
     {
         std::cout << x.ErrText().GetMultiByteChars() << "\n";
+        Disconnect();
     }
 }
