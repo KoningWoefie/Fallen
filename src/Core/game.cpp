@@ -18,6 +18,11 @@ void Game::Run(Scene* scene)
         renderer.ChangeScreenMode();
         Config::ChangedScreenMode = false;
     }
+    if(Config::ChangedTitle)
+    {
+        glfwSetWindowTitle(renderer.GetWindow(), Config::GetTitle().c_str());
+        Config::ChangedTitle = false;
+    }
     int width, height;
 	glfwGetWindowSize(renderer.GetWindow(), &width, &height);
 

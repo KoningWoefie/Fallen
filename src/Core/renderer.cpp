@@ -55,7 +55,7 @@ int Renderer::init()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
 	glfwWindowHint(GLFW_SAMPLES, 4);
 
-	_window = glfwCreateWindow(Config::ScreenWidth, Config::ScreenHeight, Config::Title.c_str(), NULL, NULL);
+	_window = glfwCreateWindow(Config::ScreenWidth, Config::ScreenHeight, Config::GetTitle().c_str(), NULL, NULL);
 
 
 	if( _window == NULL ){

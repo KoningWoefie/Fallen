@@ -154,8 +154,19 @@ add_executable(examples # g++ examples/main.cpp -o examples
 	examples/testobj.h
 )
 
+add_executable(CardGame
+    CardGame/main.cpp
+    CardGame/cardScene.cpp
+    CardGame/cardScene.h
+)
+
 if(WIN32)
     target_link_libraries(examples #g++ -lsrc
+    	src
+    	external/freetype-2.13.2/freetype
+    	${ALL_GRAPHICS_LIBS}
+    )
+    target_link_libraries(CardGame #g++ -lsrc
     	src
     	external/freetype-2.13.2/freetype
     	${ALL_GRAPHICS_LIBS}
@@ -173,6 +184,13 @@ if(UNIX)
 	   ${CMAKE_BINARY_DIR}/external/SQLapi/lib/libsqlapiu.a
 	   ${ALL_GRAPHICS_LIBS}
     )
+    target_link_libraries(CardGame #g++ -lsrc
+	   src
+	   ${FREETYPE_LIBRARIES}
+	   ${CMAKE_BINARY_DIR}/external/SQLapi/lib/libsqlapiu.a
+	   ${ALL_GRAPHICS_LIBS}
+    )
+
     file(
 		COPY external/SQLapi
 		DESTINATION ${CMAKE_BINARY_DIR}/external
