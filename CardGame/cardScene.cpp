@@ -5,6 +5,9 @@ CardScene::CardScene()
 {
     // Config::SetScreenMode(ScreenMode::Fullscreen);
     Config::SetTitle("Card Game");
+
+    m_card = new Card();
+    this->AddChild(m_card);
 }
 
 CardScene::~CardScene()
