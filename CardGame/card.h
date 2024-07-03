@@ -13,16 +13,24 @@ enum class CardType
     JOKER
 };
 
+enum class CardColor
+{
+    BLACK,
+    RED,
+    NONE
+};
+
 class Card : public Object
 {
 public:
-    Card();
+    Card(int value, CardType type);
     virtual ~Card();
 
     virtual void Update(float deltaTime);
 private:
-    int value;
-    CardType type;
+    int _value;
+    CardType _type;
+    CardColor _color;
 };
 
 #endif

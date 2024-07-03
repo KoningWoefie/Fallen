@@ -6,7 +6,8 @@ CardScene::CardScene()
     // Config::SetScreenMode(ScreenMode::Fullscreen);
     Config::SetTitle("Card Game");
 
-    m_card = new Card();
+    m_card = new Card(2, CardType::CLUBS);
+
     this->AddChild(m_card);
 }
 
