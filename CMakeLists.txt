@@ -160,6 +160,8 @@ add_executable(CardGame
     CardGame/cardScene.h
     CardGame/card.cpp
     CardGame/card.h
+    CardGame/deck.cpp
+    CardGame/deck.h
 )
 
 if(WIN32)

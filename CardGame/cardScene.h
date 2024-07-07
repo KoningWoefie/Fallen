@@ -3,6 +3,7 @@
 
 #include <src/Core/scene.h>
 #include "CardGame/card.h"
+#include "CardGame/deck.h"
 
 class CardScene : public Scene
 {

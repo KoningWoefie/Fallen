@@ -27,10 +27,13 @@ public:
     virtual ~Card();
 
     virtual void Update(float deltaTime);
+
+    std::string GetName() { return _name; };
 private:
     int _value;
     CardType _type;
     CardColor _color;
+    std::string _name;
 };
 
 #endif

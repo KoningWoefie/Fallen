@@ -9,6 +9,7 @@ CardScene::CardScene()
     m_card = new Card(2, CardType::CLUBS);
 
     this->AddChild(m_card);
+    new Deck();
 }
 
 CardScene::~CardScene()
@@ -18,5 +19,4 @@ CardScene::~CardScene()
 
 void CardScene::Update(float deltaTime)
 {
-    //copy ctor
 }
