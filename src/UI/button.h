@@ -21,9 +21,9 @@ namespace FallenUI
 
         void SetSize(int width, int height) { _width = width; _height = height; }
 
-        void SetOnPress(std::function<void()> opf) { _onPress = opf; }
-        void SetOnRelease(std::function<void()> orf) { _onRelease = orf; }
-        void SetOnHover(std::function<void()> ohf) { _onHover = ohf; };
+        void SetOnPress(std::function<void()> opf) { _onPress = opf; _setPressed = true; }
+        void SetOnRelease(std::function<void()> orf) { _onRelease = orf; _setReleased = true; }
+        void SetOnHover(std::function<void()> ohf) { _onHover = ohf; _setHovered = true; };
 
         void UpdateState();
 
@@ -50,6 +50,10 @@ namespace FallenUI
 
         bool _isHovered;
         bool _isPressed;
+
+        bool _setHovered;
+        bool _setPressed;
+        bool _setReleased;
 
         std::function<void()> _onPress;
         std::function<void()> _onRelease;

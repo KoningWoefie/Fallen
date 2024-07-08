@@ -47,12 +47,12 @@ namespace FallenUI
         if(_isHovered && !_isPressed)
         {
             _isPressed = _inputManager->GetMouseButtonDown(0);
-            if(_isPressed) _onPress();
+            if(_isPressed && _setPressed) _onPress();
         }
         if(_isPressed && _inputManager->GetMouseButtonUp(0))
         {
             _isPressed = false;
-            _onRelease();
+            if(_setReleased) _onRelease();
         }
 
         if(_x == x && _y == y) return;
@@ -61,7 +61,7 @@ namespace FallenUI
 
         if(_x >= _worldPosition.x - ((float)_width * _worldScale.x)/2 && _x <= _worldPosition.x + ((float)_width * _worldScale.x)/2 && _y <= _worldPosition.y + ((float)_height*_worldScale.y)/2 && _y >= _worldPosition.y - ((float)_height*_worldScale.y)/2)
         {
-            if(!_isHovered) _onHover();
+            if(!_isHovered && _setHovered) _onHover();
             _isHovered = true;
         }
         else
@@ -75,19 +75,19 @@ namespace FallenUI
     void Button::Press()
     {
     	_isPressed = true;
-    	_onPress();
+    	if(_setPressed) _onPress();
     }
 
     void Button::Release()
     {
     	_isPressed = false;
-    	_onRelease();
+    	if(_setReleased) _onRelease();
     }
 
     void Button::Select()
     {
     	_isHovered = true;
-    	_onHover();
+    	if(_setHovered) _onHover();
     }
 
     void Button::Deselect()
