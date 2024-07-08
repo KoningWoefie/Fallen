@@ -136,6 +136,8 @@ add_library(src # ar rcs fallenlib.a
 	src/UI/image.h
 	src/UI/uielement.cpp
 	src/UI/uielement.h
+	src/UI/inputfield.cpp
+	src/UI/inputfield.h
 	src/Presets/button.cpp
 	src/Presets/button.h
 	src/Presets/canvas.cpp

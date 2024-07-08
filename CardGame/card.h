@@ -3,6 +3,8 @@
 
 #include <src/Core/object.h>
 #include <src/UI/image.h>
+#include <src/UI/button.h>
+#include <src/UI/inputfield.h>
 
 enum class CardType
 {
@@ -34,6 +36,8 @@ private:
     CardType _type;
     CardColor _color;
     std::string _name;
+
+    FallenUI::InputField* _input;
 };
 
 #endif

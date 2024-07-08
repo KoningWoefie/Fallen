@@ -1,5 +1,7 @@
+#include <_ctype.h>
 #include <src/Core/inputmanager.h>
 #include "GLFW/glfw3.h"
+#include <cctype>
 
 //Copyright 2023 Sander Hoving (Fuck you Gideon)
 
@@ -53,13 +55,23 @@ bool InputManager::GetKeyUp(KeyCode k)
 	return _keysUp[(int)k];
 }
 
+char InputManager::GetChar(KeyCode k)
+{
+    if(_keys[(int)k])
+    {
+        if(!_keys[int(KeyCode::LeftShift)]) return tolower((char)k);
+        return (char)k;
+    }
+
+    return 0;
+}
+
 void InputManager::RegisterKey(int key, GLFWwindow* w)
 {
 	if (glfwGetKey(w, key) == GLFW_PRESS)
 	{
 		if (_keys[key] == false)
 		{
-		    std::cout << "key registered" << "\n";
 			_keys[key] = true;
 			_keysDown[key] = true;
 		}

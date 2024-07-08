@@ -16,6 +16,7 @@
 #include <src/UI/image.h>
 #include <src/UI/canvas.h>
 #include <src/UI/button.h>
+#include <src/UI/inputfield.h>
 
 class Renderer
 {

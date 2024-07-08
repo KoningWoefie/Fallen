@@ -5,6 +5,7 @@
 #include "src/Core/sprite.h"
 #include "src/Core/texture.h"
 #include "src/UI/image.h"
+#include "src/UI/inputfield.h"
 #include "src/UI/uielement.h"
 #include <iostream>
 #include <cstdio>
@@ -155,6 +156,15 @@ void Renderer::RenderObject(Object* o, glm::mat4 PaMa)
         auto& type = *c;
         if(typeid(type) == typeid(FallenUI::Image)) { RenderImage(dynamic_cast<FallenUI::Image*>(c), PaMa); }
         if(typeid(type) == typeid(Text)) { RenderText(dynamic_cast<Text*>(c), PaMa); }
+        if(typeid(type) == typeid(FallenUI::InputField))
+        {
+            FallenUI::InputField* i = dynamic_cast<FallenUI::InputField*>(c);
+            if(i->ShouldRegisterInput())
+            {
+                i->RegisterInput();
+            }
+            i = nullptr;
+        }
         if(typeid(type) == typeid(FallenUI::Button))
         {
             FallenUI::Button* b = dynamic_cast<FallenUI::Button*>(c);

@@ -145,6 +145,8 @@ public:
 
 	bool GetKeyUp(KeyCode k);
 
+	char GetChar(KeyCode k);
+
 	bool GetMouseButton(int button);
 	bool GetMouseButtonDown(int button);
 	bool GetMouseButtonUp(int button);
