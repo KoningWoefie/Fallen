@@ -16,7 +16,7 @@ namespace FallenUI
 
     void InputField::RegisterInput()
     {
-        if (InputManager::input()->GetKeyDown(KeyCode::Backspace))
+        if (InputManager::input()->GetKey(KeyCode::Backspace))
         {
             if (_input.length() > 0)
             {

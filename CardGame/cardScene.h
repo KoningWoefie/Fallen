@@ -4,6 +4,7 @@
 #include <src/Core/scene.h>
 #include "CardGame/card.h"
 #include "CardGame/deck.h"
+#include <src/Presets/inputfield.h>
 
 class CardScene : public Scene
 {
@@ -14,7 +15,8 @@ public:
     virtual void Update(float deltaTime);
 
 private:
-    Card* m_card;
+    Card* _card;
+    Presets::InputField* _inputField;
 };
 
 #endif

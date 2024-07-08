@@ -57,7 +57,7 @@ bool InputManager::GetKeyUp(KeyCode k)
 
 char InputManager::GetChar(KeyCode k)
 {
-    if(_keys[(int)k])
+    if(_keysDown[(int)k])
     {
         if(!_keys[int(KeyCode::LeftShift)]) return tolower((char)k);
         return (char)k;

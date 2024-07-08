@@ -6,9 +6,12 @@ CardScene::CardScene()
     // Config::SetScreenMode(ScreenMode::Fullscreen);
     Config::SetTitle("Card Game");
 
-    m_card = new Card(2, CardType::CLUBS);
+    _card = new Card(2, CardType::CLUBS);
+    _inputField = new Presets::InputField();
+    _inputField->transform->position = glm::vec3(400, 300, 0);
 
-    this->AddChild(m_card);
+    this->AddChild(_card);
+    this->AddChild(_inputField);
     new Deck();
 }
 
