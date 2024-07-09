@@ -47,5 +47,4 @@ Card::~Card()
 
 void Card::Update(float deltaTime)
 {
-    std::cout << _input->GetInput() << "\n";
 }

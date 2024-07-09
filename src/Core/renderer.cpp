@@ -657,13 +657,11 @@ void Renderer::RenderText(Text* text, glm::mat4 PaMa)
     float bigHeight = 0;
     float x = 0;
     float y = 0;
-    for (int i = 0; i < text->text.size(); i++)
+    for (const auto& gl : _fontMan.GetFont(text->GetFontName(), text->GetSize()))
     {
-        char g = text->text[i];
-        glyph* gl = _fontMan.GetFont(text->GetFontName(), text->GetSize())[g];
-        if((gl->size.y - gl->bearing.y) > bigHeight)
+        if((gl.second->size.y - gl.second->bearing.y) > bigHeight)
         {
-            bigHeight = gl->size.y;
+            bigHeight = gl.second->size.y - gl.second->bearing.y;
         }
     }
     for (int i = 0; i < text->text.size(); i++)
