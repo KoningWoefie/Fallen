@@ -5,6 +5,7 @@ CardScene::CardScene()
 {
     // Config::SetScreenMode(ScreenMode::Fullscreen);
     Config::SetTitle("Card Game");
+    Config::SetBackgroundColor(glm::vec3(54, 89, 74));
 
     _card = new Card(2, CardType::CLUBS);
     _inputField = new Presets::InputField();

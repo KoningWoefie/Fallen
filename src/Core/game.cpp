@@ -23,6 +23,10 @@ void Game::Run(Scene* scene)
         glfwSetWindowTitle(renderer.GetWindow(), Config::GetTitle().c_str());
         Config::ChangedTitle = false;
     }
+    if(Config::ChangedColor)
+    {
+        glClearColor(Config::BackgroundColor.r/255.0f, Config::BackgroundColor.g/255.0f, Config::BackgroundColor.b/255.0f, 0.0f);
+    }
     int width, height;
 	glfwGetWindowSize(renderer.GetWindow(), &width, &height);
 

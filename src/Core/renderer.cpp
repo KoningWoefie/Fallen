@@ -77,7 +77,7 @@ int Renderer::init()
 	glfwSetInputMode(_window, GLFW_STICKY_KEYS, GL_TRUE);
 
 	// Red background
-	glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
+	glClearColor(Config::GetBackgroundColor().r/255.0f, Config::GetBackgroundColor().g/255.0f, Config::GetBackgroundColor().b/255.0f, 0.0f);
 
 	// Backface culling
 	glEnable(GL_CULL_FACE);
