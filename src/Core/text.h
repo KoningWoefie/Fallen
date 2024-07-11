@@ -20,6 +20,7 @@ public:
 
     glm::vec4 color = glm::vec4(255, 255, 255, 255);
     std::string text;
+    bool centered = false;
 
 private:
     char * _font;

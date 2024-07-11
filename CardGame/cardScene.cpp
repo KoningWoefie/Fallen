@@ -9,10 +9,11 @@ CardScene::CardScene()
 
     _card = new Card(2, CardType::CLUBS);
     _inputField = new Presets::InputField();
-    _inputField->transform->position = glm::vec3(400, 300, 0);
+    _inputField->transform->position = glm::vec3(Config::ScreenWidth/2, 500, 0);
 
     this->AddChild(_card);
     this->AddChild(_inputField);
+    _inputField->GetComponent<Text>()->centered = true;
     new Deck();
 }
 

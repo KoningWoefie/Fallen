@@ -155,7 +155,7 @@ void Renderer::RenderObject(Object* o, glm::mat4 PaMa)
     {
         auto& type = *c;
         if(typeid(type) == typeid(FallenUI::Image)) { RenderImage(dynamic_cast<FallenUI::Image*>(c), PaMa); }
-        if(typeid(type) == typeid(Text)) { RenderText(dynamic_cast<Text*>(c), PaMa); }
+        if(typeid(type) == typeid(Text)) { RenderText(dynamic_cast<Text*>(c), PaMa, o->transform->position.x); }
         if(typeid(type) == typeid(FallenUI::InputField))
         {
             FallenUI::InputField* i = dynamic_cast<FallenUI::InputField*>(c);
@@ -296,7 +296,7 @@ void Renderer::RenderUIObject(Object* o, FallenUI::Canvas* canvas, glm::mat4 PaM
             b->UpdateState();
         }
         if(typeid(type) == typeid(FallenUI::Image)) { RenderImage(dynamic_cast<FallenUI::Image*>(c), PaMa); }
-        if(typeid(type) == typeid(Text)) { RenderText(dynamic_cast<Text*>(c), PaMa); }
+        if(typeid(type) == typeid(Text)) { RenderText(dynamic_cast<Text*>(c), PaMa, o->transform->position.x); }
     }
     for(Object* o2 : o->GetChildren())
     {
@@ -651,12 +651,13 @@ void Renderer::RenderSpriteSheet(SpriteSheet* ss, glm::mat4 PaMa)
 	glDisableVertexAttribArray(vertexUVID);
 }
 
-void Renderer::RenderText(Text* text, glm::mat4 PaMa)
+void Renderer::RenderText(Text* text, glm::mat4 PaMa, float pax)
 {
     this->ChooseShader(_textShaderID);
     float bigHeight = 0;
     float x = 0;
     float y = 0;
+    float textWidth = 0;
     for (const auto& gl : _fontMan.GetFont(text->GetFontName(), text->GetSize()))
     {
         if((gl.second->size.y - gl.second->bearing.y) > bigHeight)
@@ -664,9 +665,34 @@ void Renderer::RenderText(Text* text, glm::mat4 PaMa)
             bigHeight = gl.second->size.y - gl.second->bearing.y;
         }
     }
+    glm::mat4 OffsetPaMa = PaMa;
+    if(text->centered)
+    {
+        for (int i = 0; i < text->text.size(); i++)
+        {
+            char g = text->text[i];
+            glyph* gl = _fontMan.GetFont(text->GetFontName(), text->GetSize())[g];
+            textWidth += gl->advance >> 6;
+            if(i == 0)
+            {
+                textWidth -= gl->bearing.x;
+            }
+            if(i == text->text.size() - 1 && text->text.size() >= 2)
+            {
+                textWidth -= ((float)(gl->advance >> 6) - (float)gl->size.x - (float)gl->bearing.x);
+            }
+        }
+        glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(-(textWidth/2), 0, 0));
+        glm::mat4 rotationMatrix = glm::eulerAngleYXZ(0.0f, 0.0f, 0.0f);
+        glm::mat4 scalingMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
+        glm::mat4 modelMatrix = translationMatrix * rotationMatrix * scalingMatrix;
+        OffsetPaMa *= modelMatrix;
+    }
+
+    // OffsetPaMa *= modelMatrix;
     for (int i = 0; i < text->text.size(); i++)
     {
-        glm::mat4 TempPaMa = PaMa;
+        glm::mat4 TempPaMa = OffsetPaMa;
         char g = text->text[i];
         glyph* gl = _fontMan.GetFont(text->GetFontName(), text->GetSize())[g];
         float posX = 0 + gl->size.x * text->pivot.x;
@@ -676,8 +702,9 @@ void Renderer::RenderText(Text* text, glm::mat4 PaMa)
         }
         else
         {
-            x += gl->size.x * text->pivot.x;
+            x += (gl->size.x * text->pivot.x) - gl->bearing.x;
         }
+
         float posY = (y - gl->bearing.y) + (bigHeight + (gl->size.y * text->pivot.y));
 
         float width = gl->size.x;
@@ -754,7 +781,7 @@ void Renderer::RenderText(Text* text, glm::mat4 PaMa)
         glDisableVertexAttribArray(vertexPositionID);
         glDisableVertexAttribArray(vertexUVID);
 
-        x += ((gl->advance - gl->bearing.x) >> 6);
+        x += (gl->advance >> 6);
     }
 }
 
