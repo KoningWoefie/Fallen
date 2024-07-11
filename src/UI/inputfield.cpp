@@ -32,16 +32,6 @@ namespace FallenUI
                 _input += pi;
             }
         }
-
-        for (unsigned int i = 256; i < GLFW_KEY_LAST; i++)
-        {
-            char pi = InputManager::input()->GetChar((KeyCode)i);
-            if (pi != 0)
-            {
-                _input += pi;
-            }
-        }
-
     }
 
     void InputField::ToggleRegisterInput()
