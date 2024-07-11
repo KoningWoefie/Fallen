@@ -684,6 +684,7 @@ void Renderer::RenderText(Text* text, glm::mat4 PaMa)
         float height = gl->size.y;
 
         Mesh* mesh = _resMan.GetMesh(width, height, 0, text->pivot, 1.0f, 1.0f, true);
+
         // Build MVP matrix
         // Send our transformation to the currently bound shader, in the "MVP" uniform
         glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(posX, posY, 0));
@@ -713,7 +714,7 @@ void Renderer::RenderText(Text* text, glm::mat4 PaMa)
 
         // Set the color you want your texture to be blended with
         GLuint colorID = glGetUniformLocation(_textShaderID, "textColor");
-        glUniform4f(colorID, text->color.r, text->color.g, text->color.b, text->color.a);
+        glUniform4f(colorID, text->color.r/255.0f, text->color.g/255.0f, text->color.b/255.0f, text->color.a/255.0f);
 
         // Set the Model, View, Projection matrix in the shader
         GLuint matrixID = glGetUniformLocation(_textShaderID, "MVP");
@@ -753,7 +754,7 @@ void Renderer::RenderText(Text* text, glm::mat4 PaMa)
         glDisableVertexAttribArray(vertexPositionID);
         glDisableVertexAttribArray(vertexUVID);
 
-        x += (gl->advance >> 6);
+        x += ((gl->advance - gl->bearing.x) >> 6);
     }
 }
 

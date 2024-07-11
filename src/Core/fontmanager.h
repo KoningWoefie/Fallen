@@ -6,12 +6,14 @@
 #include <iostream>
 
 #include <glm/glm.hpp>
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
+#include <freetype/freetype.h>
 
-#define GL_CLAMP_TO_EDGE 0x812F 
+#define GL_CLAMP_TO_EDGE 0x812F
 
 struct glyph
 {

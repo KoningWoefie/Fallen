@@ -7,7 +7,7 @@ namespace Presets
     InputField::InputField() : Object()
     {
         _text = new Text();
-        _text->text = "_______";
+        _text->text = "";
 
         FallenUI::Image* i = new FallenUI::Image();
         i->AddSprite(new SlicedSprite("Assets/buttons-down.tga", 20,20,20,20));
@@ -35,6 +35,6 @@ namespace Presets
     void InputField::Update(float deltaTime)
     {
         if(!_inputField->GetInput().empty() && _inputField->ShouldRegisterInput()) _text->text = _inputField->GetInput();
-        else if(_inputField->GetInput().empty()) _text->text = "_______";
+        else if(_inputField->GetInput().empty()) _text->text = "";
     }
 }

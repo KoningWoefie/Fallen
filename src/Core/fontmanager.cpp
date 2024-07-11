@@ -1,3 +1,5 @@
+#include "freetype/config/ftheader.h"
+#include "freetype/freetype.h"
 #include <src/Core/fontmanager.h>
 
 FontManager::FontManager()
@@ -49,6 +51,7 @@ void FontManager::AddFont(const char * fontPath, int size)
     // Disable byte-alignment restriction
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
+	FT_GlyphSlot slot = fontFace->glyph;
     // create temp chars list
 	std::map<char, glyph*> chars;
 	for (GLubyte c = 0; c < 128; c++){ // Load first 128 characters of ASCII set
@@ -58,6 +61,8 @@ void FontManager::AddFont(const char * fontPath, int size)
 			continue;
 		}
 
+		FT_Render_Glyph(slot, FT_RENDER_MODE_NORMAL);
+
 		// Generate texture
 		GLuint texture;
 		glGenTextures(1, &texture);
@@ -65,13 +70,13 @@ void FontManager::AddFont(const char * fontPath, int size)
 
 		// Set texture options
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, fontFace->glyph->bitmap.width, fontFace->glyph->bitmap.rows, 0, GL_RED, GL_UNSIGNED_BYTE, fontFace->glyph->bitmap.buffer);
 
