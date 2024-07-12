@@ -4,6 +4,7 @@
 #include <src/Core/scene.h>
 #include "CardGame/card.h"
 #include "CardGame/deck.h"
+#include <src/Presets/emptyobject.h>
 #include <src/Presets/inputfield.h>
 
 class CardScene : public Scene
@@ -17,6 +18,7 @@ public:
 private:
     Card* _card;
     Presets::InputField* _inputField;
+    Presets::EmptyObject* _titleText;
 };
 
 #endif

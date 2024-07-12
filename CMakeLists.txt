@@ -144,6 +144,7 @@ add_library(src # ar rcs fallenlib.a
 	src/Presets/canvas.h
 	src/Presets/inputfield.cpp
 	src/Presets/inputfield.h
+	src/Presets/emptyobject.h
 	src/Networking/sql.cpp
 	src/Networking/sql.h
 )
