@@ -212,6 +212,10 @@ file(
 	DESTINATION ${CMAKE_BINARY_DIR}
 )
 file(
+    COPY CardGame/assets
+    DESTINATION ${CMAKE_BINARY_DIR}
+)
+file(
 	COPY src/shaders
 	DESTINATION ${CMAKE_BINARY_DIR}
 )
