@@ -7,9 +7,11 @@ CardScene::CardScene()
     Config::SetTitle("Card Game");
     Config::SetBackgroundColor(glm::vec3(54, 89, 74));
 
-    _card = new Card(2, CardType::CLUBS);
+    _card = new Card(2, CardType::SPADES);
     _inputField = new Presets::InputField();
     _inputField->transform->position = glm::vec3(Config::ScreenWidth/2, 500, 0);
+
+    this->AddChild(_card);
 
     _titleText = new Presets::EmptyObject();
 
@@ -24,7 +26,7 @@ CardScene::CardScene()
     // this->AddChild(_card);
     this->AddChild(_inputField);
     _inputField->GetComponent<Text>()->centered = true;
-    new Deck();
+    // new Deck();
 }
 
 CardScene::~CardScene()
