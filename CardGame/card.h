@@ -49,6 +49,14 @@ public:
     virtual void Update(float deltaTime);
 
     std::string GetName() { return _name; };
+    CardType GetType() { return _type; };
+    CardColor GetColor() { return _color; };
+    int GetValue() { return _value; };
+
+    bool operator < (Card* card) const
+    {
+        return (_value < card->GetValue());
+    }
 private:
     int _value;
     CardType _type;

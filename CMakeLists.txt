@@ -167,6 +167,8 @@ add_executable(CardGame
     CardGame/card.h
     CardGame/deck.cpp
     CardGame/deck.h
+    CardGame/hand.cpp
+    CardGame/hand.h
 )
 
 if(WIN32)

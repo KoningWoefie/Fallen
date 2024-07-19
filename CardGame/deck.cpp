@@ -43,9 +43,14 @@ Deck::~Deck()
 
 void Deck::Shuffle()
 {
-    std::random_shuffle(_cards.begin(), _cards.end());
-    for(Card* c : _cards)
-    {
-        std::cout << c->GetName() << std::endl;
-    }
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::shuffle(_cards.begin(), _cards.end(), gen);
+}
+
+Card* Deck::Draw()
+{
+    Card* c = _cards.back();
+    _cards.pop_back();
+    return c;
 }

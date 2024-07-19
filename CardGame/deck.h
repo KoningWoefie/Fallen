@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <string>
+#include <random>
+#include <algorithm>
 #include "CardGame/card.h"
 
 class Deck
@@ -12,7 +14,7 @@ public:
     ~Deck();
 
     void Shuffle();
-    Card Draw();
+    Card* Draw();
 
     void Regenerate();
 private:

@@ -7,11 +7,8 @@ CardScene::CardScene()
     Config::SetTitle("Card Game");
     Config::SetBackgroundColor(glm::vec3(54, 89, 74));
 
-    _card = new Card(2, CardType::SPADES);
     _inputField = new Presets::InputField();
     _inputField->transform->position = glm::vec3(Config::ScreenWidth/2, 500, 0);
-
-    this->AddChild(_card);
 
     _titleText = new Presets::EmptyObject();
 
@@ -23,10 +20,21 @@ CardScene::CardScene()
 
     this->AddChild(_titleText);
 
-    // this->AddChild(_card);
     this->AddChild(_inputField);
     _inputField->GetComponent<Text>()->centered = true;
-    // new Deck();
+    Deck* deck = new Deck();
+    _hand = new Hand();
+    for(int i = 0; i < 7; i++)
+    {
+        _hand->AddCard(deck->Draw());
+        this->AddChild(_hand->GetCard(i));
+    }
+    _hand->SortHand(0);
+    for(int i = 0; i < 7; i++)
+    {
+        _hand->GetCard(i)->transform->position = glm::vec3(100 + i * 100, 200, 0);
+        std::cout << _hand->GetCard(i)->GetName() << std::endl;
+    }
 }
 
 CardScene::~CardScene()

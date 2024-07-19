@@ -4,6 +4,7 @@
 #include <src/Core/scene.h>
 #include "CardGame/card.h"
 #include "CardGame/deck.h"
+#include "CardGame/hand.h"
 #include <src/Presets/emptyobject.h>
 #include <src/Presets/inputfield.h>
 
@@ -16,7 +17,7 @@ public:
     virtual void Update(float deltaTime);
 
 private:
-    Card* _card;
+    Hand* _hand;
     Presets::InputField* _inputField;
     Presets::EmptyObject* _titleText;
 };
