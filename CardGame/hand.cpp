@@ -12,7 +12,6 @@ Hand::~Hand()
 void Hand::AddCard(Card* card)
 {
     _cards.push_back(card);
-    std::cout << card->GetName() << " added to hand" << "\n";
 }
 
 void Hand::AddCards(std::vector<Card *> cards)

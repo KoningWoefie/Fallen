@@ -33,7 +33,6 @@ CardScene::CardScene()
     for(int i = 0; i < 7; i++)
     {
         _hand->GetCard(i)->transform->position = glm::vec3(100 + i * 100, 200, 0);
-        std::cout << _hand->GetCard(i)->GetName() << std::endl;
     }
 }
 
