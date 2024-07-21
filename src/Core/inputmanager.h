@@ -139,6 +139,10 @@ public:
 
 	void Update(GLFWwindow* w);
 
+	bool AnyKey();
+	bool AnyKeyDown();
+	bool AnyKeyUp();
+
 	bool GetKey(KeyCode k);
 
 	bool GetKeyDown(KeyCode k);
@@ -164,6 +168,9 @@ private:
 	std::map<int, bool> _keys;
 	std::map<int, bool> _keysDown;
 	std::map<int, bool> _keysUp;
+	bool _anyKey;
+	bool _anyKeyDown;
+	bool _anyKeyUp;
 
 	std::map<int, bool> _mouseButtons;
 	std::map<int, bool> _mouseButtonsDown;

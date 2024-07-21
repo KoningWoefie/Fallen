@@ -26,6 +26,10 @@ void InputManager::Update(GLFWwindow* w)
 
 	_mousePosition = glm::vec2(x, y);
 
+	_anyKey = false;
+	_anyKeyDown = false;
+	_anyKeyUp = false;
+
 	for (int i = 32; i < 96; i++)
 	{
 		RegisterKey(i, w);
@@ -73,7 +77,9 @@ void InputManager::RegisterKey(int key, GLFWwindow* w)
 		if (_keys[key] == false)
 		{
 			_keys[key] = true;
+			_anyKey = true;
 			_keysDown[key] = true;
+			_anyKeyDown = true;
 		}
 		else
 		{
@@ -92,12 +98,26 @@ void InputManager::RegisterKey(int key, GLFWwindow* w)
 		{
 			_keys[key] = false;
 			_keysUp[key] = true;
+			_anyKeyUp = true;
 		}
 		else
 		{
 			_keysUp[key] = false;
 		}
 	}
+}
+
+bool InputManager::AnyKey()
+{
+    return _anyKey;
+}
+bool InputManager::AnyKeyDown()
+{
+    return _anyKeyDown;
+}
+bool InputManager::AnyKeyUp()
+{
+    return _anyKeyUp;
 }
 
 bool InputManager::GetMouseButton(int b)

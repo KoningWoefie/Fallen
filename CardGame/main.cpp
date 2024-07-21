@@ -1,10 +1,10 @@
 #include <src/Core/game.h>
-#include "CardGame/cardScene.h"
+#include "CardGame/homescene.h"
 
 int main(void)
 {
     Game game;
-    CardScene* cardScene = new CardScene();
+    HomeScene* cardScene = new HomeScene();
     do
     {
         game.Run(cardScene);

@@ -12,7 +12,7 @@ CardScene::CardScene()
 
     _titleText = new Presets::EmptyObject();
 
-    _titleText->AddComponent(new Text((char *)"fonts/HeadlinerNo.45.ttf", 128));
+    _titleText->AddComponent(new Text((char *)"fonts/Times New Roman.ttf", 128));
     _titleText->GetComponent<Text>()->text = "Card Game";
     _titleText->GetComponent<Text>()->centered = true;
 
