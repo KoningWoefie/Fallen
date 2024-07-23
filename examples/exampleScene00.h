@@ -16,6 +16,8 @@ public:
     ~ExampleScene00();
 
     virtual void Update(float deltaTime);
+
+    virtual void Initialize();
 private:
     Presets::Button* button;
     Presets::Canvas* canvas;

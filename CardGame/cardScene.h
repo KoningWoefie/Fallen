@@ -14,6 +14,8 @@ public:
     CardScene();
     virtual ~CardScene();
 
+    virtual void Initialize();
+
     virtual void Update(float deltaTime);
 
 private:

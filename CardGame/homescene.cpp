@@ -1,8 +1,13 @@
 #include "CardGame/homescene.h"
 #include "src/Presets/canvas.h"
 #include "src/Presets/emptyobject.h"
+#include <src/Core/scenemanager.h>
 
 HomeScene::HomeScene()
+{
+}
+
+void HomeScene::Initialize()
 {
     Config::SetBackgroundColor(glm::vec3(54, 89, 74));
     Config::ScreenWidth = 1800;
@@ -53,5 +58,5 @@ void HomeScene::Update(float deltaTime)
 
 void HomeScene::StartGame()
 {
-    std::cout << "Start Game" << std::endl;
+    SceneManager::GetInstance()->NextScene();
 }

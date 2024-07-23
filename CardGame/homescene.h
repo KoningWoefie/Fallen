@@ -14,6 +14,8 @@ public:
     HomeScene();
     virtual ~HomeScene();
 
+    virtual void Initialize();
+
     virtual void Update(float deltaTime);
 private:
     void StartGame();

@@ -9,6 +9,15 @@
 
 ExampleScene00::ExampleScene00()
 {
+
+}
+
+ExampleScene00::~ExampleScene00()
+{
+}
+
+void ExampleScene00::Initialize()
+{
     canvas = new Presets::Canvas(glm::vec2(1280, 720));
 
     button = new Presets::Button("assets/RunButton.tga");
@@ -37,10 +46,6 @@ ExampleScene00::ExampleScene00()
 
     sql = new SQL("test", "root", "root", "Rooms");
     GetDatabaseValue();
-}
-
-ExampleScene00::~ExampleScene00()
-{
 }
 
 void ExampleScene00::GetDatabaseValue()

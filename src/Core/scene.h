@@ -13,8 +13,16 @@ public:
     virtual void Update(float deltaTime) = 0;
 
     Camera* GetCamera() { return _camera; }
+protected:
+    virtual void Initialize() = 0;
+    int ThisSceneIndex() { return thisSceneIndex; }
 private:
     Camera* _camera;
+
+    int thisSceneIndex;
+    void Load();
+    void Unload();
+    friend class SceneManager;
 };
 
 #endif

@@ -13,6 +13,7 @@
 #include <src/Core/camera.h>
 #include <src/Core/inputmanager.h>
 #include <src/Core/object.h>
+#include <src/Core/scenemanager.h>
 
 //Copyright 2023 Sander Hoving (Fuck you Gideon)
 
@@ -22,7 +23,7 @@ public:
     Game();
     virtual ~Game();
 
-	void Run(Scene* scene);
+    void Run(Scene* scene);
 
 	bool IsRunning() { return _running; }
 

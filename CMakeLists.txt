@@ -132,6 +132,8 @@ add_library(src # ar rcs fallenlib.a
 	src/Core/component.h
 	src/Core/transform.cpp
 	src/Core/transform.h
+	src/Core/scenemanager.cpp
+	src/Core/scenemanager.h
 	src/UI/image.cpp
 	src/UI/image.h
 	src/UI/uielement.cpp
@@ -207,6 +209,10 @@ if(UNIX)
     file(
 		COPY external/SQLapi
 		DESTINATION ${CMAKE_BINARY_DIR}/external
+	)
+	file(
+	    COPY external/SQLapi/libmysqlclient.dylib.21
+        DESTINATION ${CMAKE_BINARY_DIR}
 	)
 endif(UNIX)
 # Copy assets and shaders to the build directory

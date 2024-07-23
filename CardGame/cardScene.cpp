@@ -3,7 +3,10 @@
 
 CardScene::CardScene()
 {
-    // Config::SetScreenMode(ScreenMode::Fullscreen);
+}
+
+void CardScene::Initialize()
+{
     Config::SetTitle("Card Game");
     Config::SetBackgroundColor(glm::vec3(54, 89, 74));
 
