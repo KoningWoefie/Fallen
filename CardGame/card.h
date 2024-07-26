@@ -63,7 +63,7 @@ private:
     CardColor _color;
     std::string _name;
 
-    FallenUI::InputField* _input;
+    Components::InputField* _input;
 };
 
 #endif

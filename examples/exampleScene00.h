@@ -5,8 +5,7 @@
 #include <src/Core/sprite.h>
 #include <src/Core/text.h>
 #include <src/UI/canvas.h>
-#include <src/Presets/button.h>
-#include <src/Presets/canvas.h>
+#include <src/Objects/button.h>
 #include <src/Networking/sql.h>
 
 class ExampleScene00 : public Scene
@@ -19,8 +18,7 @@ public:
 
     virtual void Initialize();
 private:
-    Presets::Button* button;
-    Presets::Canvas* canvas;
+    Button* button;
 
     void OnButtonClicked();
     void OnButtonHovered();

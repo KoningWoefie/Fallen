@@ -1,7 +1,7 @@
 #include "src/Core/component.h"
 #include <src/UI/image.h>
 
-namespace FallenUI
+namespace Components
 {
     Image::Image() : Component()
     {

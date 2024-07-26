@@ -1,6 +1,6 @@
 #include <src/UI/uielement.h>
 
-namespace FallenUI
+namespace Components
 {
     UIElement::UIElement(UIAlignment alignment)
     {

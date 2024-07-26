@@ -1,7 +1,7 @@
 #include <src/UI/button.h>
 #include <src/Core/object.h>
 
-namespace FallenUI
+namespace Components
 {
     Button::Button()
     {

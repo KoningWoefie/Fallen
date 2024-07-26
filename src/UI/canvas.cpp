@@ -3,7 +3,7 @@
 #include <src/UI/canvas.h>
 #include <src/Core/object.h>
 
-namespace FallenUI
+namespace Components
 {
     Canvas::Canvas(int width, int height) : Component()
     {

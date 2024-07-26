@@ -3,7 +3,7 @@
 
 #include <src/Core/component.h>
 
-namespace FallenUI
+namespace Components
 {
     enum class UIAlignment
     {

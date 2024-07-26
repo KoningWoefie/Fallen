@@ -177,7 +177,7 @@ With this component you can set the alignment to the left, right, top, bottom, t
 ```cpp
 // UI element has an alignment so that the framework knows which way you want the position to be calculated
 // Center is the default
-UIelement->SetAlignment(FallenUI::UIAlignment::Center);
+UIelement->SetAlignment(Components::UIAlignment::Center);
 ```
 
 #### Image

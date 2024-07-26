@@ -154,23 +154,23 @@ void Renderer::RenderObject(Object* o, glm::mat4 PaMa)
     for(Component* c : o->GetComponents())
     {
         auto& type = *c;
-        if(typeid(type) == typeid(FallenUI::Image)) { RenderImage(dynamic_cast<FallenUI::Image*>(c), PaMa); }
-        if(typeid(type) == typeid(Text)) { RenderText(dynamic_cast<Text*>(c), PaMa, o->transform->position.x); }
-        if(typeid(type) == typeid(FallenUI::InputField))
+        if(typeid(type) == typeid(Components::Image)) { RenderImage(dynamic_cast<Components::Image*>(c), PaMa); }
+        if(typeid(type) == typeid(Components::Text)) { RenderText(dynamic_cast<Components::Text*>(c), PaMa, o->transform->position.x); }
+        if(typeid(type) == typeid(Components::InputField))
         {
-            FallenUI::InputField* i = dynamic_cast<FallenUI::InputField*>(c);
+            Components::InputField* i = dynamic_cast<Components::InputField*>(c);
             if(i->ShouldRegisterInput())
             {
                 i->RegisterInput();
             }
             i = nullptr;
         }
-        if(typeid(type) == typeid(FallenUI::Button))
+        if(typeid(type) == typeid(Components::Button))
         {
-            FallenUI::Button* b = dynamic_cast<FallenUI::Button*>(c);
+            Components::Button* b = dynamic_cast<Components::Button*>(c);
             if(b->GetHeight() <= 0 || b->GetWidth() <= 0)
             {
-                Texture* t = _resMan.GetTexture(o->GetComponent<FallenUI::Image>()->GetSprite()->FileName());
+                Texture* t = _resMan.GetTexture(o->GetComponent<Components::Image>()->GetSprite()->FileName());
                 b->SetSize(t->Width(), t->Height());
                 t = nullptr;
             }
@@ -182,7 +182,7 @@ void Renderer::RenderObject(Object* o, glm::mat4 PaMa)
     }
     for(Object* o2 : o->GetChildren())
     {
-        FallenUI::Canvas* c = o->GetComponent<FallenUI::Canvas>();
+        Components::Canvas* c = o->GetComponent<Components::Canvas>();
         if(c)
         {
             if(c->GetScaleWithScreenSize())
@@ -202,7 +202,7 @@ void Renderer::RenderObject(Object* o, glm::mat4 PaMa)
     _worldPos = thisWorldPos;
 }
 
-void Renderer::RenderUIObject(Object* o, FallenUI::Canvas* canvas, glm::mat4 PaMa)
+void Renderer::RenderUIObject(Object* o, Components::Canvas* canvas, glm::mat4 PaMa)
 {
     _scaleX *= o->transform->scale.x;
     _scaleY *= o->transform->scale.y;
@@ -214,47 +214,47 @@ void Renderer::RenderUIObject(Object* o, FallenUI::Canvas* canvas, glm::mat4 PaM
     float x = 0;
     float y = 0;
 
-    if(o->GetComponent<FallenUI::UIElement>() == nullptr)
+    if(o->GetComponent<Components::UIElement>() == nullptr)
     {
         std::cout << "UIElement component not found on object that is a child of canvas" << "\n";
         return;
     }
 
-    switch (o->GetComponent<FallenUI::UIElement>()->GetAlignment())
+    switch (o->GetComponent<Components::UIElement>()->GetAlignment())
     {
-        case FallenUI::UIAlignment::Center:
+        case Components::UIAlignment::Center:
             x = 0;
             y = 0;
             break;
-        case FallenUI::UIAlignment::TopLeft:
+        case Components::UIAlignment::TopLeft:
             x = -((float)(canvas->GetCanvasWidth()) / 2);
             y = -((float)(canvas->GetCanvasHeight()) / 2);
             break;
-        case FallenUI::UIAlignment::Top:
+        case Components::UIAlignment::Top:
             x = 0;
             y = -((float)(canvas->GetCanvasHeight()) / 2);
             break;
-        case FallenUI::UIAlignment::TopRight:
+        case Components::UIAlignment::TopRight:
             x = (float)canvas->GetCanvasWidth() / 2;
             y = -((float)(canvas->GetCanvasHeight()) / 2);
             break;
-        case FallenUI::UIAlignment::Left:
+        case Components::UIAlignment::Left:
             x = -((float)(canvas->GetCanvasWidth()) / 2);
             y = 0;
             break;
-        case FallenUI::UIAlignment::Right:
+        case Components::UIAlignment::Right:
             x = ((float)(canvas->GetCanvasWidth()) / 2);
             y = 0;
             break;
-        case FallenUI::UIAlignment::BottomLeft:
+        case Components::UIAlignment::BottomLeft:
             x = -((float)(canvas->GetCanvasWidth()) / 2);
             y = (float)(canvas->GetCanvasHeight()) / 2;
             break;
-        case FallenUI::UIAlignment::Bottom:
+        case Components::UIAlignment::Bottom:
             x = 0;
             y = (float)(canvas->GetCanvasHeight()) / 2;
             break;
-        case FallenUI::UIAlignment::BottomRight:
+        case Components::UIAlignment::BottomRight:
             x = (float)canvas->GetCanvasWidth() / 2;
             y = (float)(canvas->GetCanvasHeight()) / 2;
             break;
@@ -281,12 +281,12 @@ void Renderer::RenderUIObject(Object* o, FallenUI::Canvas* canvas, glm::mat4 PaM
     for(Component* c : o->GetComponents())
     {
         auto& type = *c;
-        if(typeid(type) == typeid(FallenUI::Button))
+        if(typeid(type) == typeid(Components::Button))
         {
-            FallenUI::Button* b = dynamic_cast<FallenUI::Button*>(c);
+            Components::Button* b = dynamic_cast<Components::Button*>(c);
             if(b->GetHeight() <= 0 || b->GetWidth() <= 0)
             {
-                Texture* t = _resMan.GetTexture(o->GetComponent<FallenUI::Image>()->GetSprite()->FileName());
+                Texture* t = _resMan.GetTexture(o->GetComponent<Components::Image>()->GetSprite()->FileName());
                 b->SetSize(t->Width(), t->Height());
                 t = nullptr;
             }
@@ -295,8 +295,8 @@ void Renderer::RenderUIObject(Object* o, FallenUI::Canvas* canvas, glm::mat4 PaM
             b->SetWorldScale(glm::vec2(_scaleX, _scaleY));
             b->UpdateState();
         }
-        if(typeid(type) == typeid(FallenUI::Image)) { RenderImage(dynamic_cast<FallenUI::Image*>(c), PaMa); }
-        if(typeid(type) == typeid(Text)) { RenderText(dynamic_cast<Text*>(c), PaMa, o->transform->position.x); }
+        if(typeid(type) == typeid(Components::Image)) { RenderImage(dynamic_cast<Components::Image*>(c), PaMa); }
+        if(typeid(type) == typeid(Components::Text)) { RenderText(dynamic_cast<Components::Text*>(c), PaMa, o->transform->position.x); }
     }
     for(Object* o2 : o->GetChildren())
     {
@@ -308,7 +308,7 @@ void Renderer::RenderUIObject(Object* o, FallenUI::Canvas* canvas, glm::mat4 PaM
     _worldPos = thisWorldPos;
 }
 
-void Renderer::RenderImage(FallenUI::Image* i, glm::mat4 PaMa)
+void Renderer::RenderImage(Components::Image* i, glm::mat4 PaMa)
 {
     this->ChooseShader(_programID);
 
@@ -651,7 +651,7 @@ void Renderer::RenderSpriteSheet(SpriteSheet* ss, glm::mat4 PaMa)
 	glDisableVertexAttribArray(vertexUVID);
 }
 
-void Renderer::RenderText(Text* text, glm::mat4 PaMa, float pax)
+void Renderer::RenderText(Components::Text* text, glm::mat4 PaMa, float pax)
 {
     this->ChooseShader(_textShaderID);
     float bigHeight = 0;

@@ -1,8 +1,7 @@
 #include "exampleScene00.h"
 #include "SQLAPI.h"
 #include "examples/testobj.h"
-#include "src/Presets/button.h"
-#include "src/Presets/canvas.h"
+#include "src/Objects/button.h"
 #include "src/UI/uielement.h"
 #include <src/UI/image.h>
 #include <sys/_select.h>
@@ -18,31 +17,30 @@ ExampleScene00::~ExampleScene00()
 
 void ExampleScene00::Initialize()
 {
-    canvas = new Presets::Canvas(glm::vec2(1280, 720));
 
-    button = new Presets::Button("assets/RunButton.tga");
+    button = new Button("assets/RunButton.tga");
 
     button->transform->position = glm::vec3(0.0f, 0.0f, 0.0f);
 
-    FallenUI::Button* b = button->GetComponent<FallenUI::Button>();
+    Components::Button* b = button->GetComponent<Components::Button>();
     b->SetOnHover(std::bind(&ExampleScene00::OnButtonHovered, this));
     b->SetOnPress(std::bind(&ExampleScene00::OnButtonClicked, this));
     b->SetOnRelease(std::bind(&ExampleScene00::OnButtonReleased, this));
 
     // AnimatedSprite* sprite = new AnimatedSprite("assets/Sprite_Sheet_G4.tga", 4, 4, 0.5f);
-    // FallenUI::Image* i = button->GetComponent<FallenUI::Image>();
+    // Components::Image* i = button->GetComponent<Components::Image>();
     // i->AddSprite(sprite);
     // sprite->AddAnimation({1,2,3,4});
     // i = nullptr;
 
-    button->AddComponent(new Text());
-    Text* t = button->GetComponent<Text>();
+    button->AddComponent(new Components::Text());
+    Components::Text* t = button->GetComponent<Components::Text>();
     t->text = "Heppo World!";
 
-    AddChild(canvas);
-    canvas->AddChild(button);
+    // AddChild(canvas);
+    // canvas->AddChild(button);
 
-    button->GetComponent<FallenUI::UIElement>()->SetAlignment(FallenUI::UIAlignment::Center);
+    button->GetComponent<Components::UIElement>()->SetAlignment(Components::UIAlignment::Center);
 
     sql = new SQL("test", "root", "root", "Rooms");
     GetDatabaseValue();
@@ -64,7 +62,7 @@ void ExampleScene00::Update(float deltaTime)
     if(Input()->GetKey(KeyCode::D))
     {
         button->transform->position.x += 10.0f * deltaTime;
-        // dynamic_cast<SpriteSheet*>(button->GetComponent<FallenUI::Image>()->GetSprite())->SetCurrentFrame(2);
+        // dynamic_cast<SpriteSheet*>(button->GetComponent<Components::Image>()->GetSprite())->SetCurrentFrame(2);
     }
 }
 

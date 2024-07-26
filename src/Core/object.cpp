@@ -16,9 +16,9 @@ Object::~Object()
 
 void Object::AddChild(Object* child)
 {
-    if(this->GetComponent<FallenUI::Canvas>() || this->GetComponent<FallenUI::UIElement>())
+    if(this->GetComponent<Components::Canvas>() || this->GetComponent<Components::UIElement>())
     {
-        if(!child->GetComponent<FallenUI::Canvas>() && !child->GetComponent<FallenUI::UIElement>()) child->AddComponent(new FallenUI::UIElement());
+        if(!child->GetComponent<Components::Canvas>() && !child->GetComponent<Components::UIElement>()) child->AddComponent(new Components::UIElement());
     }
     m_children.push_back(child);
 }

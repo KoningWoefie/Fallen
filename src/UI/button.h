@@ -5,7 +5,7 @@
 #include <src/Core/component.h>
 #include <src/Core/inputmanager.h>
 
-namespace FallenUI
+namespace Components
 {
 
     class Button : public Component

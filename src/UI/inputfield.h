@@ -4,7 +4,7 @@
 #include <src/Core/component.h>
 #include <src/Core/inputmanager.h>
 
-namespace FallenUI
+namespace Components
 {
     class InputField : public Component
     {

@@ -1,4 +1,5 @@
 #include "CardGame/cardScene.h"
+#include "src/Core/component.h"
 #include "src/Core/config.h"
 
 CardScene::CardScene()
@@ -10,21 +11,21 @@ void CardScene::Initialize()
     Config::SetTitle("Card Game");
     Config::SetBackgroundColor(glm::vec3(54, 89, 74));
 
-    _inputField = new Presets::InputField();
+    _inputField = new InputField();
     _inputField->transform->position = glm::vec3(Config::ScreenWidth/2, 500, 0);
 
-    _titleText = new Presets::EmptyObject();
+    _titleText = new EmptyObject();
 
-    _titleText->AddComponent(new Text((char *)"fonts/Times New Roman.ttf", 128));
-    _titleText->GetComponent<Text>()->text = "Card Game";
-    _titleText->GetComponent<Text>()->centered = true;
+    _titleText->AddComponent(new Components::Text((char *)"fonts/Times New Roman.ttf", 128));
+    _titleText->GetComponent<Components::Text>()->text = "Card Game";
+    _titleText->GetComponent<Components::Text>()->centered = true;
 
     _titleText->transform->position = glm::vec3(Config::ScreenWidth/2, 0, 0);
 
     this->AddChild(_titleText);
 
     this->AddChild(_inputField);
-    _inputField->GetComponent<Text>()->centered = true;
+    _inputField->GetComponent<Components::Text>()->centered = true;
     Deck* deck = new Deck();
     _hand = new Hand();
     for(int i = 0; i < 7; i++)

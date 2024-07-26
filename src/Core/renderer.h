@@ -32,10 +32,10 @@ public:
     void ChangeScreenMode();
 private:
     void RenderObject(Object* o, glm::mat4 PaMa);
-    void RenderUIObject(Object* o, FallenUI::Canvas* canvas, glm::mat4 PaMa);
+    void RenderUIObject(Object* o, Components::Canvas* canvas, glm::mat4 PaMa);
 
-    void RenderImage(FallenUI::Image* i, glm::mat4 PaMa);
-    void RenderText(Text* text, glm::mat4 PaMa, float x);
+    void RenderImage(Components::Image* i, glm::mat4 PaMa);
+    void RenderText(Components::Text* text, glm::mat4 PaMa, float x);
 
     void RenderSprite(Sprite* sprite, glm::mat4 PaMa);
     void RenderSlicedSprite(SlicedSprite* i, glm::mat4 PaMa);

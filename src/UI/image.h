@@ -4,7 +4,7 @@
 #include <src/Core/sprite.h>
 #include <glm/glm.hpp>
 
-namespace FallenUI
+namespace Components
 {
     class Image : public Component
     {

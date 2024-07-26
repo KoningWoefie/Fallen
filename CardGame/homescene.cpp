@@ -1,7 +1,6 @@
 #include "CardGame/homescene.h"
 #include "src/Core/sprite.h"
-#include "src/Presets/canvas.h"
-#include "src/Presets/emptyobject.h"
+#include "src/Objects/emptyobject.h"
 #include "src/UI/uielement.h"
 #include <src/Core/scenemanager.h>
 
@@ -15,35 +14,36 @@ void HomeScene::Initialize()
     Config::ScreenWidth = 1800;
     Config::ScreenHeight = 1080;
     Config::SetScreenMode(ScreenMode::Windowed);
-    _canvas = new Presets::Canvas(glm::vec2(1800, 1080));
+    _canvas = new EmptyObject();
+    _canvas->AddComponent(new Components::Canvas(glm::vec2(1800, 1080)));
 
-    _titleImage = new Presets::EmptyObject();
-    FallenUI::Image* image = new FallenUI::Image();
+    _titleImage = new EmptyObject();
+    Components::Image* image = new Components::Image();
     image->AddSprite(new Sprite("assets/Logo_CardGame.tga"));
     _titleImage->AddComponent(image);
     image->pivot = glm::vec2(0.5f, 0.5f);
     image = nullptr;
 
-    _text = new Presets::EmptyObject();
-    Text* text = new Text((char *)"fonts/Times New Roman.ttf");
+    _text = new EmptyObject();
+    Components::Text* text = new Components::Text((char *)"fonts/Times New Roman.ttf");
     text->text = "Press any key to start";
     text->centered = true;
     _text->AddComponent(text);
     _text->transform->position = glm::vec3(0, 400, 0);
     text = nullptr;
 
-    _startButton = new Presets::EmptyObject();
-    FallenUI::Button* button = new FallenUI::Button(Config::ScreenWidth, Config::ScreenHeight);
+    _startButton = new EmptyObject();
+    Components::Button* button = new Components::Button(Config::ScreenWidth, Config::ScreenHeight);
     button->SetOnPress(std::bind(&HomeScene::StartGame, this));
     _startButton->AddComponent(button);
     button = nullptr;
 
-    _column = new Presets::EmptyObject();
-    image = new FallenUI::Image();
+    _column = new EmptyObject();
+    image = new Components::Image();
     image->AddSprite(new SlicedSprite("assets/square.tga", 2, 2, 2, 2));
     _column->transform->scale = glm::vec3(8.0f, 1.0f, 1.0f);
-    _column->AddComponent(new FallenUI::UIElement());
-    _column->GetComponent<FallenUI::UIElement>()->SetAlignment(FallenUI::UIAlignment::Top);
+    _column->AddComponent(new Components::UIElement());
+    _column->GetComponent<Components::UIElement>()->SetAlignment(Components::UIAlignment::Top);
     _column->transform->position = glm::vec3(0, 200, 0);
     _column->AddComponent(image);
 
@@ -66,7 +66,7 @@ void HomeScene::Update(float deltaTime)
 {
     if(Input()->AnyKeyDown())
     {
-        _startButton->GetComponent<FallenUI::Button>()->Press();
+        _startButton->GetComponent<Components::Button>()->Press();
     }
 }
 

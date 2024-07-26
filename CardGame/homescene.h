@@ -2,11 +2,11 @@
 #define HOMESCENE_H
 
 #include <src/Core/scene.h>
-#include <src/Presets/emptyobject.h>
-#include <src/Presets/canvas.h>
+#include <src/Objects/emptyobject.h>
 #include <src/UI/image.h>
 #include <src/UI/button.h>
 #include <src/Core/text.h>
+#include <src/UI/canvas.h>
 
 class HomeScene : public Scene
 {
@@ -19,11 +19,11 @@ public:
     virtual void Update(float deltaTime);
 private:
     void StartGame();
-    Presets::EmptyObject* _titleImage;
-    Presets::EmptyObject* _startButton;
-    Presets::EmptyObject* _text;
-    Presets::Canvas* _canvas;
-    Presets::EmptyObject* _column;
+    EmptyObject* _titleImage;
+    EmptyObject* _startButton;
+    EmptyObject* _text;
+    EmptyObject* _column;
+    EmptyObject* _canvas;
 };
 
 #endif

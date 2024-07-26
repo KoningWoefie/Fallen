@@ -4,7 +4,7 @@
 #include "src/Core/config.h"
 #include <src/Core/component.h>
 
-namespace FallenUI
+namespace Components
 {
     class Canvas : public Component
     {

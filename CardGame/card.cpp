@@ -4,15 +4,15 @@
 
 Card::Card(int value, CardType type)
 {
-    FallenUI::Image* image = new FallenUI::Image();
+    Components::Image* image = new Components::Image();
     image->width = 500;
     image->height = 700;
 
 
-    FallenUI::Button* button = new FallenUI::Button();
-    _input = new FallenUI::InputField();
+    Components::Button* button = new Components::Button();
+    _input = new Components::InputField();
 
-    button->SetOnPress(std::bind(&FallenUI::InputField::ToggleRegisterInput, _input));
+    button->SetOnPress(std::bind(&Components::InputField::ToggleRegisterInput, _input));
 
     _value = value;
     _type = type;
@@ -61,15 +61,15 @@ Card::Card(int value, CardType type)
 
 Card::Card(CardImage ci, CardType type)
 {
-    FallenUI::Image* image = new FallenUI::Image();
+    Components::Image* image = new Components::Image();
     image->width = 500;
     image->height = 700;
 
 
-    FallenUI::Button* button = new FallenUI::Button();
-    _input = new FallenUI::InputField();
+    Components::Button* button = new Components::Button();
+    _input = new Components::InputField();
 
-    button->SetOnPress(std::bind(&FallenUI::InputField::ToggleRegisterInput, _input));
+    button->SetOnPress(std::bind(&Components::InputField::ToggleRegisterInput, _input));
 
     _value = (int)ci;
     _type = type;

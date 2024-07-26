@@ -1,7 +1,7 @@
 #include "src/Core/inputmanager.h"
 #include <src/UI/inputfield.h>
 
-namespace FallenUI
+namespace Components
 {
     InputField::InputField() : Component()
     {
