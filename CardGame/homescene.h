@@ -23,6 +23,7 @@ private:
     Presets::EmptyObject* _startButton;
     Presets::EmptyObject* _text;
     Presets::Canvas* _canvas;
+    Presets::EmptyObject* _column;
 };
 
 #endif

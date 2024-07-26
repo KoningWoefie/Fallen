@@ -1,6 +1,8 @@
 #include "CardGame/homescene.h"
+#include "src/Core/sprite.h"
 #include "src/Presets/canvas.h"
 #include "src/Presets/emptyobject.h"
+#include "src/UI/uielement.h"
 #include <src/Core/scenemanager.h>
 
 HomeScene::HomeScene()
@@ -11,7 +13,7 @@ void HomeScene::Initialize()
 {
     Config::SetBackgroundColor(glm::vec3(54, 89, 74));
     Config::ScreenWidth = 1800;
-    Config::ScreenHeight = 1169;
+    Config::ScreenHeight = 1080;
     Config::SetScreenMode(ScreenMode::Windowed);
     _canvas = new Presets::Canvas(glm::vec2(1800, 1080));
 
@@ -36,9 +38,19 @@ void HomeScene::Initialize()
     _startButton->AddComponent(button);
     button = nullptr;
 
+    _column = new Presets::EmptyObject();
+    image = new FallenUI::Image();
+    image->AddSprite(new SlicedSprite("assets/square.tga", 2, 2, 2, 2));
+    _column->transform->scale = glm::vec3(8.0f, 1.0f, 1.0f);
+    _column->AddComponent(new FallenUI::UIElement());
+    _column->GetComponent<FallenUI::UIElement>()->SetAlignment(FallenUI::UIAlignment::Top);
+    _column->transform->position = glm::vec3(0, 200, 0);
+    _column->AddComponent(image);
+
     _canvas->AddChild(_titleImage);
     _canvas->AddChild(_text);
     _canvas->AddChild(_startButton);
+    _canvas->AddChild(_column);
     this->AddChild(_canvas);
 }
 
@@ -46,6 +58,8 @@ HomeScene::~HomeScene()
 {
     delete _canvas;
     delete _titleImage;
+    delete _startButton;
+    delete _text;
 }
 
 void HomeScene::Update(float deltaTime)
