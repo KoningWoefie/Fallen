@@ -38,19 +38,28 @@ void HomeScene::Initialize()
     _startButton->AddComponent(button);
     button = nullptr;
 
-    _column = new EmptyObject();
-    image = new Components::Image();
-    image->AddSprite(new SlicedSprite("assets/square.tga", 2, 2, 2, 2));
-    _column->transform->scale = glm::vec3(8.0f, 1.0f, 1.0f);
-    _column->AddComponent(new Components::UIElement());
-    _column->GetComponent<Components::UIElement>()->SetAlignment(Components::UIAlignment::Top);
-    _column->transform->position = glm::vec3(0, 200, 0);
-    _column->AddComponent(image);
+    for(int i = 0; i < 10; i++)
+    {
+        Button* column = new Button();
+        image = column->GetComponent<Components::Image>();
+        image->AddSprite(new SlicedSprite("assets/square.tga", 2, 2, 2, 2));
+        image->GetSprite()->SetFilter(0);
+        column->transform->scale = glm::vec3(8.0f, 1.0f, 1.0f);
+        column->AddComponent(new Components::UIElement());
+        column->GetComponent<Components::UIElement>()->SetAlignment(Components::UIAlignment::Top);
+        column->transform->position = glm::vec3(0, 200 * i, 0);
+        _columns.push_back(column);
+        column = nullptr;
+    }
+
 
     _canvas->AddChild(_titleImage);
     _canvas->AddChild(_text);
     _canvas->AddChild(_startButton);
-    _canvas->AddChild(_column);
+    for(int i = 0; i < _columns.size(); i++)
+    {
+        _canvas->AddChild(_columns[i]);
+    }
     this->AddChild(_canvas);
 }
 

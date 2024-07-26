@@ -170,7 +170,7 @@ void Renderer::RenderObject(Object* o, glm::mat4 PaMa)
             Components::Button* b = dynamic_cast<Components::Button*>(c);
             if(b->GetHeight() <= 0 || b->GetWidth() <= 0)
             {
-                Texture* t = _resMan.GetTexture(o->GetComponent<Components::Image>()->GetSprite()->FileName());
+                Texture* t = _resMan.GetTexture(o->GetComponent<Components::Image>()->GetSprite()->FileName(), o->GetComponent<Components::Image>()->GetSprite()->Filter());
                 b->SetSize(t->Width(), t->Height());
                 t = nullptr;
             }
@@ -204,12 +204,11 @@ void Renderer::RenderObject(Object* o, glm::mat4 PaMa)
 
 void Renderer::RenderUIObject(Object* o, Components::Canvas* canvas, glm::mat4 PaMa)
 {
-    _scaleX *= o->transform->scale.x;
-    _scaleY *= o->transform->scale.y;
-
-
     float sX = _scaleX;
     float sY = _scaleY;
+
+    _scaleX *= o->transform->scale.x;
+    _scaleY *= o->transform->scale.y;
 
     float x = 0;
     float y = 0;
@@ -286,7 +285,7 @@ void Renderer::RenderUIObject(Object* o, Components::Canvas* canvas, glm::mat4 P
             Components::Button* b = dynamic_cast<Components::Button*>(c);
             if(b->GetHeight() <= 0 || b->GetWidth() <= 0)
             {
-                Texture* t = _resMan.GetTexture(o->GetComponent<Components::Image>()->GetSprite()->FileName());
+                Texture* t = _resMan.GetTexture(o->GetComponent<Components::Image>()->GetSprite()->FileName(), o->GetComponent<Components::Image>()->GetSprite()->Filter());
                 b->SetSize(t->Width(), t->Height());
                 t = nullptr;
             }
@@ -399,7 +398,7 @@ void Renderer::RenderSprite(Sprite* s, glm::mat4 PaMa)
     glm::mat4 MVP = _projectionMatrix * _viewMatrix * PaMa;
 
     glActiveTexture(GL_TEXTURE0);
-    Texture* t = _resMan.GetTexture(s->FileName());
+    Texture* t = _resMan.GetTexture(s->FileName(), s->Filter());
 
     glBindTexture(GL_TEXTURE_2D, t->GetTexture());
 
@@ -458,7 +457,7 @@ void Renderer::RenderSlicedSprite(SlicedSprite* ss, glm::mat4 PaMa)
 {
    	// Bind our texture in Texture Unit 0
     glActiveTexture(GL_TEXTURE0);
-	Texture* t = _resMan.GetTexture(ss->FileName());
+	Texture* t = _resMan.GetTexture(ss->FileName(), ss->Filter());
 
     ss->ChangeMeshData(t->Width(), t->Height());
     // Bind texture for OpenGL
@@ -596,7 +595,7 @@ void Renderer::RenderSpriteSheet(SpriteSheet* ss, glm::mat4 PaMa)
     glm::mat4 MVP = _projectionMatrix * _viewMatrix * PaMa;
 
     glActiveTexture(GL_TEXTURE0);
-    Texture* t = _resMan.GetTexture(ss->FileName());
+    Texture* t = _resMan.GetTexture(ss->FileName(), ss->Filter());
 
     glBindTexture(GL_TEXTURE_2D, t->GetTexture());
 

@@ -4,9 +4,9 @@
 #include <src/Core/scene.h>
 #include <src/Objects/emptyobject.h>
 #include <src/UI/image.h>
-#include <src/UI/button.h>
 #include <src/Core/text.h>
 #include <src/UI/canvas.h>
+#include <src/Objects/button.h>
 
 class HomeScene : public Scene
 {
@@ -22,7 +22,7 @@ private:
     EmptyObject* _titleImage;
     EmptyObject* _startButton;
     EmptyObject* _text;
-    EmptyObject* _column;
+    std::vector<Button*> _columns;
     EmptyObject* _canvas;
 };
 

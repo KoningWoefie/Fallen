@@ -15,7 +15,7 @@ Texture::~Texture()
 }
 
 //load tga and set the texture as said .tga file
-GLuint Texture::LoadTGA(const std::string& path)
+GLuint Texture::LoadTGA(const std::string& path, unsigned char filter)
 {
     std::cout << "Loading TGA: " << path << "\n";
 
@@ -85,9 +85,6 @@ GLuint Texture::LoadTGA(const std::string& path)
 
 	// "Bind" the newly created texture : all future texture functions will modify this texture
 	glBindTexture(GL_TEXTURE_2D, textureID);
-
-	// filter the Texture
-	unsigned char filter = 1;
 	switch (filter) {
 		case 0:
 			// No filtering.

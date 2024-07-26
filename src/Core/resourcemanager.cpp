@@ -1,4 +1,5 @@
 #include <src/Core/resourcemanager.h>
+#include <string>
 
 ResourceManager::ResourceManager()
 {
@@ -33,7 +34,7 @@ ResourceManager::~ResourceManager()
     std::cout << "ResourceManager destroyed" << "\n";
 }
 
-Texture* ResourceManager::GetTexture(std::string fileName, int width, int height)
+Texture* ResourceManager::GetTexture(std::string fileName, unsigned char filter, int width, int height)
 {
     if(fileName.empty())
     {
@@ -44,7 +45,7 @@ Texture* ResourceManager::GetTexture(std::string fileName, int width, int height
         return _textures[fileName];
     }
     _textures[fileName] = new Texture();
-    _textures[fileName]->LoadTGA(fileName);
+    _textures[fileName]->LoadTGA(fileName, filter);
     return _textures[fileName];
 }
 

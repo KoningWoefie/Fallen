@@ -11,7 +11,7 @@ class Sprite
 public:
     // Constructor
     // parameter filepath for the texture this is only compatible with .tga files at the moment
-    Sprite(const std::string& filePath);
+    Sprite(const std::string& filePath, unsigned char filter = 1);
 
     // Destructor
     virtual ~Sprite();
@@ -21,8 +21,11 @@ public:
     glm::vec2 UV;
 
     int Type() { return _type; }
+    unsigned char Filter() { return m_filter; }
+    void SetFilter(unsigned char filter) { m_filter = filter; }
 private:
     std::string m_filename;
+    unsigned char m_filter;
 
 protected:
     int _type;

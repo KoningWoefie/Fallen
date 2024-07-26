@@ -14,7 +14,7 @@ public:
     Texture(int width = 0, int height = 0);
     virtual ~Texture();
 
-    GLuint LoadTGA(const std::string& path);
+    GLuint LoadTGA(const std::string& path, unsigned char filter = 1);
 
     GLuint GetTexture() { return _texture; }
 

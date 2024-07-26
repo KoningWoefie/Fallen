@@ -1,9 +1,10 @@
 #include <src/Core/sprite.h>
 
-Sprite::Sprite(const std::string& filePath)
+Sprite::Sprite(const std::string& filePath, unsigned char filter)
 {
     _type = 0;
     m_filename = filePath;
+    m_filter = filter;
 }
 
 Sprite::~Sprite()
