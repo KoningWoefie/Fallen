@@ -21,6 +21,7 @@ void Object::AddChild(Object* child)
         if(!child->GetComponent<Components::Canvas>() && !child->GetComponent<Components::UIElement>()) child->AddComponent(new Components::UIElement());
     }
     m_children.push_back(child);
+    child->parent = this;
 }
 
 void Object::RemoveChild(Object* child)

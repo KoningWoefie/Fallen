@@ -10,6 +10,7 @@ public:
     glm::vec3 position;
     float rotation;
     glm::vec3 scale;
+    glm::vec2 size;
 private:
     Transform();
     virtual ~Transform();

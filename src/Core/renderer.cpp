@@ -1,9 +1,12 @@
 #include <src/Core/camera.h>
 #include "GLFW/glfw3.h"
+#include "src/Core/component.h"
 #include "src/Core/inputmanager.h"
 #include "src/Core/resourcemanager.h"
 #include "src/Core/sprite.h"
+#include "src/Core/text.h"
 #include "src/Core/texture.h"
+#include "src/UI/canvas.h"
 #include "src/UI/image.h"
 #include "src/UI/inputfield.h"
 #include "src/UI/uielement.h"
@@ -134,6 +137,16 @@ void Renderer::RenderScene(Scene* scene)
 
 void Renderer::RenderObject(Object* o, glm::mat4 PaMa)
 {
+    if(o->transform->size.x == -1.0f)
+    {
+        o->transform->size.x = 0.0f;
+        o->transform->size.y = 0.0f;
+        if(o->GetComponent<Components::Image>())
+        {
+            o->transform->size.x = _resMan.GetTexture(o->GetComponent<Components::Image>()->GetSprite()->FileName(), o->GetComponent<Components::Image>()->GetSprite()->Filter())->Width();
+            o->transform->size.y = _resMan.GetTexture(o->GetComponent<Components::Image>()->GetSprite()->FileName(), o->GetComponent<Components::Image>()->GetSprite()->Filter())->Height();
+        }
+    }
     _scaleX *= o->transform->scale.x;
     _scaleY *= o->transform->scale.y;
 
@@ -204,6 +217,16 @@ void Renderer::RenderObject(Object* o, glm::mat4 PaMa)
 
 void Renderer::RenderUIObject(Object* o, Components::Canvas* canvas, glm::mat4 PaMa)
 {
+    if(o->transform->size.x == -1.0f)
+    {
+        o->transform->size.x = 0.0f;
+        o->transform->size.y = 0.0f;
+        if(o->GetComponent<Components::Image>())
+        {
+            o->transform->size.x = _resMan.GetTexture(o->GetComponent<Components::Image>()->GetSprite()->FileName(), o->GetComponent<Components::Image>()->GetSprite()->Filter())->Width();
+            o->transform->size.y = _resMan.GetTexture(o->GetComponent<Components::Image>()->GetSprite()->FileName(), o->GetComponent<Components::Image>()->GetSprite()->Filter())->Height();
+        }
+    }
     float sX = _scaleX;
     float sY = _scaleY;
 
@@ -218,7 +241,19 @@ void Renderer::RenderUIObject(Object* o, Components::Canvas* canvas, glm::mat4 P
         std::cout << "UIElement component not found on object that is a child of canvas" << "\n";
         return;
     }
+    float width = 0.0f;
+    float height = 0.0f;
 
+    if(o->parent->GetComponent<Components::Canvas>())
+    {
+        width = o->parent->GetComponent<Components::Canvas>()->GetCanvasWidth();
+        height = o->parent->GetComponent<Components::Canvas>()->GetCanvasHeight();
+    }
+    else
+    {
+        width = o->transform->size.x;
+        height = o->transform->size.y;
+    }
     switch (o->GetComponent<Components::UIElement>()->GetAlignment())
     {
         case Components::UIAlignment::Center:
@@ -226,36 +261,36 @@ void Renderer::RenderUIObject(Object* o, Components::Canvas* canvas, glm::mat4 P
             y = 0;
             break;
         case Components::UIAlignment::TopLeft:
-            x = -((float)(canvas->GetCanvasWidth()) / 2);
-            y = -((float)(canvas->GetCanvasHeight()) / 2);
+            x = -(width / 2);
+            y = -(height / 2);
             break;
         case Components::UIAlignment::Top:
             x = 0;
-            y = -((float)(canvas->GetCanvasHeight()) / 2);
+            y = -(height / 2);
             break;
         case Components::UIAlignment::TopRight:
-            x = (float)canvas->GetCanvasWidth() / 2;
-            y = -((float)(canvas->GetCanvasHeight()) / 2);
+            x = width / 2;
+            y = -(height / 2);
             break;
         case Components::UIAlignment::Left:
-            x = -((float)(canvas->GetCanvasWidth()) / 2);
+            x = -(width / 2);
             y = 0;
             break;
         case Components::UIAlignment::Right:
-            x = ((float)(canvas->GetCanvasWidth()) / 2);
+            x = (height / 2);
             y = 0;
             break;
         case Components::UIAlignment::BottomLeft:
-            x = -((float)(canvas->GetCanvasWidth()) / 2);
-            y = (float)(canvas->GetCanvasHeight()) / 2;
+            x = -(width / 2);
+            y = height / 2;
             break;
         case Components::UIAlignment::Bottom:
             x = 0;
-            y = (float)(canvas->GetCanvasHeight()) / 2;
+            y = height / 2;
             break;
         case Components::UIAlignment::BottomRight:
-            x = (float)canvas->GetCanvasWidth() / 2;
-            y = (float)(canvas->GetCanvasHeight()) / 2;
+            x = width / 2;
+            y = height / 2;
             break;
     }
 
@@ -295,7 +330,8 @@ void Renderer::RenderUIObject(Object* o, Components::Canvas* canvas, glm::mat4 P
             b->UpdateState();
         }
         if(typeid(type) == typeid(Components::Image)) { RenderImage(dynamic_cast<Components::Image*>(c), PaMa); }
-        if(typeid(type) == typeid(Components::Text)) { RenderText(dynamic_cast<Components::Text*>(c), PaMa, o->transform->position.x); }
+        if(typeid(type) == typeid(Components::Text)) { RenderText(dynamic_cast<Components::Text*>(c), PaMa, o->transform->position.x); };
+
     }
     for(Object* o2 : o->GetChildren())
     {
@@ -653,6 +689,7 @@ void Renderer::RenderSpriteSheet(SpriteSheet* ss, glm::mat4 PaMa)
 void Renderer::RenderText(Components::Text* text, glm::mat4 PaMa, float pax)
 {
     this->ChooseShader(_textShaderID);
+    if(text->text == "") return;
     float bigHeight = 0;
     float x = 0;
     float y = 0;
@@ -681,7 +718,7 @@ void Renderer::RenderText(Components::Text* text, glm::mat4 PaMa, float pax)
                 textWidth -= ((float)(gl->advance >> 6) - (float)gl->size.x - (float)gl->bearing.x);
             }
         }
-        glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(-(textWidth/2), 0, 0));
+        glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(-(textWidth/2)/_scaleX, 0, 0));
         glm::mat4 rotationMatrix = glm::eulerAngleYXZ(0.0f, 0.0f, 0.0f);
         glm::mat4 scalingMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
         glm::mat4 modelMatrix = translationMatrix * rotationMatrix * scalingMatrix;
@@ -713,9 +750,9 @@ void Renderer::RenderText(Components::Text* text, glm::mat4 PaMa, float pax)
 
         // Build MVP matrix
         // Send our transformation to the currently bound shader, in the "MVP" uniform
-        glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(posX, posY, 0));
+        glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(posX/_scaleX, posY/_scaleY, 0));
         glm::mat4 rotationMatrix = glm::eulerAngleYXZ(0.0f, 0.0f, 0.0f);
-        glm::mat4 scalingMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
+        glm::mat4 scalingMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f/_scaleX, 1.0f/_scaleY, 1.0f));
         glm::mat4 modelMatrix = translationMatrix * rotationMatrix * scalingMatrix;
 
         TempPaMa *= modelMatrix;
