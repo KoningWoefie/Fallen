@@ -173,6 +173,11 @@ add_executable(CardGame
     CardGame/homescene.h
 )
 
+add_executable(Tetris
+    Tetris/main.cpp
+    Tetris/gamescene.cpp
+    Tetris/gamescene.h
+)
 if(WIN32)
     target_link_libraries(examples #g++ -lsrc
     	src
@@ -182,6 +187,11 @@ if(WIN32)
     target_link_libraries(CardGame #g++ -lsrc
     	src
     	external/freetype-2.13.2/freetype
+    	${ALL_GRAPHICS_LIBS}
+    )
+    target_link_libraries(Tetris #g++ -lsrc
+        src
+        external/freetype-2.13.2/freetype
     	${ALL_GRAPHICS_LIBS}
     )
 	file(
@@ -203,7 +213,12 @@ if(UNIX)
 	   ${CMAKE_BINARY_DIR}/external/SQLapi/lib/libsqlapiu.a
 	   ${ALL_GRAPHICS_LIBS}
     )
-
+    target_link_libraries(Tetris #g++ -lsrc
+	   src
+	   ${FREETYPE_LIBRARIES}
+	   ${CMAKE_BINARY_DIR}/external/SQLapi/lib/libsqlapiu.a
+	   ${ALL_GRAPHICS_LIBS}
+    )
     file(
 		COPY external/SQLapi
 		DESTINATION ${CMAKE_BINARY_DIR}/external
