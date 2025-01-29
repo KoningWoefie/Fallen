@@ -7,6 +7,7 @@
 #include <src/Core/text.h>
 #include <src/UI/canvas.h>
 #include <src/Objects/button.h>
+#include <src/Objects/inputfield.h>
 
 class HomeScene : public Scene
 {
@@ -18,12 +19,23 @@ public:
 
     virtual void Update(float deltaTime);
 private:
-    void StartGame();
+    void GoToChoice();
+    void GoToHost();
+    void Host();
+    void GoToJoin();
+    void Join();
     EmptyObject* _titleImage;
     EmptyObject* _startButton;
     EmptyObject* _text;
     std::vector<Button*> _columns;
     EmptyObject* _canvas;
+
+    Button* _hostButton;
+    Button* _joinButton;
+    Button* _exitButton;
+
+    std::vector<InputField*> _inputFields;
+    EmptyObject* _hostPanel;
 };
 
 #endif
