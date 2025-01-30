@@ -32,7 +32,7 @@ public:
     void ChangeScreenMode();
 private:
     void RenderObject(Object* o, glm::mat4 PaMa);
-    void RenderUIObject(Object* o, Components::Canvas* canvas, glm::mat4 PaMa);
+    void RenderUIObject(Object* o, Components::Canvas* canvas, glm::mat4 PaMa, float canvasScaling = 1.0f);
 
     void RenderImage(Components::Image* i, glm::mat4 PaMa);
     void RenderText(Components::Text* text, glm::mat4 PaMa, float x);
