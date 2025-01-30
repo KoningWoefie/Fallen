@@ -239,6 +239,10 @@ file(
     DESTINATION ${CMAKE_BINARY_DIR}
 )
 file(
+    COPY Tetris/assets
+    DESTINATION ${CMAKE_BINARY_DIR}
+)
+file(
 	COPY src/shaders
 	DESTINATION ${CMAKE_BINARY_DIR}
 )
