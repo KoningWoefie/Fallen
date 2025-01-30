@@ -198,13 +198,17 @@ void Renderer::RenderObject(Object* o, glm::mat4 PaMa)
         Components::Canvas* c = o->GetComponent<Components::Canvas>();
         if(c)
         {
+            float cs = 1.0f;
             if(c->GetScaleWithScreenSize())
             {
                 c->SetCanvasSize(Config::ScreenWidth, Config::ScreenHeight);
+                float csX = (float)Config::ScreenWidth / (float)c->GetReferenceResolution().x;
+                float csY = (float)Config::ScreenHeight / (float)c->GetReferenceResolution().y;
+                cs = (csX + csY) / 2;
                 o->transform->position = glm::vec3(Config::ScreenWidth/2, Config::ScreenHeight/2, 0.0f);
 				_worldPos = glm::vec2(o->transform->position.x, o->transform->position.y);
             }
-            RenderUIObject(o2, c, PaMa);
+            RenderUIObject(o2, c, PaMa, cs);
             c = nullptr;
             continue;
         }
@@ -215,7 +219,7 @@ void Renderer::RenderObject(Object* o, glm::mat4 PaMa)
     _worldPos = thisWorldPos;
 }
 
-void Renderer::RenderUIObject(Object* o, Components::Canvas* canvas, glm::mat4 PaMa)
+void Renderer::RenderUIObject(Object* o, Components::Canvas* canvas, glm::mat4 PaMa, float canvasScaling)
 {
     if(o->transform->size.x == -1.0f)
     {
@@ -235,6 +239,7 @@ void Renderer::RenderUIObject(Object* o, Components::Canvas* canvas, glm::mat4 P
 
     float x = 0;
     float y = 0;
+
 
     if(o->GetComponent<Components::UIElement>() == nullptr)
     {
@@ -297,20 +302,16 @@ void Renderer::RenderUIObject(Object* o, Components::Canvas* canvas, glm::mat4 P
     _worldPos += glm::vec2(o->transform->position.x + x, o->transform->position.y + y);
     glm::vec2 thisWorldPos = _worldPos;
 
-    float csX = (float)Config::ScreenWidth / (float)canvas->GetReferenceResolution().x;
-    float csY = (float)Config::ScreenHeight / (float)canvas->GetReferenceResolution().y;
-    float cs = (csX + csY) / 2;
-
     //Build our model matrix
     glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(o->transform->position.x + x, o->transform->position.y + y, 0));
     glm::mat4 rotationMatrix = glm::eulerAngleYXZ(0.0f, 0.0f, o->transform->rotation);
-    glm::mat4 scalingMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(o->transform->scale.x * cs, o->transform->scale.y * cs, 1));
+    glm::mat4 scalingMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(o->transform->scale.x * canvasScaling, o->transform->scale.y * canvasScaling, 1));
     glm::mat4 modelMatrix = translationMatrix * rotationMatrix * scalingMatrix;
 
     PaMa *= modelMatrix;
 
-    _scaleX *= cs;
-    _scaleY *= cs;
+    _scaleX *= canvasScaling;
+    _scaleY *= canvasScaling;
 
     for(Component* c : o->GetComponents())
     {
