@@ -12,6 +12,7 @@ GameScene::~GameScene()
 
 void GameScene::Update(float deltaTime)
 {
+    // _gridObject->transform->position = glm::vec3(-36.0f, 41.0f * std::round((float)Config::ScreenHeight/240.0f) - 8.0f * std::round((float)Config::ScreenHeight/240.0f) + 1.0f, 0.0f);
 }
 
 void GameScene::Initialize()
@@ -30,7 +31,7 @@ void GameScene::Initialize()
 
     _backgroundImage = new EmptyObject();
     Components::Image* image = new Components::Image();
-    image->AddSprite(new Sprite("assets/MainSceneBackground.tga"));
+    image->AddSprite(new Sprite("assets/MainSceneBackground.tga", 0));
     _backgroundImage->AddComponent(image);
 
     _canvas->AddChild(_backgroundImage);
@@ -48,7 +49,7 @@ void GameScene::CreateGrid()
     Components::UIElement* uiElement = new Components::UIElement();
     uiElement->SetAlignment(Components::UIAlignment::Top);
     _gridObject->AddComponent(uiElement);
-    _gridObject->transform->position = glm::vec3(-36.0f, 44.0f, 0.0f);
+    _gridObject->transform->position = glm::vec3(-36.0f, 45.0f, 0.0f);
     _canvas->AddChild(_gridObject);
 
     for(int x = 0; x < colNum; x++)
@@ -58,9 +59,12 @@ void GameScene::CreateGrid()
         {
             _grid[x].push_back(new EmptyObject());
             Components::Image* image = new Components::Image();
-            image->AddSprite(new Sprite("assets/EmptyBlock.tga", 0));
+            // image->AddSprite(new Sprite("assets/EmptyBlock.tga", 0));
+            _grid[x][y]->transform->size = glm::vec2(8.0f, 8.0f);
+            image->width = 8.0f;
+            image->height = 8.0f;
+            image->color = glm::vec4(1, 1, 1, 0);
             _grid[x][y]->AddComponent(image);
-            _grid[x][y]->transform->scale = glm::vec3(0.25f, 0.25f, 1.0f);
             _gridObject->AddChild(_grid[x][y]);
             _grid[x][y]->transform->position = glm::vec3(8.0f * x, 8.0f * y, 0.0f);
         }
