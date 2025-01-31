@@ -134,6 +134,8 @@ add_library(src # ar rcs fallenlib.a
 	src/Core/transform.h
 	src/Core/scenemanager.cpp
 	src/Core/scenemanager.h
+	src/Core/color.cpp
+	src/Core/color.h
 	src/UI/image.cpp
 	src/UI/image.h
 	src/UI/uielement.cpp
