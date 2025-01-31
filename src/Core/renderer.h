@@ -37,7 +37,7 @@ private:
     void RenderImage(Components::Image* i, glm::mat4 PaMa);
     void RenderText(Components::Text* text, glm::mat4 PaMa, float x);
 
-    void RenderSprite(Sprite* sprite, glm::mat4 PaMa);
+    void RenderSprite(Sprite* sprite, glm::mat4 PaMa, glm::vec2 size = glm::vec2(0.0f, 0.0f));
     void RenderSlicedSprite(SlicedSprite* i, glm::mat4 PaMa);
     void RenderSpriteSheet(SpriteSheet* ss, glm::mat4 PaMa);
 

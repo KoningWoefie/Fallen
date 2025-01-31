@@ -16,6 +16,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <cmath>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -359,8 +360,8 @@ void Renderer::RenderImage(Components::Image* i, glm::mat4 PaMa)
         AnimatedSprite* as = nullptr;
         switch(i->GetSprite()->Type())
         {
-            case 0:
-                RenderSprite(i->GetSprite(), PaMa);
+            case 0:;
+                RenderSprite(i->GetSprite(), PaMa, glm::vec2(i->width, i->height));
                 break;
             case 1:
                 RenderSlicedSprite(dynamic_cast<SlicedSprite*>(i->GetSprite()), PaMa);
@@ -382,6 +383,7 @@ void Renderer::RenderImage(Components::Image* i, glm::mat4 PaMa)
 
     glm::mat4 MVP = _projectionMatrix * _viewMatrix * PaMa;
     Mesh* m = _resMan.GetMesh(i->width, i->height, 0, i->pivot);
+
 
     GLuint dColorID = glGetUniformLocation(_programID, "defaultColor");
 	glUniform4f(dColorID, 255.0f, 255.0f, 255.0f, 255.0f);
@@ -430,7 +432,7 @@ void Renderer::RenderImage(Components::Image* i, glm::mat4 PaMa)
 }
 
 
-void Renderer::RenderSprite(Sprite* s, glm::mat4 PaMa)
+void Renderer::RenderSprite(Sprite* s, glm::mat4 PaMa, glm::vec2 size)
 {
     glm::mat4 MVP = _projectionMatrix * _viewMatrix * PaMa;
 
@@ -442,7 +444,9 @@ void Renderer::RenderSprite(Sprite* s, glm::mat4 PaMa)
     GLuint textureID = glGetUniformLocation(_programID, "textureSampler");
     glUniform1i(textureID, 0);
 
-    Mesh* m = _resMan.GetMesh(t->Width(), t->Height(), 0, glm::vec2(0.5f, 0.5f));
+    Mesh* m;
+    if (size.x != 0.0f) m = _resMan.GetMesh(size.x, size.y, 0, glm::vec2(0.5f, 0.5f));
+    else m = _resMan.GetMesh(t->Width(), t->Height(), 0, glm::vec2(0.5f, 0.5f));
 
     GLuint dColorID = glGetUniformLocation(_programID, "defaultColor");
 
