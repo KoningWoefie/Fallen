@@ -1,4 +1,5 @@
 #include <src/Core/color.h>
+#include <iostream>
 
 const glm::vec4 Color::White = glm::vec4(1, 1, 1, 1);
 const glm::vec4 Color::Black = glm::vec4(0, 0, 0, 1);
@@ -33,7 +34,9 @@ glm::vec4 Color::BGRAColor(char b, char g, char r, char a)
 
 glm::vec4 Color::HexCodeColor(std::string hexCode)
 {
-    float r, g, b = 0.0f;
+    float r = 0.0f;
+    float g = 0.0f;
+    float b = 0.0f;
 
     // Red
     if(hexCode[0] - 48 >= 0 && hexCode[0] < 58) r += (hexCode[0] - 48) * 16;
