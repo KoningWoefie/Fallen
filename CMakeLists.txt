@@ -149,6 +149,8 @@ add_library(src # ar rcs fallenlib.a
 	src/Objects/emptyobject.h
 	src/Networking/sql.cpp
 	src/Networking/sql.h
+	src/Math/math.cpp
+	src/Math/math.h
 )
 
 add_executable(examples # g++ examples/main.cpp -o examples
