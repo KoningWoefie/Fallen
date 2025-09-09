@@ -96,4 +96,67 @@ namespace FallenMath
 
         return clampedValue;
     }
+
+    int round(float value)
+    {
+        return std::round(value);
+    }
+
+    float round(float value, int decimals)
+    {
+        float tempValue = value * 10 * (float)decimals;
+        return std::roundf(tempValue);
+    }
+
+    double round(double value, int decimals)
+    {
+        double tempValue = value * 10 * (double)decimals;
+        return std::roundf(tempValue);
+    }
+
+    std::tuple<float, float> slex(float a, float b)
+    {
+        float x = -b/a;
+
+        return std::make_tuple(x,0);
+    }
+
+    std::tuple<float, float> sley(float a, float b)
+    {
+        return std::make_tuple(0,b);
+    }
+
+    std::tuple<float, float> slep(float a, float b, float x)
+    {
+        float y = a*x+b;
+        return std::make_tuple(x,y);
+    }
+
+    std::vector<std::tuple<float,float>> slei(float a, float b)
+    {
+        std::vector<std::tuple<float,float>> intersectionPoints;
+        intersectionPoints.push_back(std::make_tuple(-b/a, 0));
+        intersectionPoints.push_back(std::make_tuple(0, b));
+
+        return intersectionPoints;
+    }
+
+    std::vector<std::tuple<float,float>> sqex(float a, float b, float c)
+    {
+        std::vector<std::tuple<float,float>> intersectionPoints;
+
+        float smallestNumber = (c > b) ? c : b;
+
+        for(int i = smallestNumber; i >= 0; i--)
+        {
+            if((int)c%i != 0) { continue; }
+            float d = b-i;
+            if (d * i != c) { continue; }
+
+            intersectionPoints.push_back(std::make_tuple(-d, 0));
+            intersectionPoints.push_back(std::make_tuple(-i, 0));
+        }
+
+        return intersectionPoints;
+    }
 }

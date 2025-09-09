@@ -4,6 +4,7 @@
 #include "src/Objects/inputfield.h"
 #include "src/UI/uielement.h"
 #include <src/Core/scenemanager.h>
+#include <src/Math/math.h>
 
 HomeScene::HomeScene()
 {
@@ -48,6 +49,15 @@ void HomeScene::Initialize()
     _joinButton = nullptr;
     _exitButton = nullptr;
     _hostPanel = nullptr;
+
+    float x = 0;
+    float y = 0;
+
+    std::tie(x, y) = FallenMath::sqex(1,8,12)[0];
+    std::cout << x << ", " << y << "\n";
+    std::tie(x, y) = FallenMath::sqex(1,8,12)[1];
+    std::cout << x << ", " << y << "\n";
+
 }
 
 HomeScene::~HomeScene()
