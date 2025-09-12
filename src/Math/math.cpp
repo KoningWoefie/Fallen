@@ -175,6 +175,10 @@ namespace FallenMath
 
     std::vector<std::tuple<float,float>> sqey(float a, float b, float c)
     {
-        return c;
+        std::vector<std::tuple<float,float>> intersectionPoints;
+
+        intersectionPoints.push_back(std::make_tuple(0,c));
+        
+        return intersectionPoints;
     }
 }
