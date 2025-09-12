@@ -53,9 +53,9 @@ void HomeScene::Initialize()
     float x = 0;
     float y = 0;
 
-    std::tie(x, y) = FallenMath::sqex(1,8,12)[0];
+    std::tie(x, y) = FallenMath::sqex(1,-4,-12)[0];
     std::cout << x << ", " << y << "\n";
-    std::tie(x, y) = FallenMath::sqex(1,8,12)[1];
+    std::tie(x, y) = FallenMath::sqex(1,-4,-12)[1];
     std::cout << x << ", " << y << "\n";
 
 }

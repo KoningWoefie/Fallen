@@ -145,16 +145,29 @@ namespace FallenMath
     {
         std::vector<std::tuple<float,float>> intersectionPoints;
 
-        float smallestNumber = (c > b) ? c : b;
+        float absB = std::abs(b);
+        float absC = std::abs(c);
+
+        float smallestNumber = (absC > absB) ? absC : absB;
 
         for(int i = smallestNumber; i >= 0; i--)
         {
-            if((int)c%i != 0) { continue; }
-            float d = b-i;
-            if (d * i != c) { continue; }
+            float e = i;
+            if((int)absC%(int)e != 0) { continue; }
+            float d = absB-e;
 
+            // if(d < 0 && b < 0) { d *= -1; e *= -1; }
+
+            if (std::abs(d * e) != absC) { continue; }
+
+            // One number is negative
+            if (b < 0 && c >= 0) 
+            {
+                d *= -1.0f; 
+                e *= -1.0f;
+            }
             intersectionPoints.push_back(std::make_tuple(-d, 0));
-            intersectionPoints.push_back(std::make_tuple(-i, 0));
+            intersectionPoints.push_back(std::make_tuple(-e, 0));
         }
 
         return intersectionPoints;
