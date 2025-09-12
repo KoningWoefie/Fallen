@@ -42,7 +42,7 @@ namespace FallenMath
     // solve quadratic equation y-axis
     std::vector<std::tuple<float,float>> sqey(float a, float b, float c);
     // // solve quadratic equation point
-    // std::vector<std::tuple<float,float>> sqep(float a, float b, float c, float x);
+    std::vector<std::tuple<float,float>> sqep(float a, float b, float c, float x);
     // // solve quadratic equation intersections
     // std::vector<std::tuple<float,float>> sqei(float a, float b, float c);
 

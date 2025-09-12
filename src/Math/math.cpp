@@ -178,7 +178,18 @@ namespace FallenMath
         std::vector<std::tuple<float,float>> intersectionPoints;
 
         intersectionPoints.push_back(std::make_tuple(0,c));
-        
+
         return intersectionPoints;
+    }
+
+    std::vector<std::tuple<float,float>> sqep(float a, float b, float c, float x)
+    {
+        std::vector<std::tuple<float,float>> coords;
+
+        float y = a * pow(x, 2) + b * x + c;
+
+        coords.push_back(std::make_tuple(x,y));
+
+        return coords;
     }
 }
